@@ -228,7 +228,7 @@ export default function DashboardOverview({
               onClick={() => onNavigateToTab('qualification')}
               className="w-full py-2.5 rounded-xl bg-[#1E2634] hover:bg-[#283244] text-xs font-semibold text-[#C7A66A] border border-[#C7A66A]/30 transition-colors cursor-pointer"
             >
-              Mở Trình Sàng Lọc AI Ngay $\rightarrow$
+              Mở Trình Sàng Lọc AI Ngay →
             </button>
           </div>
         </div>
@@ -247,7 +247,7 @@ export default function DashboardOverview({
               onClick={() => onNavigateToTab('appointments')}
               className="text-xs text-[#C7A66A] hover:underline font-semibold cursor-pointer"
             >
-              Xem tất cả ({appointments.length}) $\rightarrow$
+              Xem tất cả ({appointments.length}) →
             </button>
           </div>
 

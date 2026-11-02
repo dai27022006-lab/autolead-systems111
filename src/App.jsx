@@ -237,7 +237,7 @@ export default function App() {
           EXPERIENCE B: BUYER PORTAL DEMO (ĐẠI - 5-STEP TEST DRIVE JOURNEY)
       ========================================================================= */}
       {currentView === 'buyer' && (
-        <div className="flex-1 flex flex-col bg-[#0b1019] text-[#F7F7F5]">
+        <div className="flex-1 flex flex-col bg-[#F8F9F5] text-[#142A43] min-h-screen">
           {/* Seamless Experience Switcher Top Banner */}
           <header className="sticky top-0 z-40 bg-[#142A43] border-b border-white/10 px-2.5 sm:px-4 py-2 sm:py-3 shadow-md">
             <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">

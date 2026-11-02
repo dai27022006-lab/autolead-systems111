@@ -91,6 +91,10 @@ export const storageService = {
     return newLead;
   },
 
+  // Backward compatibility alias for Buyer Demo
+  addLead: (lead) => storageService.addCRMLead(lead),
+  getLeads: () => storageService.getCRMLeads(),
+
   updateCRMLead: (updatedLead) => {
     const leads = storageService.getCRMLeads();
     const index = leads.findIndex(l => l.id === updatedLead.id);

@@ -238,7 +238,7 @@ export default function LeadManagement({
                           title="Chuyển sang trạng thái kế tiếp"
                           className="text-[10px] text-[#C7A66A] hover:underline flex items-center gap-0.5 font-bold cursor-pointer"
                         >
-                          Tiếp $\rightarrow$
+                          Tiếp →
                         </button>
                       </div>
                     </div>
