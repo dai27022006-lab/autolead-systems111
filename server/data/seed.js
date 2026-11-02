@@ -1,0 +1,152 @@
+export const SEED_CARS = [
+  {
+    id: 'car-c200',
+    name: 'Mercedes-Benz C200 Avantgarde 2024',
+    segment: 'Luxury Sedan',
+    price: '1.599.000.000 VNĐ',
+    specs: 'Động cơ 1.5L Turbo Mild-Hybrid 204HP, Hộp số 9G-TRONIC, Màn hình 11.9 inch',
+    image: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=800&q=80',
+    status: 'Sẵn sàng lái thử'
+  },
+  {
+    id: 'car-glc300',
+    name: 'Mercedes-Benz GLC 300 4MATIC 2024',
+    segment: 'Luxury SUV',
+    price: '2.799.000.000 VNĐ',
+    specs: 'Động cơ 2.0L Turbo 258HP, Dẫn động 4MATIC, Gói âm thanh Burmester 15 loa',
+    image: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=800&q=80',
+    status: 'Sẵn sàng lái thử'
+  },
+  {
+    id: 'car-e200',
+    name: 'Mercedes-Benz E200 Exclusive 2024',
+    segment: 'Luxury Sedan',
+    price: '2.540.000.000 VNĐ',
+    specs: 'Khoang lái thương gia, Ốp gỗ tần bì bóng, Hệ thống treo êm ái AGILITY CONTROL',
+    image: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=800&q=80',
+    status: 'Sẵn sàng lái thử'
+  },
+  {
+    id: 'car-macan',
+    name: 'Porsche Macan GTS 2023 (Lướt 8.000km)',
+    segment: 'Xe lướt hạng sang',
+    price: '4.250.000.000 VNĐ',
+    specs: 'Động cơ V6 2.9L Twin-Turbo 440HP, Kiểm định 111 điểm chính hãng Porsche',
+    image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80',
+    status: 'Sẵn sàng lái thử'
+  }
+];
+
+export const SEED_LEADS = [
+  {
+    id: 'LEAD-2024-001',
+    customerName: 'Hoàng Minh Tuấn',
+    phone: '0912345678',
+    email: 'tuan.hoangminh@gmail.com',
+    leadSource: 'Meta Ads (Facebook)',
+    interestedVehicle: 'Mercedes-Benz GLC 300 4MATIC 2024',
+    vehicleSegment: 'Luxury SUV',
+    purchasePurpose: 'Gia đình & Công việc ngoại giao',
+    expectedBudget: '2.8 - 3.2 tỷ VNĐ',
+    expectedPurchasingTime: 'Trong 2 tuần tới',
+    readinessToVisitShowroom: 'Sẵn sàng',
+    assignedSalesperson: 'Trần Tuấn Anh',
+    createdAt: '2026-10-30 08:30',
+    status: 'Appointment Booked',
+    qualificationDetails: {
+      hasValidContact: true,
+      hasClearDemand: true,
+      hasSpecificModel: true,
+      meetsTargetCriteria: true,
+      agreesToVisitShowroom: true,
+      hasSpecificDateTime: true,
+      confirmedInSystem: true,
+      aiScore: 96,
+      aiExplanation: 'Khách hàng có ngân sách rõ ràng, xác nhận SĐT chính chủ, đồng ý đến showroom lái thử GLC 300.',
+      suggestedAction: 'Bàn giao hồ sơ xe cho Sales Tuấn Anh tiếp đón.'
+    },
+    notes: [
+      { date: '2026-10-30 08:31', author: 'AI Agent', content: 'Ghi nhận thông tin từ Meta Lead Form.' }
+    ],
+    interactionHistory: [
+      { type: 'form', channel: 'Meta Ads', time: '2026-10-30 08:30', detail: 'Điền form quảng cáo GLC 300' }
+    ]
+  },
+  {
+    id: 'LEAD-2024-002',
+    customerName: 'Nguyễn Bích Phương',
+    phone: '0988776543',
+    email: 'bichphuong.nguyen@vietin.com',
+    leadSource: 'Google Search Ads',
+    interestedVehicle: 'Porsche Macan GTS 2023 (Lướt 8.000km)',
+    vehicleSegment: 'Xe lướt hạng sang',
+    purchasePurpose: 'Xe cá nhân hàng ngày',
+    expectedBudget: 'Khoảng 4.2 tỷ VNĐ',
+    expectedPurchasingTime: 'Trong tháng này',
+    readinessToVisitShowroom: 'Đã hoàn thành',
+    assignedSalesperson: 'Lê Thu Hà',
+    createdAt: '2026-10-30 10:15',
+    status: 'Showroom Visit',
+    qualificationDetails: {
+      hasValidContact: true,
+      hasClearDemand: true,
+      hasSpecificModel: true,
+      meetsTargetCriteria: true,
+      agreesToVisitShowroom: true,
+      hasSpecificDateTime: true,
+      confirmedInSystem: true,
+      aiScore: 98,
+      aiExplanation: 'Khách đã lái thử sáng Chủ Nhật với Sales Thu Hà. Đánh giá chất lượng xe rất mới.',
+      suggestedAction: 'Soạn thảo bảng tính trả góp ngân hàng.'
+    },
+    notes: [],
+    interactionHistory: []
+  }
+];
+
+export const SEED_APPOINTMENTS = [
+  {
+    id: 'APT-01',
+    leadId: 'LEAD-2024-001',
+    customerName: 'Hoàng Minh Tuấn',
+    customerPhone: '0912345678',
+    vehicleModel: 'Mercedes-Benz GLC 300 4MATIC 2024',
+    appointmentDate: '2026-11-07',
+    appointmentTime: '14:00 - 15:30',
+    salesperson: 'Trần Tuấn Anh',
+    status: 'Confirmed',
+    isQualifiedAppointment: true,
+    billableFee: 300000,
+    notes: 'Khách yêu cầu xe lái thử màu Trắng hoặc Bạc.'
+  },
+  {
+    id: 'APT-02',
+    leadId: 'LEAD-2024-002',
+    customerName: 'Nguyễn Bích Phương',
+    customerPhone: '0988776543',
+    vehicleModel: 'Porsche Macan GTS 2023 (Lướt 8.000km)',
+    appointmentDate: '2026-10-31',
+    appointmentTime: '09:00 - 10:30',
+    salesperson: 'Lê Thu Hà',
+    status: 'Completed',
+    isQualifiedAppointment: true,
+    billableFee: 300000,
+    notes: 'Đã hoàn thành lái thử.'
+  }
+];
+
+export const SEED_B2B_INQUIRIES = [
+  {
+    id: 'B2B-101',
+    dealershipName: 'Mercedes-Benz Haxaco Sài Gòn',
+    contactPerson: 'Ông Nguyễn Trọng Đức',
+    phone: '0903847291',
+    email: 'duc.nguyen@haxaco.com.vn',
+    location: 'Quận Bình Thạnh, TP. Hồ Chí Minh',
+    dealershipType: 'Đại lý chính hãng xe sang',
+    monthlyLeadVolume: '150 - 300 leads/tháng',
+    status: 'Đang triển khai 30 ngày',
+    notes: 'Cần tối ưu chuyển đổi phân khúc GLC và C-Class.',
+    submittedAt: '2026-10-25 09:30'
+  }
+];

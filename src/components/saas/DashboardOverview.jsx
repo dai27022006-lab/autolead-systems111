@@ -1,0 +1,324 @@
+import React from 'react';
+import {
+  Users,
+  UserCheck,
+  CalendarCheck,
+  Building2,
+  TrendingUp,
+  AlertTriangle,
+  Clock,
+  ArrowRight,
+  ShieldCheck,
+  CheckCircle2,
+  PhoneCall,
+  Sparkles
+} from 'lucide-react';
+
+export default function DashboardOverview({
+  leads,
+  appointments,
+  campaigns,
+  onNavigateToTab
+}) {
+  // Calculate operational stats
+  const totalLeads = leads.length;
+  const newLeads = leads.filter(l => l.status === 'New Lead').length;
+  const contactedLeads = leads.filter(l => l.status === 'Contacted').length;
+  const qualifiedLeads = leads.filter(l => l.status === 'Qualified Lead').length;
+  const bookedAppointments = leads.filter(l => l.status === 'Appointment Booked').length;
+  const showroomVisits = leads.filter(l => l.status === 'Showroom Visit').length;
+  const salesOpportunities = leads.filter(l => l.status === 'Sales Opportunity').length;
+
+  // Billable Qualified Appointments (300,000 VND / appointment)
+  const billableAppointments = appointments.filter(a => a.isQualifiedAppointment && (a.status === 'Confirmed' || a.status === 'Completed'));
+  const totalBillableFee = billableAppointments.length * 300000;
+
+  // Operational Funnel stages
+  const funnelStages = [
+    { label: 'Lead Tiếp nhận', count: totalLeads, rate: '100%', color: 'bg-slate-700' },
+    { label: 'Đã Liên hệ (AI)', count: totalLeads - newLeads, rate: `${Math.round(((totalLeads - newLeads) / (totalLeads || 1)) * 100)}%`, color: 'bg-sky-600' },
+    { label: 'Đạt 7 Tiêu chí', count: qualifiedLeads + bookedAppointments + showroomVisits + salesOpportunities, rate: `${Math.round(((qualifiedLeads + bookedAppointments + showroomVisits + salesOpportunities) / (totalLeads || 1)) * 100)}%`, color: 'bg-amber-600' },
+    { label: 'Lịch Hẹn Lái Thử', count: bookedAppointments + showroomVisits + salesOpportunities, rate: `${Math.round(((bookedAppointments + showroomVisits + salesOpportunities) / (totalLeads || 1)) * 100)}%`, color: 'bg-[#C7A66A]' },
+    { label: 'Đã Đến Showroom', count: showroomVisits + salesOpportunities, rate: `${Math.round(((showroomVisits + salesOpportunities) / (totalLeads || 1)) * 100)}%`, color: 'bg-emerald-600' },
+    { label: 'Cơ Hội Bán Xe', count: salesOpportunities, rate: `${Math.round((salesOpportunities / (totalLeads || 1)) * 100)}%`, color: 'bg-purple-600' }
+  ];
+
+  const formatVND = (num) => new Intl.NumberFormat('vi-VN').format(num) + ' VNĐ';
+
+  return (
+    <div className="space-y-8">
+      {/* Top Banner: Lean Operations & Verification Status */}
+      <div className="p-5 rounded-2xl bg-gradient-to-r from-[#171D27] via-[#1E2634] to-[#171D27] border border-[#C7A66A]/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
+        <div>
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span className="text-xs font-bold uppercase tracking-wider text-[#C7A66A]">
+              Tác nghiệp Chuẩn Quản trị TMĐT (I-T-O & Lean Operations)
+            </span>
+          </div>
+          <h2 className="text-xl font-extrabold text-white mt-1">
+            Bảng Điều Khiển Tác Nghiệp & Phễu Chuyển Đổi Lịch Hẹn
+          </h2>
+          <p className="text-xs text-slate-300 mt-0.5">
+            Theo dõi thời gian thực quá trình chuyển hóa Lead quảng cáo $\rightarrow$ Lịch hẹn lái thử đủ điều kiện $\rightarrow$ Cơ hội chốt hợp đồng xe.
+          </p>
+        </div>
+
+        {/* Billable Qualified Appointment Badge */}
+        <div className="p-3.5 rounded-xl bg-[#0d121c] border border-slate-800 flex items-center gap-4 shrink-0">
+          <div>
+            <span className="text-[10px] uppercase font-bold text-slate-400 block">Lịch Hẹn Đủ Điều Kiện Tính Phí</span>
+            <div className="flex items-baseline gap-1.5 mt-0.5">
+              <span className="text-2xl font-black text-[#C7A66A]">{billableAppointments.length}</span>
+              <span className="text-xs text-slate-400">cuộc hẹn</span>
+            </div>
+            <span className="text-[11px] font-bold text-emerald-400">
+              Tổng phí kết quả: {formatVND(totalBillableFee)}
+            </span>
+          </div>
+          <button
+            onClick={() => onNavigateToTab('appointments')}
+            className="px-3 py-2 rounded-lg bg-[#1E2634] hover:bg-[#283244] text-xs font-semibold text-[#C7A66A] border border-[#C7A66A]/40 cursor-pointer"
+          >
+            Đối soát $\rightarrow$
+          </button>
+        </div>
+      </div>
+
+      {/* 7 Operational Metric Cards (I-T-O Pipeline) */}
+      <div>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+            <Users className="w-4 h-4 text-[#C7A66A]" />
+            Tiến độ 6 Trạng Thái Khách Hàng (Kanban Workflow)
+          </h3>
+          <button
+            onClick={() => onNavigateToTab('leads')}
+            className="text-xs font-semibold text-[#C7A66A] hover:underline flex items-center gap-1 cursor-pointer"
+          >
+            Xem bảng Kanban chi tiết $\rightarrow$
+          </button>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
+          <div className="p-4 rounded-xl bg-[#141B26] border border-slate-800">
+            <span className="text-[11px] font-medium text-slate-400 block">1. Total Leads</span>
+            <span className="text-2xl font-black text-white mt-1 block">{totalLeads}</span>
+            <span className="text-[10px] text-slate-500">Đầu vào (Input)</span>
+          </div>
+
+          <div className="p-4 rounded-xl bg-[#141B26] border border-slate-800">
+            <span className="text-[11px] font-medium text-slate-400 block">2. New Lead</span>
+            <span className="text-2xl font-black text-sky-400 mt-1 block">{newLeads}</span>
+            <span className="text-[10px] text-sky-400/80">Chờ AI liên hệ</span>
+          </div>
+
+          <div className="p-4 rounded-xl bg-[#141B26] border border-slate-800">
+            <span className="text-[11px] font-medium text-slate-400 block">3. Contacted</span>
+            <span className="text-2xl font-black text-indigo-400 mt-1 block">{contactedLeads}</span>
+            <span className="text-[10px] text-indigo-400/80">Đang follow-up</span>
+          </div>
+
+          <div className="p-4 rounded-xl bg-[#141B26] border border-[#C7A66A]/30 bg-gradient-to-br from-[#141B26] to-[#1A2230]">
+            <span className="text-[11px] font-medium text-[#C7A66A] block">4. Qualified</span>
+            <span className="text-2xl font-black text-[#C7A66A] mt-1 block">{qualifiedLeads}</span>
+            <span className="text-[10px] text-[#C7A66A]/80">Đạt 7 tiêu chuẩn</span>
+          </div>
+
+          <div className="p-4 rounded-xl bg-[#141B26] border border-slate-800">
+            <span className="text-[11px] font-medium text-slate-400 block">5. Appt Booked</span>
+            <span className="text-2xl font-black text-amber-400 mt-1 block">{bookedAppointments}</span>
+            <span className="text-[10px] text-amber-400/80">Đã chốt ngày giờ</span>
+          </div>
+
+          <div className="p-4 rounded-xl bg-[#141B26] border border-slate-800">
+            <span className="text-[11px] font-medium text-slate-400 block">6. Showroom Visit</span>
+            <span className="text-2xl font-black text-emerald-400 mt-1 block">{showroomVisits}</span>
+            <span className="text-[10px] text-emerald-400/80">Đã lái thử thực tế</span>
+          </div>
+
+          <div className="p-4 rounded-xl bg-[#141B26] border border-purple-500/30 bg-purple-950/20">
+            <span className="text-[11px] font-medium text-purple-300 block">7. Opportunity</span>
+            <span className="text-2xl font-black text-purple-400 mt-1 block">{salesOpportunities}</span>
+            <span className="text-[10px] text-purple-400">Đàm phán cọc xe</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Grid: Conversion Funnel & Lean WIP Bottleneck Analysis */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Conversion Funnel */}
+        <div className="lg:col-span-2 p-6 rounded-2xl bg-[#141B26] border border-slate-800 shadow-xl">
+          <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
+            <div>
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <TrendingUp className="w-4 h-4 text-[#C7A66A]" />
+                Phễu Chuyển Đổi Tác Nghiệp (Lead-to-Showroom Funnel)
+              </h3>
+              <p className="text-xs text-slate-400 mt-0.5">Tỷ lệ chuyển hóa qua từng chặng thẩm định</p>
+            </div>
+            <span className="text-xs font-mono text-[#C7A66A] font-bold">Standard CPA: 300.000đ</span>
+          </div>
+
+          <div className="space-y-4">
+            {funnelStages.map((stg, sIdx) => (
+              <div key={sIdx}>
+                <div className="flex items-center justify-between text-xs mb-1.5">
+                  <span className="font-semibold text-slate-300">{stg.label}</span>
+                  <div className="flex items-center gap-3">
+                    <span className="font-bold text-white">{stg.count} lead</span>
+                    <span className="text-slate-400 font-mono text-[11px]">({stg.rate})</span>
+                  </div>
+                </div>
+                <div className="w-full h-3 rounded-full bg-[#0d121c] overflow-hidden p-0.5 border border-slate-800">
+                  <div
+                    className={`h-full rounded-full transition-all duration-500 ${stg.color}`}
+                    style={{ width: stg.rate }}
+                  ></div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 pt-4 border-t border-slate-800/80 flex flex-wrap items-center justify-between text-xs text-slate-400 gap-2">
+            <span>Tỷ lệ hẹn lái thử thành công: <strong className="text-emerald-400 font-bold">
+              {Math.round(((bookedAppointments + showroomVisits + salesOpportunities) / (totalLeads || 1)) * 100)}%
+            </strong> (Cao gấp 3.2 lần trung bình ngành)</span>
+            <span className="text-[11px] text-slate-500">Dữ liệu đối soát tự động từ CRM</span>
+          </div>
+        </div>
+
+        {/* Lean & WIP Bottleneck Alert (Course Chapter 5) */}
+        <div className="p-6 rounded-2xl bg-[#141B26] border border-slate-800 shadow-xl flex flex-col justify-between">
+          <div>
+            <div className="flex items-center gap-2 pb-4 border-b border-slate-800 mb-5">
+              <AlertTriangle className="w-4 h-4 text-amber-400" />
+              <h3 className="text-base font-bold text-white">Cảnh Báo Điểm Nghẽn (WIP)</h3>
+            </div>
+
+            <div className="space-y-3.5 text-xs">
+              <div className="p-3.5 rounded-xl bg-[#0d121c] border border-slate-800">
+                <div className="flex justify-between items-center text-slate-300">
+                  <span>WIP Khâu Chờ Liên Hệ:</span>
+                  <span className="font-bold text-emerald-400">1 lead (Tốt)</span>
+                </div>
+                <p className="text-[11px] text-slate-500 mt-1">AI tự động kích hoạt cuộc gọi/Zalo dưới 60s, không để lead bị ứ đọng.</p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-[#0d121c] border border-amber-500/30 bg-amber-950/10">
+                <div className="flex justify-between items-center text-slate-300">
+                  <span>WIP Khâu Sàng Lọc:</span>
+                  <span className="font-bold text-amber-400">{contactedLeads} lead đang chờ</span>
+                </div>
+                <p className="text-[11px] text-slate-400 mt-1">Cần chốt lịch hẹn cụ thể để đủ điều kiện nghiệm thu 300.000 VNĐ.</p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-[#0d121c] border border-slate-800">
+                <div className="flex justify-between items-center text-slate-300">
+                  <span>Hiệu suất tiếp nhận:</span>
+                  <span className="font-bold text-white">96.8% đúng hạn</span>
+                </div>
+                <p className="text-[11px] text-slate-500 mt-1">Tuân thủ tiêu chuẩn chất lượng dịch vụ số TQM.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 pt-4 border-t border-slate-800">
+            <button
+              onClick={() => onNavigateToTab('qualification')}
+              className="w-full py-2.5 rounded-xl bg-[#1E2634] hover:bg-[#283244] text-xs font-semibold text-[#C7A66A] border border-[#C7A66A]/30 transition-colors cursor-pointer"
+            >
+              Mở Trình Sàng Lọc AI Ngay $\rightarrow$
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Section: Upcoming Appointments & Recent Interaction History */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Upcoming Appointments Table */}
+        <div className="p-6 rounded-2xl bg-[#141B26] border border-slate-800 shadow-xl">
+          <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
+            <div className="flex items-center gap-2">
+              <CalendarCheck className="w-4 h-4 text-[#C7A66A]" />
+              <h3 className="text-base font-bold text-white">Lịch Hẹn Lái Thử Sắp Tới</h3>
+            </div>
+            <button
+              onClick={() => onNavigateToTab('appointments')}
+              className="text-xs text-[#C7A66A] hover:underline font-semibold cursor-pointer"
+            >
+              Xem tất cả ({appointments.length}) $\rightarrow$
+            </button>
+          </div>
+
+          <div className="space-y-3">
+            {appointments.slice(0, 3).map((apt) => (
+              <div
+                key={apt.id}
+                className="p-3.5 rounded-xl bg-[#0d121c] border border-slate-800 flex items-center justify-between gap-3 text-xs"
+              >
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-white">{apt.customerName}</span>
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                      apt.status === 'Confirmed' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' :
+                      apt.status === 'Completed' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' :
+                      'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                    }`}>
+                      {apt.status}
+                    </span>
+                  </div>
+                  <p className="text-slate-400 text-[11px] mt-0.5">{apt.vehicleModel}</p>
+                  <p className="text-slate-500 text-[10px] mt-0.5 font-mono">
+                    {apt.appointmentDate} • {apt.appointmentTime} • Sales: {apt.salesperson}
+                  </p>
+                </div>
+
+                <div className="text-right shrink-0">
+                  <span className={`font-mono text-xs font-bold block ${apt.isQualifiedAppointment ? 'text-[#C7A66A]' : 'text-slate-500'}`}>
+                    {apt.isQualifiedAppointment ? '+300.000đ' : 'Chưa đủ điều kiện'}
+                  </span>
+                  <span className="text-[10px] text-slate-500">Billable CPA</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Recent Lead Activity Feed */}
+        <div className="p-6 rounded-2xl bg-[#141B26] border border-slate-800 shadow-xl">
+          <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
+            <div className="flex items-center gap-2">
+              <Clock className="w-4 h-4 text-[#C7A66A]" />
+              <h3 className="text-base font-bold text-white">Nhật Ký Tác Nghiệp Gần Nhất</h3>
+            </div>
+            <span className="text-xs text-slate-500">Omnichannel Log</span>
+          </div>
+
+          <div className="space-y-3.5">
+            {leads.slice(0, 4).map((ld) => {
+              const latestLog = ld.interactionHistory?.[0] || { channel: 'System', time: ld.createdAt, detail: 'Tiếp nhận thông tin' };
+              return (
+                <div key={ld.id} className="flex items-start gap-3 text-xs">
+                  <div className="w-7 h-7 rounded-lg bg-[#1E2634] border border-slate-700 flex items-center justify-center shrink-0 mt-0.5 text-[#C7A66A]">
+                    <PhoneCall className="w-3.5 h-3.5" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-semibold text-slate-200 truncate">{ld.customerName}</span>
+                      <span className="text-[10px] font-mono text-slate-500 shrink-0">{latestLog.time}</span>
+                    </div>
+                    <p className="text-slate-400 text-[11px] truncate mt-0.5">{latestLog.detail}</p>
+                    <span className="inline-block mt-1 text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-400 font-medium">
+                      Kênh: {ld.leadSource} • Xe: {ld.interestedVehicle}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

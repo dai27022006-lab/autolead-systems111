@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AutoLead Systems — MVP</title>
+<style>
+:root {
+  --site-primary: #142c4e;
+  --site-secondary: #e5edf7;
+  --site-background: #f4f7fb;
+  --site-on-primary: #ffffff;
+  --site-on-secondary: #183454;
+  --site-on-background: #17263b;
+  --site-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --site-font-heading: Inter, ui-sans-serif, system-ui, sans-serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+  --surface: #ffffff;
+  --muted: #6b7a90;
+  --line: #e6ebf2;
+  --accent: #2c6be0;
+  --green: #13845b;
+  --amber: #a96608;
+  --red: #bf4545;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--site-font-body); background: light-dark(#f4f7fb,#0d1725); color: light-dark(#17263b,#edf3fb); }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+.app-root { min-height: 100vh; width: 100%; background-color: var(--site-background); color: var(--site-on-background); border-radius: 0; }
+.topbar { height: 72px; background: var(--site-primary); color: var(--site-on-primary); display:flex; align-items:center; justify-content:space-between; padding: 0 34px; }
+.brand { display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.2px; }
+.brand-mark { width:36px;height:36px;border-radius:11px;background:#ffffff20;display:grid;place-items:center;font-size:18px; }
+.brand small { display:block;font-size:10px;letter-spacing:1.7px;opacity:.68;font-weight:600;margin-top:2px; }
+.top-actions { display:flex; align-items:center; gap:12px; font-size:12px; }
+.demo-tag { border:1px solid #ffffff55;border-radius:30px;padding:7px 11px;color:#e4edff; }
+.avatar { width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#dce8fb;color:#17345a;font-weight:800; }
+.layout { display:grid;grid-template-columns:225px minmax(0,1fr);min-height:calc(100vh - 72px); }
+.sidebar { background:#102641;color:#d4e0ef;padding:24px 14px; }
+.nav-label { text-transform:uppercase;letter-spacing:1.4px;font-size:10px;color:#8094ad;padding:8px 12px 12px;font-weight:700; }
+.nav-item { display:flex;align-items:center;gap:12px;padding:12px;border-radius:9px;color:#c4d1e1;font-size:13px;margin-bottom:5px;cursor:pointer;border:0;background:transparent;width:100%;text-align:left; }
+.nav-item.active,.nav-item:hover { background:#244466;color:white; }
+.nav-icon { width:20px;text-align:center;font-size:16px; }
+.sidebar-note { margin:30px 7px 0;padding:14px;border:1px solid #ffffff20;border-radius:10px;color:#9fb1c7;font-size:11px;line-height:1.6; }
+.main { padding:30px 34px 42px;max-width:1500px;width:100%;margin:0 auto; }
+.page-head { display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:24px; }
+.eyebrow { color:#6d819b;text-transform:uppercase;font-size:10px;letter-spacing:1.7px;font-weight:800;margin-bottom:7px; }
+h1 { font-family:var(--site-font-heading);font-size:calc(27px * var(--site-heading-scale));margin:0;color:#142c4e;letter-spacing:-.7px; }
+.subtitle { color:#718096;font-size:13px;margin-top:7px; }
+.btn { border:1px solid #d9e1ec;background:#fff;color:#27405e;border-radius:8px;padding:10px 14px;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:8px; }
+.btn:hover { border-color:#9db5d4;background:#f8fbff; }
+.btn-primary { background:#245fc5;color:white;border-color:#245fc5;box-shadow:0 5px 12px #245fc522; }
+.btn-primary:hover { background:#194eaa;color:white; }
+.btn-quiet { background:transparent; }
+.stats { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:20px; }
+.stat-card,.panel { background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 3px 14px #1b365008; }
+.stat-card { padding:17px 18px; }
+.stat-top { display:flex;justify-content:space-between;align-items:center;color:#728198;font-size:11px;font-weight:650; }
+.stat-icon { width:30px;height:30px;border-radius:9px;background:#edf3fc;display:grid;place-items:center;color:#3269bd;font-size:15px; }
+.stat-value { font-size:27px;font-weight:800;letter-spacing:-1px;margin-top:10px;color:#1b3453; }
+.stat-foot { font-size:10px;color:#8b98aa;margin-top:3px; }
+.content-grid { display:grid;grid-template-columns:minmax(0,1.7fr) minmax(260px,.8fr);gap:16px; }
+.panel { padding:18px;min-width:0; }
+.panel-head { display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:10px; }
+.panel-title { color:#1c3554;font-weight:800;font-size:14px; }
+.panel-sub { color:#8b98aa;font-size:10px;margin-top:4px; }
+.pipeline { display:grid;grid-template-columns:repeat(5,1fr);gap:7px; }
+.pipe { padding:12px 9px;border-radius:9px;background:#f5f8fc;border:1px solid #edf1f6; }
+.pipe strong { display:block;font-size:20px;color:#1d385c; }
+.pipe span { color:#77869b;font-size:10px;display:block;margin-top:4px; }
+.pipe-bar { height:4px;border-radius:4px;background:#dce7f5;margin-top:10px;overflow:hidden; }
+.pipe-bar i { display:block;height:100%;background:#3976d5;border-radius:4px; }
+.activity-list { display:flex;flex-direction:column;gap:13px; }
+.activity { display:flex;gap:10px;align-items:flex-start;font-size:11px;color:#52647a;line-height:1.5; }
+.activity-dot { width:8px;height:8px;border-radius:50%;background:#4a83d9;margin-top:4px;flex:none; }
+.activity time { display:block;color:#98a4b3;font-size:10px;margin-top:2px; }
+.table-panel { margin-top:16px;padding:0;overflow:hidden; }
+.table-head { padding:18px 18px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px; }
+.toolbar { display:flex;gap:8px;flex-wrap:wrap;padding:0 18px 14px; }
+.search { position:relative;flex:1;min-width:180px; }
+.search input { width:100%;padding:9px 12px 9px 34px;border:1px solid #dfe6ef;border-radius:8px;background:#fff;font-size:11px;outline:none; }
+.search:before { content:'⌕';position:absolute;left:12px;top:5px;color:#7f8da0;font-size:20px; }
+.toolbar select { border:1px solid #dfe6ef;border-radius:8px;padding:9px 11px;background:white;color:#506078;font-size:11px; }
+.table-wrap { overflow-x:auto; }
+table { width:100%;border-collapse:collapse;white-space:nowrap; }
+th { text-align:left;color:#8996a8;font-size:9px;letter-spacing:1px;text-transform:uppercase;font-weight:800;padding:11px 18px;background:#f8fafc;border-top:1px solid #edf1f5;border-bottom:1px solid #edf1f5; }
+td { padding:13px 18px;border-bottom:1px solid #f0f3f7;font-size:11px;color:#516178; }
+tr:last-child td { border-bottom:0; }
+.customer { display:flex;align-items:center;gap:9px; }
+.initial { width:29px;height:29px;border-radius:9px;background:#e9f0fb;color:#285a9e;display:grid;place-items:center;font-weight:800;font-size:10px; }
+.customer b { display:block;color:#253d5b;font-size:11px; }
+.customer small { display:block;color:#9aa5b3;font-size:9px;margin-top:3px; }
+.status { display:inline-flex;align-items:center;padding:5px 8px;border-radius:20px;font-size:9px;font-weight:800; }
+.s-new { color:#4169a8;background:#edf3ff; }.s-contact { color:#8c650f;background:#fff6df; }.s-qualified { color:#14744f;background:#e5f6ee; }.s-booked { color:#6a4eb0;background:#f0ebff; }.s-visited { color:#167a82;background:#e4f6f7; }.s-opportunity { color:#a34e30;background:#fff0e9; }
+.row-action { border:0;background:transparent;color:#3569b8;font-size:11px;font-weight:750; }
+.empty { text-align:center;padding:35px;color:#8795a8;font-size:12px; }
+.footer-note { margin-top:15px;color:#8795a8;font-size:10px;line-height:1.6; }
+.view { display:none; }.view.active { display:block; }
+.kanban { display:grid;grid-template-columns:repeat(5,minmax(170px,1fr));gap:10px;overflow-x:auto; }
+.kanban-col { background:#edf2f8;border-radius:10px;padding:10px;min-height:220px; }
+.kanban-title { font-size:11px;font-weight:800;color:#435873;padding:5px 4px 11px;display:flex;justify-content:space-between; }
+.k-card { background:white;border:1px solid #e4eaf1;border-radius:8px;padding:11px;margin-bottom:8px;box-shadow:0 2px 6px #18304b08; }
+.k-card b { display:block;font-size:11px;color:#2b405d; }.k-card small { display:block;color:#8592a4;font-size:9px;margin-top:5px; }
+.k-card button { margin-top:9px;border:0;background:#f1f5fb;color:#3865a5;border-radius:5px;padding:6px 8px;font-size:9px;font-weight:750; }
+.form-grid { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+.field { display:flex;flex-direction:column;gap:6px; }.field.full { grid-column:1/-1; }
+.field label { color:#586b83;font-size:10px;font-weight:800; }.field input,.field select,.field textarea { width:100%;border:1px solid #dce4ee;border-radius:8px;padding:10px 11px;font-size:11px;color:#304761;background:white;outline:none; }.field textarea { min-height:70px;resize:vertical; }
+.form-actions { display:flex;justify-content:flex-end;gap:8px;margin-top:18px; }
+.modal-backdrop { position:fixed;inset:0;background:#10243b88;display:none;align-items:center;justify-content:center;padding:16px;z-index:10; }.modal-backdrop.open { display:flex; }
+.modal { width:min(610px,100%);background:white;border-radius:14px;padding:22px;box-shadow:0 20px 60px #07172a55;max-height:90vh;overflow:auto; }.modal h2 { font-size:18px;color:#193553;margin:0 0 5px; }.modal p { color:#8592a3;font-size:11px;margin:0 0 18px; }
+.detail-top { display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:18px; }.detail-name { font-size:19px;font-weight:800;color:#1c3554; }.detail-meta { color:#8391a4;font-size:11px;margin-top:5px; }
+.detail-grid { display:grid;grid-template-columns:1fr 1fr;gap:10px; }.detail-item { background:#f6f8fb;padding:12px;border-radius:8px; }.detail-item span { display:block;font-size:9px;color:#8b99aa;text-transform:uppercase;letter-spacing:.8px;font-weight:800; }.detail-item b { display:block;color:#344b67;font-size:11px;margin-top:6px; }
+.disclaimer { background:#fff8e8;border:1px solid #f3e4bd;color:#80601e;border-radius:8px;padding:11px 13px;font-size:10px;line-height:1.6;margin-top:15px; }
+.toast { position:fixed;bottom:20px;right:20px;background:#173452;color:white;padding:12px 16px;border-radius:8px;font-size:11px;box-shadow:0 8px 25px #10243b44;opacity:0;transform:translateY(8px);transition:.2s;pointer-events:none;z-index:20; }.toast.show { opacity:1;transform:translateY(0); }
+@media(max-width:1000px) { .layout{grid-template-columns:70px minmax(0,1fr)}.sidebar{padding:20px 8px}.nav-label,.nav-text,.sidebar-note{display:none}.nav-item{justify-content:center;padding:13px 5px}.content-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)} }
+@media(max-width:650px) { .topbar{padding:0 16px}.top-actions .demo-tag{display:none}.layout{display:block}.sidebar{display:flex;padding:7px;gap:4px;overflow-x:auto}.nav-item{min-width:48px;margin:0}.main{padding:22px 13px}.page-head{flex-direction:column}.stats{gap:8px}.stat-card{padding:13px}.stat-value{font-size:23px}.pipeline{grid-template-columns:repeat(2,1fr)}.form-grid,.detail-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.table-head{align-items:flex-start;flex-direction:column} }
+</style>
+</head>
+<body>
+<div class="app-root">
+  <header class="topbar">
+    <div class="brand"><div class="brand-mark">↗</div><div>AutoLead Systems<small>FROM LEADS TO QUALIFIED TEST DRIVES</small></div></div>
+    <div class="top-actions"><span class="demo-tag">● BẢN DEMO MVP · DỮ LIỆU MÔ PHỎNG</span><span>Quản trị viên</span><div class="avatar">AD</div></div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="nav-label">Không gian làm việc</div>
+      <button class="nav-item active" data-view="dashboard"><span class="nav-icon">▦</span><span class="nav-text">Tổng quan</span></button>
+      <button class="nav-item" data-view="leads"><span class="nav-icon">◉</span><span class="nav-text">Khách hàng tiềm năng</span></button>
+      <button class="nav-item" data-view="pipeline"><span class="nav-icon">⇢</span><span class="nav-text">Quy trình xử lý</span></button>
+      <button class="nav-item" data-view="appointments"><span class="nav-icon">▣</span><span class="nav-text">Lịch hẹn lái thử</span></button>
+      <div class="sidebar-note">MVP minh họa quy trình quản lý lead và lịch hẹn. Chưa kết nối hệ thống quảng cáo, tổng đài hoặc Zalo thực tế.</div>
+    </aside>
+    <main class="main">
+      <section class="view active" id="view-dashboard">
+        <div class="page-head"><div><div class="eyebrow">Bảng điều khiển / Tổng quan</div><h1>Tổng quan hoạt động</h1><div class="subtitle">Theo dõi khách hàng tiềm năng và tiến độ chuyển đổi thành lịch hẹn lái thử.</div></div><button class="btn btn-primary" onclick="openLeadModal()">＋ Thêm khách hàng</button></div>
+        <div class="stats">
+          <div class="stat-card"><div class="stat-top">Tổng khách hàng <span class="stat-icon">◉</span></div><div class="stat-value" id="stat-total">—</div><div class="stat-foot">Lead đang được quản lý trong demo</div></div>
+          <div class="stat-card"><div class="stat-top">Đủ điều kiện <span class="stat-icon">✓</span></div><div class="stat-value" id="stat-qualified">—</div><div class="stat-foot">Đã xác định nhu cầu phù hợp</div></div>
+          <div class="stat-card"><div class="stat-top">Đã đặt lịch <span class="stat-icon">▣</span></div><div class="stat-value" id="stat-booked">—</div><div class="stat-foot">Có ngày và giờ hẹn cụ thể</div></div>
+          <div class="stat-card"><div class="stat-top">Cơ hội bán hàng <span class="stat-icon">↗</span></div><div class="stat-value" id="stat-opportunity">—</div><div class="stat-foot">Đã chuyển sang Sales theo dõi</div></div>
+        </div>
+        <div class="content-grid">
+          <div class="panel"><div class="panel-head"><div><div class="panel-title">Phễu xử lý khách hàng</div><div class="panel-sub">Số lượng lead theo từng trạng thái hiện tại</div></div><button class="btn btn-quiet" onclick="showView('pipeline')">Xem quy trình →</button></div><div class="pipeline" id="pipeline-stats"></div></div>
+          <div class="panel"><div class="panel-head"><div><div class="panel-title">Hoạt động gần đây</div><div class="panel-sub">Các cập nhật trong phiên demo</div></div></div><div class="activity-list" id="activity-list"></div></div>
+        </div>
+        <div class="panel table-panel"><div class="table-head"><div><div class="panel-title">Khách hàng mới cập nhật</div><div class="panel-sub">Danh sách lead gần đây</div></div><button class="btn" onclick="showView('leads')">Xem tất cả →</button></div><div class="table-wrap"><table><thead><tr><th>Khách hàng</th><th>Dòng xe quan tâm</th><th>Trạng thái</th><th>Ngày cập nhật</th><th></th></tr></thead><tbody id="recent-table"></tbody></table></div></div>
+      </section>
+      <section class="view" id="view-leads">
+        <div class="page-head"><div><div class="eyebrow">Quản lý dữ liệu / Lead</div><h1>Khách hàng tiềm năng</h1><div class="subtitle">Lưu trữ thông tin và theo dõi từng bước chăm sóc khách hàng.</div></div><button class="btn btn-primary" onclick="openLeadModal()">＋ Thêm khách hàng</button></div>
+        <div class="panel table-panel"><div class="table-head"><div><div class="panel-title">Danh sách khách hàng</div><div class="panel-sub" id="lead-count">—</div></div><button class="btn" onclick="exportCSV()">↓ Xuất CSV</button></div><div class="toolbar"><div class="search"><input id="search-input" placeholder="Tìm tên, số điện thoại, dòng xe..." oninput="renderLeads()" /></div><select id="status-filter" onchange="renderLeads()"><option value="all">Tất cả trạng thái</option><option value="Mới">Mới</option><option value="Đã liên hệ">Đã liên hệ</option><option value="Đủ điều kiện">Đủ điều kiện</option><option value="Đã đặt lịch">Đã đặt lịch</option><option value="Đã đến showroom">Đã đến showroom</option><option value="Cơ hội bán hàng">Cơ hội bán hàng</option></select><select id="sort-filter" onchange="renderLeads()"><option value="newest">Mới cập nhật</option><option value="name">Tên A–Z</option></select></div><div class="table-wrap"><table><thead><tr><th>Khách hàng</th><th>Dòng xe</th><th>Nhu cầu</th><th>Trạng thái</th><th>Lịch hẹn</th><th>Thao tác</th></tr></thead><tbody id="leads-table"></tbody></table></div></div>
+        <div class="footer-note">Dữ liệu đang hiển thị là dữ liệu giả lập phục vụ kiểm thử chức năng, không phải thông tin khách hàng thực tế.</div>
+      </section>
+      <section class="view" id="view-pipeline">
+        <div class="page-head"><div><div class="eyebrow">Quản lý quy trình / Pipeline</div><h1>Quy trình xử lý lead</h1><div class="subtitle">Theo dõi khách hàng từ khi tiếp nhận đến khi trở thành cơ hội bán hàng.</div></div><button class="btn btn-primary" onclick="openLeadModal()">＋ Thêm khách hàng</button></div>
+        <div class="kanban" id="kanban-board"></div>
+        <div class="footer-note">Trạng thái được cập nhật thủ công trong MVP. Bản demo chưa tự động gọi điện hoặc đồng bộ trạng thái từ CRM bên ngoài.</div>
+      </section>
+      <section class="view" id="view-appointments">
+        <div class="page-head"><div><div class="eyebrow">Quản lý lịch / Appointment</div><h1>Lịch hẹn lái thử</h1><div class="subtitle">Danh sách khách hàng đã có thời gian hẹn cụ thể với showroom.</div></div><button class="btn" onclick="exportCSV(true)">↓ Xuất lịch hẹn</button></div>
+        <div class="panel table-panel"><div class="table-head"><div><div class="panel-title">Lịch hẹn đã ghi nhận</div><div class="panel-sub">Chỉ hiển thị lead có ngày và giờ hẹn</div></div></div><div class="table-wrap"><table><thead><tr><th>Khách hàng</th><th>Điện thoại</th><th>Dòng xe</th><th>Ngày hẹn</th><th>Giờ hẹn</th><th>Trạng thái</th><th></th></tr></thead><tbody id="appointments-table"></tbody></table></div></div>
+      </section>
+    </main>
+  </div>
+</div>
+<div class="modal-backdrop" id="lead-modal"><div class="modal"><h2 id="modal-title">Thêm khách hàng tiềm năng</h2><p>Nhập thông tin cơ bản để lưu lead vào danh sách quản lý.</p><form id="lead-form"><input type="hidden" id="lead-id"/><div class="form-grid">
+  <div class="field"><label>Họ và tên *</label><input id="f-name" required placeholder="Nguyễn Văn A"/></div>
+  <div class="field"><label>Số điện thoại *</label><input id="f-phone" required inputmode="tel" placeholder="09xxxxxxxx"/></div>
+  <div class="field"><label>Dòng xe quan tâm *</label><input id="f-car" required placeholder="Mercedes-Benz C-Class"/></div>
+  <div class="field"><label>Nhu cầu mua xe</label><select id="f-need"><option>Mua xe lần đầu</option><option>Nâng cấp xe</option><option>Đổi xe</option><option>Tìm hiểu tham khảo</option></select></div>
+  <div class="field"><label>Thời gian dự kiến</label><select id="f-timing"><option>Trong 1 tháng</option><option>1–3 tháng</option><option>3–6 tháng</option><option>Chưa xác định</option></select></div>
+  <div class="field"><label>Khả năng tài chính (khách tự nguyện cung cấp)</label><select id="f-budget"><option>Chưa trao đổi</option><option>Dưới 1 tỷ</option><option>1–2 tỷ</option><option>2–3 tỷ</option><option>Trên 3 tỷ</option></select></div>
+  <div class="field"><label>Trạng thái</label><select id="f-status"><option>Mới</option><option>Đã liên hệ</option><option>Đủ điều kiện</option><option>Đã đặt lịch</option><option>Đã đến showroom</option><option>Cơ hội bán hàng</option></select></div>
+  <div class="field"><label>Ngày hẹn lái thử</label><input id="f-date" type="date"/></div>
+  <div class="field"><label>Giờ hẹn</label><input id="f-time" type="time"/></div>
+  <div class="field full"><label>Ghi chú</label><textarea id="f-notes" placeholder="Nhu cầu, nội dung đã trao đổi..."></textarea></div>
+</div><div class="form-actions"><button type="button" class="btn" onclick="closeLeadModal()">Hủy</button><button type="submit" class="btn btn-primary">Lưu khách hàng</button></div></form></div></div>
+<div class="modal-backdrop" id="detail-modal"><div class="modal"><div class="detail-top"><div><div class="eyebrow">Hồ sơ khách hàng</div><div class="detail-name" id="detail-name"></div><div class="detail-meta" id="detail-meta"></div></div><button class="btn" onclick="closeDetail()">✕</button></div><div class="detail-grid" id="detail-grid"></div><div class="disclaimer">Gợi ý tiềm năng trong bản demo (nếu có) chỉ dựa trên các trường thông tin được nhập, không phải kết quả đánh giá bằng mô hình AI.</div><div class="form-actions"><button class="btn" onclick="closeDetail()">Đóng</button><button class="btn btn-primary" id="detail-edit">Chỉnh sửa thông tin</button></div></div></div>
+<div class="toast" id="toast"></div>
+<script>
+const STORAGE_KEY = 'autolead_mvp_v1';
+const initialLeads = [
+ {id:101,name:'Nguyễn Minh Anh',phone:'0903 123 456',car:'Mercedes-Benz C-Class',need:'Nâng cấp xe',timing:'Trong 1 tháng',budget:'2–3 tỷ',status:'Đã đặt lịch',date:'2026-11-04',time:'09:30',notes:'Quan tâm phiên bản C 200 Avantgarde. Dữ liệu mô phỏng.',updated:'2026-11-01'},
+ {id:102,name:'Trần Quốc Bảo',phone:'0918 234 567',car:'BMW 3 Series',need:'Mua xe lần đầu',timing:'1–3 tháng',budget:'1–2 tỷ',status:'Đủ điều kiện',date:'',time:'',notes:'Muốn tìm hiểu chi phí lăn bánh. Dữ liệu mô phỏng.',updated:'2026-11-01'},
+ {id:103,name:'Lê Hoàng Yến',phone:'0987 345 678',car:'Lexus ES',need:'Đổi xe',timing:'Trong 1 tháng',budget:'Trên 3 tỷ',status:'Đã liên hệ',date:'',time:'',notes:'Đã trao đổi sơ bộ, đang cân nhắc lịch đến showroom.',updated:'2026-10-31'},
+ {id:104,name:'Phạm Đức Long',phone:'0934 456 789',car:'Toyota Camry',need:'Mua xe lần đầu',timing:'3–6 tháng',budget:'1–2 tỷ',status:'Mới',date:'',time:'',notes:'Đăng ký tìm hiểu mẫu xe.',updated:'2026-10-31'},
+ {id:105,name:'Vũ Thanh Hà',phone:'0972 567 890',car:'Porsche Macan',need:'Nâng cấp xe',timing:'Trong 1 tháng',budget:'Trên 3 tỷ',status:'Đã đến showroom',date:'2026-10-30',time:'14:00',notes:'Đã đến showroom theo lịch hẹn. Dữ liệu mô phỏng.',updated:'2026-10-30'},
+ {id:106,name:'Đỗ Anh Tuấn',phone:'0908 678 901',car:'Mercedes-Benz GLC',need:'Đổi xe',timing:'1–3 tháng',budget:'2–3 tỷ',status:'Cơ hội bán hàng',date:'2026-10-29',time:'10:00',notes:'Đã chuyển Sales tiếp tục tư vấn.',updated:'2026-10-30'}
+];
+let leads = loadLeads();
+let activities = [{text:'Khởi tạo bộ dữ liệu demo gồm 6 lead mô phỏng.',time:'Phiên hiện tại'},{text:'MVP sẵn sàng để kiểm thử các thao tác quản lý lead.',time:'Phiên hiện tại'}];
+const stages = ['Mới','Đã liên hệ','Đủ điều kiện','Đã đặt lịch','Đã đến showroom','Cơ hội bán hàng'];
+function loadLeads(){try{const saved=localStorage.getItem(STORAGE_KEY);return saved?JSON.parse(saved):structuredClone(initialLeads)}catch(e){return structuredClone(initialLeads)}}
+function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(leads));}catch(e){/* Preview environments may disable browser storage; changes remain active for this session. */}}
+function escapeHTML(v=''){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function fmtDate(d){if(!d)return '—';const [y,m,day]=d.split('-');return `${day}/${m}/${y}`}
+function initials(n){return n.split(' ').slice(-2).map(x=>x[0]).join('').toUpperCase()}
+function statusClass(s){return {'Mới':'s-new','Đã liên hệ':'s-contact','Đủ điều kiện':'s-qualified','Đã đặt lịch':'s-booked','Đã đến showroom':'s-visited','Cơ hội bán hàng':'s-opportunity'}[s]||'s-new'}
+function badge(s){return `<span class="status ${statusClass(s)}">${escapeHTML(s)}</span>`}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400)}
+function showView(name){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById('view-'+name).classList.add('active');document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.view===name));if(name==='leads')renderLeads();if(name==='pipeline')renderPipeline();if(name==='appointments')renderAppointments();}
+document.querySelectorAll('.nav-item').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
+function logActivity(text){activities.unshift({text,time:new Date().toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'})});activities=activities.slice(0,5)}
+function render(){renderStats();renderRecent();renderActivity();renderLeads();renderPipeline();renderAppointments()}
+function renderStats(){document.getElementById('stat-total').textContent=leads.length;document.getElementById('stat-qualified').textContent=leads.filter(x=>['Đủ điều kiện','Đã đặt lịch','Đã đến showroom','Cơ hội bán hàng'].includes(x.status)).length;document.getElementById('stat-booked').textContent=leads.filter(x=>x.date&&x.time).length;document.getElementById('stat-opportunity').textContent=leads.filter(x=>x.status==='Cơ hội bán hàng').length;
+ const counts=stages.slice(0,5).map(s=>({s,n:leads.filter(x=>x.status===s).length}));const max=Math.max(1,...counts.map(x=>x.n));document.getElementById('pipeline-stats').innerHTML=counts.map(x=>`<div class="pipe"><strong>${x.n}</strong><span>${x.s}</span><div class="pipe-bar"><i style="width:${x.n/max*100}%"></i></div></div>`).join('');}
+function rowHTML(l,compact=false){return `<tr><td><div class="customer"><div class="initial">${initials(escapeHTML(l.name))}</div><div><b>${escapeHTML(l.name)}</b><small>${escapeHTML(l.phone)}</small></div></div></td><td>${escapeHTML(l.car)}</td>${compact?'':`<td>${escapeHTML(l.need)}</td>`}<td>${badge(l.status)}</td>${compact?`<td>${fmtDate(l.updated)}</td>`:`<td>${l.date?fmtDate(l.date)+' · '+escapeHTML(l.time||''): '—'}</td>`}<td><button class="row-action" onclick="openDetail(${l.id})">Chi tiết →</button></td></tr>`}
+function renderRecent(){const rows=[...leads].sort((a,b)=>b.updated.localeCompare(a.updated)).slice(0,4);document.getElementById('recent-table').innerHTML=rows.length?rows.map(l=>rowHTML(l,true)).join(''):`<tr><td colspan="5" class="empty">Chưa có dữ liệu</td></tr>`}
+function renderActivity(){document.getElementById('activity-list').innerHTML=activities.map(a=>`<div class="activity"><i class="activity-dot"></i><div>${escapeHTML(a.text)}<time>${escapeHTML(a.time)}</time></div></div>`).join('')}
+function renderLeads(){const q=(document.getElementById('search-input')?.value||'').toLowerCase();const st=document.getElementById('status-filter')?.value||'all';const sort=document.getElementById('sort-filter')?.value||'newest';let arr=leads.filter(l=>(st==='all'||l.status===st)&&[l.name,l.phone,l.car].join(' ').toLowerCase().includes(q));arr.sort(sort==='name'?(a,b)=>a.name.localeCompare(b.name,'vi'):(a,b)=>b.updated.localeCompare(a.updated));document.getElementById('lead-count').textContent=`${arr.length} / ${leads.length} khách hàng`;document.getElementById('leads-table').innerHTML=arr.length?arr.map(l=>rowHTML(l,false)).join(''):`<tr><td colspan="6" class="empty">Không tìm thấy khách hàng phù hợp</td></tr>`}
+function renderPipeline(){document.getElementById('kanban-board').innerHTML=stages.slice(0,5).map(s=>{const arr=leads.filter(l=>l.status===s);return `<div class="kanban-col"><div class="kanban-title">${s}<span>${arr.length}</span></div>${arr.map(l=>`<div class="k-card"><b>${escapeHTML(l.name)}</b><small>${escapeHTML(l.car)}</small><small>${escapeHTML(l.phone)}</small><button onclick="advanceLead(${l.id})">Chuyển bước →</button></div>`).join('')||'<div style="font-size:10px;color:#98a4b4;padding:8px 4px">Chưa có lead</div>'}</div>`}).join('')}
+function renderAppointments(){const arr=leads.filter(l=>l.date&&l.time).sort((a,b)=>a.date.localeCompare(b.date));document.getElementById('appointments-table').innerHTML=arr.length?arr.map(l=>`<tr><td><div class="customer"><div class="initial">${initials(l.name)}</div><div><b>${escapeHTML(l.name)}</b><small>Khách hàng</small></div></div></td><td>${escapeHTML(l.phone)}</td><td>${escapeHTML(l.car)}</td><td>${fmtDate(l.date)}</td><td>${escapeHTML(l.time)}</td><td>${badge(l.status)}</td><td><button class="row-action" onclick="openDetail(${l.id})">Chi tiết →</button></td></tr>`).join(''):`<tr><td colspan="7" class="empty">Chưa có lịch hẹn được ghi nhận</td></tr>`}
+function openLeadModal(id=null){document.getElementById('lead-form').reset();document.getElementById('lead-id').value='';document.getElementById('modal-title').textContent=id?'Cập nhật khách hàng':'Thêm khách hàng tiềm năng';if(id){const l=leads.find(x=>x.id===id);if(!l)return;document.getElementById('lead-id').value=l.id;for(const [k,v] of Object.entries({name:'f-name',phone:'f-phone',car:'f-car',need:'f-need',timing:'f-timing',budget:'f-budget',status:'f-status',date:'f-date',time:'f-time',notes:'f-notes'}))document.getElementById(v).value=l[k]||'';}document.getElementById('lead-modal').classList.add('open')}
+function closeLeadModal(){document.getElementById('lead-modal').classList.remove('open')}
+document.getElementById('lead-form').addEventListener('submit',e=>{e.preventDefault();const id=document.getElementById('lead-id').value;const phone=document.getElementById('f-phone').value.trim();if(!/^[0-9+() .-]{8,18}$/.test(phone)){showToast('Vui lòng kiểm tra số điện thoại.');return}const l={id:id?Number(id):Date.now(),name:document.getElementById('f-name').value.trim(),phone,car:document.getElementById('f-car').value.trim(),need:document.getElementById('f-need').value,timing:document.getElementById('f-timing').value,budget:document.getElementById('f-budget').value,status:document.getElementById('f-status').value,date:document.getElementById('f-date').value,time:document.getElementById('f-time').value,notes:document.getElementById('f-notes').value,updated:new Date().toISOString().slice(0,10)};if((l.date&&!l.time)||(!l.date&&l.time)){showToast('Ngày và giờ hẹn cần được nhập cùng nhau.');return}if(id){leads=leads.map(x=>x.id===Number(id)?l:x);logActivity(`Đã cập nhật thông tin lead ${l.name}.`)}else{leads.unshift(l);logActivity(`Đã tạo lead mới: ${l.name}.`)}save();closeLeadModal();render();showToast(id?'Đã cập nhật khách hàng.':'Đã thêm khách hàng mới.');});
+function openDetail(id){const l=leads.find(x=>x.id===id);if(!l)return;document.getElementById('detail-name').textContent=l.name;document.getElementById('detail-meta').textContent=l.phone+' · '+l.car;document.getElementById('detail-grid').innerHTML=[['Trạng thái',l.status],['Nhu cầu',l.need],['Thời gian dự kiến',l.timing],['Khả năng tài chính',l.budget],['Ngày hẹn',fmtDate(l.date)],['Giờ hẹn',l.time||'—'],['Ngày cập nhật',fmtDate(l.updated)],['Ghi chú',l.notes||'—']].map(x=>`<div class="detail-item"><span>${x[0]}</span><b>${escapeHTML(x[1])}</b></div>`).join('');document.getElementById('detail-edit').onclick=()=>{closeDetail();openLeadModal(id)};document.getElementById('detail-modal').classList.add('open')}
+function closeDetail(){document.getElementById('detail-modal').classList.remove('open')}
+function advanceLead(id){const l=leads.find(x=>x.id===id);if(!l)return;const idx=stages.indexOf(l.status);if(idx>=0&&idx<stages.length-1){l.status=stages[idx+1];l.updated=new Date().toISOString().slice(0,10);if(l.status==='Đã đặt lịch'&&!l.date){l.date=new Date(Date.now()+86400000).toISOString().slice(0,10);l.time='09:00'}save();logActivity(`Đã chuyển ${l.name} sang trạng thái ${l.status}.`);render();showToast('Đã cập nhật trạng thái lead.')}else showToast('Lead đã ở bước cuối của quy trình demo.')}
+function exportCSV(onlyAppointments=false){const arr=onlyAppointments?leads.filter(l=>l.date&&l.time):leads;const cols=['id','name','phone','car','need','timing','budget','status','date','time','notes','updated'];const labels=['ID','Họ tên','Số điện thoại','Dòng xe','Nhu cầu','Thời gian dự kiến','Khả năng tài chính','Trạng thái','Ngày hẹn','Giờ hẹn','Ghi chú','Ngày cập nhật'];const csv='\uFEFF'+[labels,...arr.map(l=>cols.map(c=>l[c]??''))].map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=onlyAppointments?'autolead_lich_hen_demo.csv':'autolead_leads_demo.csv';a.click();URL.revokeObjectURL(url);showToast('Đã xuất tệp CSV.');}
+function resetDemo(){if(!confirm('Khôi phục dữ liệu mô phỏng ban đầu? Các thay đổi hiện tại sẽ bị xóa.'))return;leads=structuredClone(initialLeads);save();logActivity('Đã khôi phục dữ liệu mô phỏng ban đầu.');render();showToast('Đã khôi phục dữ liệu demo.')}
+render();
+</script>
+</body>
+</html>
