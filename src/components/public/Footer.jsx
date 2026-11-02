@@ -48,12 +48,12 @@ export default function Footer({ onOpenMvpDemo, onOpenLeadViewer, onOpenSaas }) 
               Hệ thống tiếp nhận, thẩm định và đặt lịch hẹn lái thử tự động ứng dụng trí tuệ nhân tạo chuyên biệt cho đại lý ô tô và showroom xe lướt cao cấp.
             </p>
 
-            <div className="flex flex-wrap gap-2 pt-2">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-2 pt-2">
               {onOpenMvpDemo && (
                 <button
                   type="button"
                   onClick={onOpenMvpDemo}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2.5 sm:py-1.5 min-h-[44px] sm:min-h-[36px] rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer"
+                  className="inline-flex items-center justify-center sm:justify-start gap-1.5 px-3.5 py-2.5 sm:py-1.5 min-h-[44px] sm:min-h-[36px] rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-[#F47721]" />
                   <span>Trải nghiệm Buyer Demo</span>
@@ -64,7 +64,7 @@ export default function Footer({ onOpenMvpDemo, onOpenLeadViewer, onOpenSaas }) 
                 <button
                   type="button"
                   onClick={onOpenSaas}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2.5 sm:py-1.5 min-h-[44px] sm:min-h-[36px] rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer"
+                  className="inline-flex items-center justify-center sm:justify-start gap-1.5 px-3.5 py-2.5 sm:py-1.5 min-h-[44px] sm:min-h-[36px] rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer"
                 >
                   <ShieldCheck className="w-3.5 h-3.5 text-[#75A94C]" />
                   <span>Cổng CRM Đại lý</span>
@@ -75,7 +75,7 @@ export default function Footer({ onOpenMvpDemo, onOpenLeadViewer, onOpenSaas }) 
                 <button
                   type="button"
                   onClick={onOpenLeadViewer}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2.5 sm:py-1.5 min-h-[44px] sm:min-h-[36px] rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer"
+                  className="inline-flex items-center justify-center sm:justify-start gap-1.5 px-3.5 py-2.5 sm:py-1.5 min-h-[44px] sm:min-h-[36px] rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer"
                 >
                   <Database className="w-3.5 h-3.5 text-[#4A98E8]" />
                   <span>Xem Showroom Leads</span>
@@ -86,15 +86,15 @@ export default function Footer({ onOpenMvpDemo, onOpenLeadViewer, onOpenSaas }) 
 
           {/* Col 2: Navigation Links (3 cols) */}
           <div className="lg:col-span-3 space-y-3">
-            <h4 className="text-xs font-mono font-bold text-white uppercase tracking-wider">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider">
               Khám Phá Nhanh
             </h4>
-            <ul className="space-y-2">
+            <ul className="grid grid-cols-2 sm:grid-cols-1 gap-2 text-xs">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-slate-400 hover:text-[#F47721] transition-colors"
+                    className="text-slate-400 hover:text-[#F47721] transition-colors py-1 inline-block"
                   >
                     {link.label}
                   </a>
@@ -105,7 +105,7 @@ export default function Footer({ onOpenMvpDemo, onOpenLeadViewer, onOpenSaas }) 
 
           {/* Col 3: Academic & Integration Context (4 cols) */}
           <div className="lg:col-span-4 space-y-3">
-            <h4 className="text-xs font-mono font-bold text-white uppercase tracking-wider">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider">
               Thông Tin Đồ Án Học Phần
             </h4>
             <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2 text-[11px] leading-relaxed">

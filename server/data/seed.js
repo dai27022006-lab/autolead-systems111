@@ -5,7 +5,7 @@ export const SEED_CARS = [
     segment: 'Luxury Sedan',
     price: '1.599.000.000 VNĐ',
     specs: 'Động cơ 1.5L Turbo Mild-Hybrid 204HP, Hộp số 9G-TRONIC, Màn hình 11.9 inch',
-    image: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=800&q=80',
+    image: './assets/mercedes-c200.jpg',
     status: 'Sẵn sàng lái thử'
   },
   {
@@ -14,25 +14,25 @@ export const SEED_CARS = [
     segment: 'Luxury SUV',
     price: '2.799.000.000 VNĐ',
     specs: 'Động cơ 2.0L Turbo 258HP, Dẫn động 4MATIC, Gói âm thanh Burmester 15 loa',
-    image: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=800&q=80',
+    image: './assets/mercedes-glc300.jpg',
     status: 'Sẵn sàng lái thử'
   },
   {
     id: 'car-e200',
     name: 'Mercedes-Benz E200 Exclusive 2024',
-    segment: 'Luxury Sedan',
+    segment: 'Executive Sedan',
     price: '2.540.000.000 VNĐ',
     specs: 'Khoang lái thương gia, Ốp gỗ tần bì bóng, Hệ thống treo êm ái AGILITY CONTROL',
-    image: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=800&q=80',
+    image: './assets/mercedes-e200.jpg',
     status: 'Sẵn sàng lái thử'
   },
   {
     id: 'car-macan',
     name: 'Porsche Macan GTS 2023 (Lướt 8.000km)',
-    segment: 'Xe lướt hạng sang',
+    segment: 'Luxury Compact SUV',
     price: '4.250.000.000 VNĐ',
     specs: 'Động cơ V6 2.9L Twin-Turbo 440HP, Kiểm định 111 điểm chính hãng Porsche',
-    image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80',
+    image: './assets/porsche-macan.jpg',
     status: 'Sẵn sàng lái thử'
   }
 ];

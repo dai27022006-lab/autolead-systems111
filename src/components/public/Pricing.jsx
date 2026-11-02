@@ -25,7 +25,7 @@ export default function Pricing({ onOpenContact }) {
   ];
 
   return (
-    <section id="pricing" className="py-20 md:py-24 bg-white relative border-b border-[#DCE3EC]">
+    <section id="pricing" className="scroll-mt-24 sm:scroll-mt-28 py-20 md:py-24 bg-white relative border-b border-[#DCE3EC]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl mx-auto text-center space-y-3 mb-16">
@@ -98,17 +98,18 @@ export default function Pricing({ onOpenContact }) {
 
           {/* Card 2: Performance Fee */}
           <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border-2 border-[#F47721] flex flex-col justify-between shadow-lg relative">
-            <div className="absolute top-4 right-4 flex items-center gap-2">
-              <span className="px-3 py-1 rounded-full bg-[#F47721]/10 text-[#F47721] border border-[#F47721]/30 text-[11px] font-bold">
-                Trả theo kết quả
-              </span>
-              <PixelMoney size={24} />
-            </div>
-
             <div>
-              <span className="text-[11px] font-mono font-bold text-[#F47721] uppercase tracking-wider block">
-                Giai đoạn 02 • Vận hành & Nghiệm thu
-              </span>
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-2 pb-2">
+                <span className="text-[11px] font-mono font-bold text-[#F47721] uppercase tracking-wider">
+                  Giai đoạn 02 • Vận hành & Nghiệm thu
+                </span>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#F47721]/10 text-[#F47721] border border-[#F47721]/30 text-[10px] font-bold">
+                    Trả theo kết quả
+                  </span>
+                  <PixelMoney size={22} />
+                </div>
+              </div>
               <h3 className="text-xl font-bold text-[#142A43] mt-1">Phí theo lịch hẹn đủ điều kiện</h3>
 
               <div className="my-6">
@@ -156,16 +157,16 @@ export default function Pricing({ onOpenContact }) {
         </div>
 
         {/* Dynamic Calculator Box */}
-        <div className="max-w-4xl mx-auto rounded-2xl sm:rounded-3xl bg-[#07182D] text-white p-5 sm:p-8 border border-white/20 shadow-2xl mb-12">
+        <div className="max-w-4xl mx-auto rounded-2xl sm:rounded-3xl bg-[#07182D] text-white p-4 sm:p-8 border border-white/20 shadow-2xl mb-12">
           <div className="flex items-center gap-2 text-[#FFE875] font-mono text-xs font-bold uppercase mb-4">
-            <Sliders className="w-4 h-4" />
+            <Sliders className="w-4 h-4 shrink-0" />
             <span>Công cụ tính ngân sách dự kiến</span>
           </div>
 
-          <h3 className="text-xl sm:text-2xl font-bold mb-2">
+          <h3 className="text-lg sm:text-2xl font-bold mb-2 leading-snug">
             Mô phỏng ngân sách theo mục tiêu lịch hẹn hàng tháng
           </h3>
-          <p className="text-xs sm:text-sm text-slate-300 mb-8">
+          <p className="text-xs sm:text-sm text-slate-300 mb-6">
             Kéo thanh trượt để ước tính ngân sách đầu tư và số lượng cuộc hẹn lái thử showroom nhận được.
           </p>
 

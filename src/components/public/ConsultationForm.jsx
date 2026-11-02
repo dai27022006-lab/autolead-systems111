@@ -419,7 +419,7 @@ export default function ConsultationForm({ isModal = false, onClose }) {
   }
 
   return (
-    <section id="consultation" className="py-20 md:py-24 bg-[#F8F9F5] relative border-b border-[#DCE3EC]">
+    <section id="consultation" className="scroll-mt-24 sm:scroll-mt-28 py-20 md:py-24 bg-[#F8F9F5] relative border-b border-[#DCE3EC]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto text-center space-y-3 mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#DCE3EC] text-xs font-bold text-[#F47721] font-mono shadow-xs">

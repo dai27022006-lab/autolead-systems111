@@ -25,7 +25,7 @@ export default function CommitmentsAndFaq() {
   ];
 
   return (
-    <section id="faq" className="py-20 md:py-24 bg-white relative border-b border-[#DCE3EC]">
+    <section id="faq" className="scroll-mt-24 sm:scroll-mt-28 py-20 md:py-24 bg-white relative border-b border-[#DCE3EC]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl mx-auto text-center space-y-3 mb-16">

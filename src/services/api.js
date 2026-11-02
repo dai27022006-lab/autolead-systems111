@@ -1,4 +1,17 @@
 import { storageService } from './storage.js';
+import c200Img from '../assets/mercedes-c200.jpg';
+import glc300Img from '../assets/mercedes-glc300.jpg';
+import e200Img from '../assets/mercedes-e200.jpg';
+import macanImg from '../assets/porsche-macan.jpg';
+
+const CAR_IMAGES = {
+  'car-c200': c200Img,
+  'car-glc300': glc300Img,
+  'car-e200': e200Img,
+  'car-e300': e200Img,
+  'car-macan': macanImg,
+  'car-porsche-macan': macanImg
+};
 
 const API_BASE = '/api';
 
@@ -37,15 +50,14 @@ export const api = {
   // Cars (Demo Inventory)
   getCars: async () => {
     const res = await fetchJSON(`${API_BASE}/cars`);
-    if (res && res.success) return res.data;
-    return [
+    const rawCars = (res && res.success) ? res.data : [
       {
         id: 'car-c200',
         name: 'Mercedes-Benz C200 Avantgarde 2024',
         segment: 'Luxury Sedan',
         price: '1.599.000.000 VNĐ',
         specs: 'Động cơ 1.5L Turbo Mild-Hybrid 204HP, Hộp số 9G-TRONIC, Màn hình 11.9 inch',
-        image: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=800&q=80',
+        image: c200Img,
         status: 'Sẵn sàng lái thử'
       },
       {
@@ -53,29 +65,34 @@ export const api = {
         name: 'Mercedes-Benz GLC 300 4MATIC 2024',
         segment: 'Luxury SUV',
         price: '2.799.000.000 VNĐ',
-        specs: 'Động cơ 2.0L Turbo 258HP, Dẫn động 4 bánh toàn thời gian 4MATIC, Cửa sổ trời',
-        image: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=800&q=80',
+        specs: 'Động cơ 2.0L Turbo 258HP, Dẫn động 4 bánh toàn thời gian 4MATIC, Cửa sổ trời toàn cảnh',
+        image: glc300Img,
         status: 'Sẵn sàng lái thử'
       },
       {
-        id: 'car-e300',
-        name: 'Mercedes-Benz E300 AMG 2024',
+        id: 'car-e200',
+        name: 'Mercedes-Benz E200 Exclusive 2024',
         segment: 'Executive Sedan',
-        price: '3.209.000.000 VNĐ',
-        specs: 'Gói thể thao AMG Line cao cấp, Đèn Digital Light, Hệ thống âm thanh Burmester',
-        image: 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=800&q=80',
+        price: '2.540.000.000 VNĐ',
+        specs: 'Khoang lái thương gia, Ốp gỗ tần bì bóng, Hệ thống treo êm ái AGILITY CONTROL',
+        image: e200Img,
         status: 'Sẵn sàng lái thử'
       },
       {
-        id: 'car-porsche-macan',
-        name: 'Porsche Macan GTS 2023 (Xe Lướt Cao Cấp)',
-        segment: 'Sport Compact SUV',
-        price: '4.850.000.000 VNĐ',
-        specs: 'Odo 9.500 km, Động cơ 2.9L V6 Twin-Turbo 440HP, Lịch sử bảo dưỡng chính hãng',
-        image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80',
+        id: 'car-macan',
+        name: 'Porsche Macan GTS 2023 (Lướt 8.000km)',
+        segment: 'Luxury Compact SUV',
+        price: '4.250.000.000 VNĐ',
+        specs: 'Động cơ V6 2.9L Twin-Turbo 440HP, Kiểm định 111 điểm chính hãng Porsche',
+        image: macanImg,
         status: 'Sẵn sàng lái thử'
       }
     ];
+
+    return rawCars.map(car => ({
+      ...car,
+      image: CAR_IMAGES[car.id] || car.image || glc300Img
+    }));
   },
 
   // Auth: Dealer Demo Login (Bug 10 Fix)
