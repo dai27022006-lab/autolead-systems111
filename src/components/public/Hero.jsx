@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRight, Sparkles, CheckCircle2, ShieldCheck, CalendarCheck, Zap } from 'lucide-react';
 import { PixelCarOrange } from './PixelIcons';
 import PixelFringe from './PixelFringe';
+import heroBg from '../../assets/hero-pixel-automotive-world.jpg';
 
 export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
   return (
@@ -12,7 +13,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
       {/* 16-bit Pixel Art Background */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/assets/hero-pixel-automotive-world.jpg"
+          src={heroBg}
           alt="AutoLead Systems Pixel Art Automotive World - Dealership Showroom & Luxury Cars"
           className="w-full h-full object-cover object-bottom pixelated select-none pointer-events-none"
         />
@@ -23,7 +24,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column: Headline, Value Proposition, Action CTAs */}
           <div className="lg:col-span-7 space-y-6 text-left">
-            <div className="p-6 sm:p-8 rounded-3xl bg-[#0E2034]/80 backdrop-blur-md border border-white/25 shadow-2xl space-y-5">
+            <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-[#0E2034]/80 backdrop-blur-md border border-white/25 shadow-2xl space-y-5">
               {/* Badge */}
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#142A43] border border-[#F47721]/50 text-xs font-bold text-white tracking-wide font-mono shadow-xs">
                 <PixelCarOrange size={20} />
@@ -33,7 +34,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
               </div>
 
               {/* Main Headline */}
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-[1.18] drop-shadow-md">
+              <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-[1.18] drop-shadow-md">
                 Chuyển đổi khách hàng tiềm năng thành{' '}
                 <span className="text-[#F47721] underline decoration-[#F47721]/60 underline-offset-4">
                   lịch hẹn lái thử
@@ -42,7 +43,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
               </h1>
 
               {/* Subtitle */}
-              <p className="text-sm sm:text-base text-slate-200 font-normal leading-relaxed">
+              <p className="text-xs sm:text-base text-slate-200 font-normal leading-relaxed">
                 AutoLead Systems giúp đại lý ô tô thu hút đúng khách hàng, sàng lọc tự động theo 7 tiêu chí TQM và đặt lịch lái thử hiệu quả hơn.
               </p>
 
@@ -51,7 +52,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
                 <button
                   type="button"
                   onClick={onOpenContact}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm text-white bg-[#F47721] hover:bg-[#E76513] shadow-lg shadow-[#F47721]/30 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm text-white bg-[#F47721] hover:bg-[#E76513] shadow-lg shadow-[#F47721]/30 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer min-h-[48px]"
                 >
                   <span>Đăng ký tư vấn 30 phút</span>
                   <ArrowRight className="w-4 h-4" />
@@ -60,7 +61,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
                 <button
                   type="button"
                   onClick={onOpenMvpDemo}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-sm text-white hover:text-slate-200 bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/35 transition-all cursor-pointer shadow-xs"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-sm text-white hover:text-slate-200 bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/35 transition-all cursor-pointer shadow-xs min-h-[48px]"
                 >
                   <Sparkles className="w-4 h-4 text-[#F47721]" />
                   <span>Xem demo hệ thống →</span>
@@ -70,7 +71,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
                   <button
                     type="button"
                     onClick={onOpenSaas}
-                    className="inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl font-semibold text-xs text-white/90 hover:text-white bg-slate-900/60 hover:bg-slate-900/80 border border-white/20 transition-all cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl font-semibold text-xs text-white/90 hover:text-white bg-slate-900/60 hover:bg-slate-900/80 border border-white/20 transition-all cursor-pointer min-h-[44px]"
                   >
                     <span>Cổng CRM Đại lý</span>
                   </button>
@@ -78,8 +79,8 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
               </div>
 
               {/* Offer Highlight */}
-              <div className="pt-3 border-t border-white/15 flex items-center gap-2 text-xs text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-[#75A94C] shrink-0" />
+              <div className="pt-3 border-t border-white/15 flex items-start gap-2 text-xs text-slate-300">
+                <CheckCircle2 className="w-4 h-4 text-[#75A94C] shrink-0 mt-0.5" />
                 <span>
                   Offer chính thức:{' '}
                   <strong className="text-white">15.000.000 VNĐ</strong> setup 30 ngày +{' '}

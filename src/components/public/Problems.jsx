@@ -8,6 +8,7 @@ import {
   PixelMoney,
   PixelCarOrange
 } from './PixelIcons';
+import pixelCarsBg from '../../assets/dealership-pixel-cars.jpg';
 
 export default function Problems() {
   const problems = [
@@ -100,7 +101,7 @@ export default function Problems() {
           <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
             <div className="lg:col-span-5 h-56 sm:h-64 lg:h-full relative overflow-hidden">
               <img
-                src="/assets/dealership-pixel-cars.jpg"
+                src={pixelCarsBg}
                 alt="Không gian showroom ô tô hiện đại trong thế giới AutoLead"
                 className="w-full h-full object-cover object-center pixelated"
                 loading="lazy"

@@ -239,31 +239,33 @@ export default function App() {
       {currentView === 'buyer' && (
         <div className="flex-1 flex flex-col bg-[#0b1019] text-[#F7F7F5]">
           {/* Seamless Experience Switcher Top Banner */}
-          <header className="sticky top-0 z-40 bg-[#142A43] border-b border-white/10 px-4 py-3 shadow-md">
-            <div className="max-w-7xl mx-auto flex items-center justify-between">
-              <div className="flex items-center gap-3">
+          <header className="sticky top-0 z-40 bg-[#142A43] border-b border-white/10 px-2.5 sm:px-4 py-2 sm:py-3 shadow-md">
+            <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                 <button
                   type="button"
                   onClick={() => navigateToView('public')}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer shrink-0"
                 >
-                  <ArrowLeft className="w-4 h-4 text-[#F47721]" />
-                  <span>← Về Trang B2B Sales (Pixel World)</span>
+                  <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F47721]" />
+                  <span className="sm:hidden">← B2B Sales</span>
+                  <span className="hidden sm:inline">← Về Trang B2B Sales (Pixel World)</span>
                 </button>
-                <span className="hidden sm:inline text-xs text-slate-400 font-mono">|</span>
-                <span className="hidden sm:inline text-xs font-semibold text-slate-300">
+                <span className="hidden md:inline text-xs text-slate-400 font-mono">|</span>
+                <span className="hidden md:inline text-xs font-semibold text-slate-300 truncate">
                   Cổng Mô Phỏng Khách Mua Xe (Buyer Portal)
                 </span>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 shrink-0">
                 <button
                   type="button"
                   onClick={() => navigateToView('saas')}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#F47721] hover:bg-[#E76513] text-xs font-bold text-white transition-all cursor-pointer shadow-xs"
+                  className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#F47721] hover:bg-[#E76513] text-xs font-bold text-white transition-all cursor-pointer shadow-xs"
                 >
                   <ShieldCheck className="w-3.5 h-3.5" />
-                  <span>Xem Kết Quả Trên CRM →</span>
+                  <span className="sm:hidden">Xem CRM →</span>
+                  <span className="hidden sm:inline">Xem Kết Quả Trên CRM →</span>
                 </button>
               </div>
             </div>
@@ -286,31 +288,33 @@ export default function App() {
       {currentView === 'saas' && (
         <div className="flex-1 flex flex-col bg-[#0b1019] text-[#F7F7F5]">
           {/* Seamless Experience Switcher Top Banner */}
-          <header className="sticky top-0 z-40 bg-[#07182D] border-b border-white/10 px-4 py-2.5 shadow-md">
-            <div className="max-w-7xl mx-auto flex items-center justify-between">
-              <div className="flex items-center gap-3">
+          <header className="sticky top-0 z-40 bg-[#07182D] border-b border-white/10 px-2.5 sm:px-4 py-2 sm:py-2.5 shadow-md">
+            <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                 <button
                   type="button"
                   onClick={() => navigateToView('public')}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer shrink-0"
                 >
-                  <ArrowLeft className="w-4 h-4 text-[#F47721]" />
-                  <span>← Về Trang B2B Sales (Pixel World)</span>
+                  <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F47721]" />
+                  <span className="sm:hidden">← B2B Sales</span>
+                  <span className="hidden sm:inline">← Về Trang B2B Sales (Pixel World)</span>
                 </button>
-                <span className="hidden sm:inline text-xs text-slate-400 font-mono">|</span>
-                <span className="hidden sm:inline text-xs font-semibold text-slate-300">
+                <span className="hidden md:inline text-xs text-slate-400 font-mono">|</span>
+                <span className="hidden md:inline text-xs font-semibold text-slate-300 truncate">
                   Hệ Thống CRM Điều Hành Showroom Ô Tô
                 </span>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 shrink-0">
                 <button
                   type="button"
                   onClick={() => navigateToView('buyer')}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-slate-200 transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-slate-200 transition-all cursor-pointer"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-[#F47721]" />
-                  <span>Chạy Thử Buyer Demo</span>
+                  <span className="sm:hidden">Buyer Demo</span>
+                  <span className="hidden sm:inline">Chạy Thử Buyer Demo</span>
                 </button>
 
                 {currentUser && (

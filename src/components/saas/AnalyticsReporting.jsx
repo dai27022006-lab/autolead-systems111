@@ -97,8 +97,8 @@ export default function AnalyticsReporting({ leads, appointments, campaigns }) {
       </div>
 
       {/* LEAN & VSM BENCHMARK TABLE (IUH Operations Management Chapter 2 & 5) */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-[#141B26] border border-slate-800 shadow-2xl">
-        <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
+      <div className="p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-[#141B26] border border-slate-800 shadow-2xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-800 mb-6 gap-3">
           <div>
             <div className="flex items-center gap-2">
               <Zap className="w-4 h-4 text-[#C7A66A]" />
@@ -108,13 +108,13 @@ export default function AnalyticsReporting({ leads, appointments, campaigns }) {
               Chứng minh sự tinh gọn theo triết lý Lean Operations, loại bỏ lãng phí thời gian và tăng thông lượng (Throughput)
             </p>
           </div>
-          <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold">
+          <span className="self-start sm:self-auto px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold">
             Lean Optimized
           </span>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-slate-300">
+          <table className="w-full min-w-[560px] text-left text-xs text-slate-300">
             <thead className="bg-[#0e1421] text-slate-400 uppercase text-[10px] font-bold tracking-wider border-b border-slate-800">
               <tr>
                 <th className="py-3.5 px-4">Chỉ Số Tác Nghiệp (Operations Metrics)</th>

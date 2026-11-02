@@ -39,6 +39,102 @@
   ],
   "leads": [
     {
+      "id": "LEAD-2024-004",
+      "customerName": "Ly",
+      "phone": "0368623799",
+      "email": "lyly@gmail.com",
+      "leadSource": "Buyer Demo Portal",
+      "interestedVehicle": "Mercedes-Benz GLC 300 4MATIC 2024",
+      "vehicleSegment": "Luxury SUV",
+      "purchasePurpose": "Gia đình & Công việc ngoại giao",
+      "expectedBudget": "Khoảng 2.0 - 3.0 tỷ VNĐ",
+      "expectedPurchasingTime": "Đang trong giai đoạn khảo sát",
+      "readinessToVisitShowroom": "Sẵn sàng lái thử trong tuần này",
+      "assignedSalesperson": "Trần Tuấn Anh (Trưởng nhóm)",
+      "createdAt": "10:58:38 2/11/2026",
+      "status": "Appointment Booked",
+      "qualificationDetails": {
+        "hasValidContact": true,
+        "hasClearDemand": true,
+        "hasSpecificModel": true,
+        "meetsTargetCriteria": true,
+        "agreesToVisitShowroom": true,
+        "hasSpecificDateTime": true,
+        "confirmedInSystem": true,
+        "aiScore": 98,
+        "aiExplanation": "Đã chốt lịch lái thử Mercedes-Benz GLC 300 4MATIC 2024 vào 2026-11-03 lúc 09:00 - 10:30. Đạt 7/7 tiêu chí chất lượng.",
+        "suggestedAction": "Chuyển sang bước chọn ngày giờ lái thử để đạt chuẩn 7/7 tiêu chuẩn (Phí nghiệm thu: 300.000 VNĐ)."
+      },
+      "notes": [
+        {
+          "date": "10:59:01 2/11/2026",
+          "author": "Automated Booking Engine",
+          "content": "Đã xác nhận lịch hẹn APT-04 cho dòng xe Mercedes-Benz GLC 300 4MATIC 2024. Phí nghiệm thu: 300.000 VNĐ."
+        },
+        {
+          "date": "10:58:38 2/11/2026",
+          "author": "System",
+          "content": "Tiếp nhận thông tin khách hàng từ cổng Buyer Demo."
+        }
+      ],
+      "interactionHistory": [
+        {
+          "type": "form",
+          "channel": "Buyer Demo Form",
+          "time": "10:58:38 2/11/2026",
+          "detail": "Khách hàng đăng ký lái thử mẫu Mercedes-Benz GLC 300 4MATIC 2024"
+        }
+      ]
+    },
+    {
+      "id": "LEAD-2024-003",
+      "customerName": "r",
+      "phone": "0987453212",
+      "email": "ngddam231006@gmail.com",
+      "leadSource": "Buyer Demo Portal",
+      "interestedVehicle": "Mercedes-Benz C200 Avantgarde 2024",
+      "vehicleSegment": "Luxury Sedan",
+      "purchasePurpose": "Gia đình & Công việc ngoại giao",
+      "expectedBudget": "1.5 - 2.0 tỷ VNĐ",
+      "expectedPurchasingTime": "Trong 2 tuần tới",
+      "readinessToVisitShowroom": "Sẵn sàng lái thử trong tuần này",
+      "assignedSalesperson": "Trần Tuấn Anh (Trưởng nhóm)",
+      "createdAt": "10:51:54 2/11/2026",
+      "status": "Appointment Booked",
+      "qualificationDetails": {
+        "hasValidContact": true,
+        "hasClearDemand": true,
+        "hasSpecificModel": true,
+        "meetsTargetCriteria": true,
+        "agreesToVisitShowroom": true,
+        "hasSpecificDateTime": true,
+        "confirmedInSystem": true,
+        "aiScore": 98,
+        "aiExplanation": "Đã chốt lịch lái thử Mercedes-Benz C200 Avantgarde 2024 vào 2026-11-03 lúc 09:00 - 10:30. Đạt 7/7 tiêu chí chất lượng.",
+        "suggestedAction": "Chuyển sang bước chọn ngày giờ lái thử để đạt chuẩn 7/7 tiêu chuẩn (Phí nghiệm thu: 300.000 VNĐ)."
+      },
+      "notes": [
+        {
+          "date": "10:52:03 2/11/2026",
+          "author": "Automated Booking Engine",
+          "content": "Đã xác nhận lịch hẹn APT-03 cho dòng xe Mercedes-Benz C200 Avantgarde 2024. Phí nghiệm thu: 300.000 VNĐ."
+        },
+        {
+          "date": "10:51:54 2/11/2026",
+          "author": "System",
+          "content": "Tiếp nhận thông tin khách hàng từ cổng Buyer Demo."
+        }
+      ],
+      "interactionHistory": [
+        {
+          "type": "form",
+          "channel": "Buyer Demo Form",
+          "time": "10:51:54 2/11/2026",
+          "detail": "Khách hàng đăng ký lái thử mẫu Mercedes-Benz C200 Avantgarde 2024"
+        }
+      ]
+    },
+    {
       "id": "LEAD-2024-001",
       "customerName": "Hoàng Minh Tuấn",
       "phone": "0912345678",
@@ -114,6 +210,36 @@
   ],
   "appointments": [
     {
+      "id": "APT-04",
+      "leadId": "LEAD-2024-004",
+      "customerName": "Ly",
+      "customerPhone": "0368623799",
+      "vehicleModel": "Mercedes-Benz GLC 300 4MATIC 2024",
+      "appointmentDate": "2026-11-03",
+      "appointmentTime": "09:00 - 10:30",
+      "salesperson": "Trần Tuấn Anh",
+      "status": "Confirmed",
+      "isQualifiedAppointment": true,
+      "billableFee": 300000,
+      "notes": "Mục đích: Gia đình & Công việc ngoại giao. Dự kiến mua: Đang trong giai đoạn khảo sát.",
+      "createdAt": "10:59:01 2/11/2026"
+    },
+    {
+      "id": "APT-03",
+      "leadId": "LEAD-2024-003",
+      "customerName": "r",
+      "customerPhone": "0987453212",
+      "vehicleModel": "Mercedes-Benz C200 Avantgarde 2024",
+      "appointmentDate": "2026-11-03",
+      "appointmentTime": "09:00 - 10:30",
+      "salesperson": "Trần Tuấn Anh",
+      "status": "Confirmed",
+      "isQualifiedAppointment": true,
+      "billableFee": 300000,
+      "notes": "Mục đích: Gia đình & Công việc ngoại giao. Dự kiến mua: Trong 2 tuần tới.",
+      "createdAt": "10:52:03 2/11/2026"
+    },
+    {
       "id": "APT-01",
       "leadId": "LEAD-2024-001",
       "customerName": "Hoàng Minh Tuấn",
@@ -144,6 +270,21 @@
   ],
   "b2bInquiries": [
     {
+      "contact_name": "dam nguyen",
+      "showroom_name": "bwm",
+      "phone": "0987654321",
+      "email": "ngddam231006@gmail.com",
+      "showroom_type": "luxury",
+      "consultation_need": "Quản lý và sàng lọc lead, Tối ưu quy trình đặt lịch lái thử",
+      "showroom_location": "TP. Hồ Chí Minh",
+      "monthly_lead_volume": "50-150",
+      "consent": true,
+      "created_at": "2026-11-02T03:51:30.003Z",
+      "id": "B2B-7853",
+      "submittedAt": "10:50:57 2/11/2026",
+      "status": "Chờ liên hệ"
+    },
+    {
       "id": "B2B-101",
       "dealershipName": "Mercedes-Benz Haxaco Sài Gòn",
       "contactPerson": "Ông Nguyễn Trọng Đức",
@@ -158,5 +299,5 @@
     }
   ],
   "version": 1,
-  "lastUpdated": "2026-11-02T03:33:24.255Z"
+  "lastUpdated": "2026-11-02T03:59:01.313Z"
 }

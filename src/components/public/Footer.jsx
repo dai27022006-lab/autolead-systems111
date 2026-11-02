@@ -53,7 +53,7 @@ export default function Footer({ onOpenMvpDemo, onOpenLeadViewer, onOpenSaas }) 
                 <button
                   type="button"
                   onClick={onOpenMvpDemo}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2.5 sm:py-1.5 min-h-[44px] sm:min-h-[36px] rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-[#F47721]" />
                   <span>Trải nghiệm Buyer Demo</span>
@@ -64,7 +64,7 @@ export default function Footer({ onOpenMvpDemo, onOpenLeadViewer, onOpenSaas }) 
                 <button
                   type="button"
                   onClick={onOpenSaas}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2.5 sm:py-1.5 min-h-[44px] sm:min-h-[36px] rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer"
                 >
                   <ShieldCheck className="w-3.5 h-3.5 text-[#75A94C]" />
                   <span>Cổng CRM Đại lý</span>
@@ -75,7 +75,7 @@ export default function Footer({ onOpenMvpDemo, onOpenLeadViewer, onOpenSaas }) 
                 <button
                   type="button"
                   onClick={onOpenLeadViewer}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2.5 sm:py-1.5 min-h-[44px] sm:min-h-[36px] rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer"
                 >
                   <Database className="w-3.5 h-3.5 text-[#4A98E8]" />
                   <span>Xem Showroom Leads</span>

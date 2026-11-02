@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CheckCircle2, Sliders, ShieldCheck, ArrowRight, Zap, Info } from 'lucide-react';
 import { PixelMoney, PixelWrench } from './PixelIcons';
+import automotiveDetailBg from '../../assets/automotive-detail.jpg';
 
 export default function Pricing({ onOpenContact }) {
   const [appointmentCount, setAppointmentCount] = useState(20);
@@ -43,7 +44,7 @@ export default function Pricing({ onOpenContact }) {
         {/* 2 Core Pricing Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
           {/* Card 1: Fixed Setup Fee */}
-          <div className="p-8 rounded-3xl bg-[#F8F9F5] border border-[#DCE3EC] flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
+          <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-[#F8F9F5] border border-[#DCE3EC] flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
             <div>
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-mono font-bold text-[#64748B] uppercase tracking-wider block">
@@ -88,7 +89,7 @@ export default function Pricing({ onOpenContact }) {
               <button
                 type="button"
                 onClick={onOpenContact}
-                className="w-full py-3.5 rounded-xl font-bold text-xs text-[#142A43] bg-white hover:bg-slate-100 border border-[#DCE3EC] transition-colors cursor-pointer shadow-xs"
+                className="w-full py-3.5 rounded-xl font-bold text-xs text-[#142A43] bg-white hover:bg-slate-100 border border-[#DCE3EC] transition-colors cursor-pointer shadow-xs min-h-[44px]"
               >
                 Khảo sát triển khai đại lý
               </button>
@@ -96,7 +97,7 @@ export default function Pricing({ onOpenContact }) {
           </div>
 
           {/* Card 2: Performance Fee */}
-          <div className="p-8 rounded-3xl bg-white border-2 border-[#F47721] flex flex-col justify-between shadow-lg relative">
+          <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border-2 border-[#F47721] flex flex-col justify-between shadow-lg relative">
             <div className="absolute top-4 right-4 flex items-center gap-2">
               <span className="px-3 py-1 rounded-full bg-[#F47721]/10 text-[#F47721] border border-[#F47721]/30 text-[11px] font-bold">
                 Trả theo kết quả
@@ -155,7 +156,7 @@ export default function Pricing({ onOpenContact }) {
         </div>
 
         {/* Dynamic Calculator Box */}
-        <div className="max-w-4xl mx-auto rounded-3xl bg-[#07182D] text-white p-6 sm:p-8 border border-white/20 shadow-2xl mb-12">
+        <div className="max-w-4xl mx-auto rounded-2xl sm:rounded-3xl bg-[#07182D] text-white p-5 sm:p-8 border border-white/20 shadow-2xl mb-12">
           <div className="flex items-center gap-2 text-[#FFE875] font-mono text-xs font-bold uppercase mb-4">
             <Sliders className="w-4 h-4" />
             <span>Công cụ tính ngân sách dự kiến</span>
@@ -170,9 +171,9 @@ export default function Pricing({ onOpenContact }) {
 
           <div className="space-y-6">
             <div>
-              <div className="flex justify-between items-center mb-2">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 mb-2">
                 <span className="text-xs text-slate-300 font-medium">Số lượng cuộc hẹn lái thử mong muốn:</span>
-                <span className="text-lg font-mono font-bold text-[#FFE875]">
+                <span className="text-base sm:text-lg font-mono font-bold text-[#FFE875]">
                   {appointmentCount} cuộc hẹn / tháng
                 </span>
               </div>
@@ -217,14 +218,14 @@ export default function Pricing({ onOpenContact }) {
               </div>
             </div>
 
-            <div className="text-xs text-slate-300 flex items-center justify-between pt-2">
+            <div className="text-xs text-slate-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-2">
               <span className="italic">
                 * Từ tháng thứ 2 trở đi: Đại lý chỉ thanh toán theo số lượng lịch hẹn thực tế ({formatVND(variableFee)}).
               </span>
               <button
                 type="button"
                 onClick={onOpenContact}
-                className="text-xs font-bold text-[#FFE875] hover:underline cursor-pointer"
+                className="text-xs font-bold text-[#FFE875] hover:underline cursor-pointer shrink-0"
               >
                 Nhận báo giá chính thức →
               </button>
@@ -233,7 +234,7 @@ export default function Pricing({ onOpenContact }) {
         </div>
 
         {/* 7 TQM Acceptance Criteria */}
-        <div className="max-w-4xl mx-auto rounded-3xl bg-[#F8F9F5] border border-[#DCE3EC] p-6 sm:p-8 space-y-4 mb-12">
+        <div className="max-w-4xl mx-auto rounded-2xl sm:rounded-3xl bg-[#F8F9F5] border border-[#DCE3EC] p-5 sm:p-8 space-y-4 mb-12">
           <div className="flex items-center gap-2 text-xs font-mono text-[#75A94C] font-bold uppercase">
             <ShieldCheck className="w-4 h-4" />
             <span>Tiêu chuẩn nghiệm thu 7 tiêu chí TQM</span>
@@ -259,7 +260,7 @@ export default function Pricing({ onOpenContact }) {
           <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
             <div className="lg:col-span-5 h-56 sm:h-64 lg:h-full relative overflow-hidden">
               <img
-                src="/assets/automotive-detail.jpg"
+                src={automotiveDetailBg}
                 alt="Chi tiết hoàn thiện ngoại thất ô tô cao cấp"
                 className="w-full h-full object-cover object-center"
                 loading="lazy"

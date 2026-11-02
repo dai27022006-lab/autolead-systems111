@@ -84,7 +84,7 @@ export default function LeadQualification({
       {/* Main Grid: Lead Selector + Qualification Matrix */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column: Lead List for Qualification */}
-        <div className="rounded-2xl bg-[#141B26] border border-slate-800 p-4 shadow-xl flex flex-col h-[700px]">
+        <div className="rounded-2xl bg-[#141B26] border border-slate-800 p-4 shadow-xl flex flex-col h-[280px] lg:h-[700px]">
           <div className="pb-3 border-b border-slate-800 mb-3 flex items-center justify-between">
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300">Danh Sách Lead Cần Thẩm Định</h3>
             <span className="text-[11px] font-mono text-slate-500">{leads.length} khách hàng</span>
@@ -129,7 +129,7 @@ export default function LeadQualification({
         {activeLead && (
           <div className="lg:col-span-2 space-y-6">
             {/* Active Lead Summary Card */}
-            <div className="p-6 rounded-2xl bg-[#141B26] border border-slate-800 shadow-xl">
+            <div className="p-4 sm:p-6 rounded-2xl bg-[#141B26] border border-slate-800 shadow-xl">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
                 <div>
                   <div className="flex items-center gap-2">
@@ -223,7 +223,7 @@ export default function LeadQualification({
 
                 <button
                   onClick={() => onOpenCreateAppointment(activeLead)}
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#C7A66A] to-[#B08D4C] hover:from-[#D4AF37] hover:to-[#C7A66A] text-[#101B2B] text-xs font-bold flex items-center gap-2 shadow-lg cursor-pointer"
+                  className="w-full sm:w-auto px-5 py-2.5 min-h-[44px] justify-center rounded-xl bg-gradient-to-r from-[#C7A66A] to-[#B08D4C] hover:from-[#D4AF37] hover:to-[#C7A66A] text-[#101B2B] text-xs font-bold flex items-center gap-2 shadow-lg cursor-pointer"
                 >
                   <Calendar className="w-4 h-4" />
                   <span>Lên Lịch Hẹn Lái Thử Cho Khách Này</span>

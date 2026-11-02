@@ -92,7 +92,7 @@ export default function Navbar({
           </nav>
 
           {/* Desktop Action Buttons */}
-          <div className="hidden md:flex items-center gap-2.5">
+          <div className="hidden lg:flex items-center gap-2.5">
             {/* Switch to Buyer Demo */}
             <button
               type="button"
@@ -154,11 +154,11 @@ export default function Navbar({
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex md:hidden items-center gap-2">
+          <div className="flex lg:hidden items-center gap-2">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`p-2 rounded-xl transition-colors cursor-pointer ${
+              className={`w-10 h-10 flex items-center justify-center rounded-xl transition-colors cursor-pointer ${
                 isScrolled
                   ? 'bg-[#F8F9F5] border border-[#DCE3EC] text-[#142A43]'
                   : 'bg-white/30 backdrop-blur-md border border-white/40 text-white'
@@ -172,14 +172,14 @@ export default function Navbar({
 
         {/* Mobile Dropdown Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden mt-3 pt-4 pb-6 px-4 bg-white/95 backdrop-blur-xl rounded-2xl border border-[#DCE3EC] shadow-2xl space-y-3 text-left">
+          <div className="lg:hidden mt-3 pt-4 pb-6 px-4 bg-white/95 backdrop-blur-xl rounded-2xl border border-[#DCE3EC] shadow-2xl space-y-3 text-left max-h-[calc(100vh-80px)] overflow-y-auto">
             <nav className="flex flex-col space-y-1">
               {navLinks.map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="px-3 py-2 rounded-xl text-xs font-bold text-[#142A43] hover:bg-[#F8F9F5] hover:text-[#F47721] transition-colors"
+                  className="px-3 py-2.5 rounded-xl text-xs font-bold text-[#142A43] hover:bg-[#F8F9F5] hover:text-[#F47721] transition-colors min-h-[44px] flex items-center"
                 >
                   {item.label}
                 </a>
@@ -193,7 +193,7 @@ export default function Navbar({
                   setMobileMenuOpen(false);
                   onOpenMvpDemo();
                 }}
-                className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-bold text-[#142A43] bg-[#F8F9F5] border border-[#DCE3EC]"
+                className="w-full min-h-[44px] flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-bold text-[#142A43] bg-[#F8F9F5] border border-[#DCE3EC] cursor-pointer"
               >
                 <Sparkles className="w-4 h-4 text-[#F47721]" />
                 <span>Xem demo hệ thống (Buyer Portal) →</span>
@@ -206,7 +206,7 @@ export default function Navbar({
                     setMobileMenuOpen(false);
                     onOpenSaas();
                   }}
-                  className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-bold text-white bg-[#142A43]"
+                  className="w-full min-h-[44px] flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-bold text-white bg-[#142A43] cursor-pointer"
                 >
                   <ShieldCheck className="w-4 h-4 text-[#75A94C]" />
                   <span>Cổng điều hành CRM Showroom</span>
@@ -220,7 +220,7 @@ export default function Navbar({
                     setMobileMenuOpen(false);
                     onOpenLeadViewer();
                   }}
-                  className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-semibold text-[#64748B] bg-white border border-[#DCE3EC]"
+                  className="w-full min-h-[44px] flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-semibold text-[#64748B] bg-white border border-[#DCE3EC] cursor-pointer"
                 >
                   <Database className="w-4 h-4 text-[#142A43]" />
                   <span>Quản lý yêu cầu đăng ký (Domain A)</span>
@@ -233,7 +233,7 @@ export default function Navbar({
                   setMobileMenuOpen(false);
                   onOpenContact();
                 }}
-                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-[#F47721] shadow-md shadow-[#F47721]/30 hover:bg-[#E76513]"
+                className="w-full min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-[#F47721] shadow-md shadow-[#F47721]/30 hover:bg-[#E76513] cursor-pointer"
               >
                 <span>Đăng ký tư vấn 30 phút</span>
                 <ArrowRight className="w-4 h-4" />

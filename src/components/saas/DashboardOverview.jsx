@@ -48,7 +48,7 @@ export default function DashboardOverview({
   return (
     <div className="space-y-8">
       {/* Top Banner: Lean Operations & Verification Status */}
-      <div className="p-5 rounded-2xl bg-gradient-to-r from-[#171D27] via-[#1E2634] to-[#171D27] border border-[#C7A66A]/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
+      <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#171D27] via-[#1E2634] to-[#171D27] border border-[#C7A66A]/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
         <div>
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
@@ -56,20 +56,20 @@ export default function DashboardOverview({
               Tác nghiệp Chuẩn Quản trị TMĐT (I-T-O & Lean Operations)
             </span>
           </div>
-          <h2 className="text-xl font-extrabold text-white mt-1">
+          <h2 className="text-lg sm:text-xl font-extrabold text-white mt-1">
             Bảng Điều Khiển Tác Nghiệp & Phễu Chuyển Đổi Lịch Hẹn
           </h2>
           <p className="text-xs text-slate-300 mt-0.5">
-            Theo dõi thời gian thực quá trình chuyển hóa Lead quảng cáo $\rightarrow$ Lịch hẹn lái thử đủ điều kiện $\rightarrow$ Cơ hội chốt hợp đồng xe.
+            Theo dõi thời gian thực quá trình chuyển hóa Lead quảng cáo → Lịch hẹn lái thử đủ điều kiện → Cơ hội chốt hợp đồng xe.
           </p>
         </div>
 
         {/* Billable Qualified Appointment Badge */}
-        <div className="p-3.5 rounded-xl bg-[#0d121c] border border-slate-800 flex items-center gap-4 shrink-0">
+        <div className="p-3 sm:p-3.5 rounded-xl bg-[#0d121c] border border-slate-800 flex items-center justify-between sm:justify-start w-full sm:w-auto gap-4 shrink-0">
           <div>
             <span className="text-[10px] uppercase font-bold text-slate-400 block">Lịch Hẹn Đủ Điều Kiện Tính Phí</span>
             <div className="flex items-baseline gap-1.5 mt-0.5">
-              <span className="text-2xl font-black text-[#C7A66A]">{billableAppointments.length}</span>
+              <span className="text-xl sm:text-2xl font-black text-[#C7A66A]">{billableAppointments.length}</span>
               <span className="text-xs text-slate-400">cuộc hẹn</span>
             </div>
             <span className="text-[11px] font-bold text-emerald-400">
@@ -78,9 +78,9 @@ export default function DashboardOverview({
           </div>
           <button
             onClick={() => onNavigateToTab('appointments')}
-            className="px-3 py-2 rounded-lg bg-[#1E2634] hover:bg-[#283244] text-xs font-semibold text-[#C7A66A] border border-[#C7A66A]/40 cursor-pointer"
+            className="px-3 py-2 min-h-[44px] flex items-center justify-center rounded-lg bg-[#1E2634] hover:bg-[#283244] text-xs font-semibold text-[#C7A66A] border border-[#C7A66A]/40 cursor-pointer"
           >
-            Đối soát $\rightarrow$
+            Đối soát →
           </button>
         </div>
       </div>
@@ -88,19 +88,19 @@ export default function DashboardOverview({
       {/* 7 Operational Metric Cards (I-T-O Pipeline) */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+          <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
             <Users className="w-4 h-4 text-[#C7A66A]" />
-            Tiến độ 6 Trạng Thái Khách Hàng (Kanban Workflow)
+            Tiến độ 6 Trạng Thái Khách Hàng (Kanban)
           </h3>
           <button
             onClick={() => onNavigateToTab('leads')}
             className="text-xs font-semibold text-[#C7A66A] hover:underline flex items-center gap-1 cursor-pointer"
           >
-            Xem bảng Kanban chi tiết $\rightarrow$
+            Xem Kanban →
           </button>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2.5 sm:gap-3">
           <div className="p-4 rounded-xl bg-[#141B26] border border-slate-800">
             <span className="text-[11px] font-medium text-slate-400 block">1. Total Leads</span>
             <span className="text-2xl font-black text-white mt-1 block">{totalLeads}</span>
@@ -255,7 +255,7 @@ export default function DashboardOverview({
             {appointments.slice(0, 3).map((apt) => (
               <div
                 key={apt.id}
-                className="p-3.5 rounded-xl bg-[#0d121c] border border-slate-800 flex items-center justify-between gap-3 text-xs"
+                className="p-3.5 rounded-xl bg-[#0d121c] border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
               >
                 <div>
                   <div className="flex items-center gap-2">
@@ -274,7 +274,7 @@ export default function DashboardOverview({
                   </p>
                 </div>
 
-                <div className="text-right shrink-0">
+                <div className="text-left sm:text-right shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-800/80 flex sm:block items-center justify-between">
                   <span className={`font-mono text-xs font-bold block ${apt.isQualifiedAppointment ? 'text-[#C7A66A]' : 'text-slate-500'}`}>
                     {apt.isQualifiedAppointment ? '+300.000đ' : 'Chưa đủ điều kiện'}
                   </span>

@@ -161,7 +161,7 @@ export default function CampaignManagement({ campaigns, onAddCampaign }) {
       </div>
 
       {/* AI CREATIVE STUDIO TOOL */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#141B26] via-[#1A2333] to-[#121A26] border-2 border-[#C7A66A]/40 shadow-2xl">
+      <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-[#141B26] via-[#1A2333] to-[#121A26] border-2 border-[#C7A66A]/40 shadow-2xl">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-800 mb-6">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C7A66A]/20 text-[#C7A66A] text-xs font-bold uppercase tracking-wider mb-2">
@@ -177,7 +177,7 @@ export default function CampaignManagement({ campaigns, onAddCampaign }) {
           <button
             onClick={handleGenerateCreative}
             disabled={isGenerating}
-            className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#C7A66A] to-[#B08D4C] hover:from-[#D4AF37] hover:to-[#C7A66A] text-[#101B2B] text-xs font-extrabold flex items-center justify-center gap-2 shadow-lg cursor-pointer shrink-0"
+            className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#C7A66A] to-[#B08D4C] hover:from-[#D4AF37] hover:to-[#C7A66A] text-[#101B2B] text-xs font-extrabold flex items-center justify-center gap-2 shadow-lg cursor-pointer shrink-0 min-h-[44px]"
           >
             {isGenerating ? (
               <span>AI đang khởi tạo nội dung...</span>
@@ -199,7 +199,7 @@ export default function CampaignManagement({ campaigns, onAddCampaign }) {
             <select
               value={selectedVehicle}
               onChange={(e) => setSelectedVehicle(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white text-xs outline-none focus:border-[#C7A66A] cursor-pointer"
+              className="w-full px-3.5 py-2.5 sm:py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-white text-base sm:text-xs outline-none focus:border-[#C7A66A] cursor-pointer"
             >
               {VEHICLE_OPTIONS.map(v => <option key={v} value={v}>{v}</option>)}
             </select>
@@ -212,7 +212,7 @@ export default function CampaignManagement({ campaigns, onAddCampaign }) {
             <select
               value={selectedAngle}
               onChange={(e) => setSelectedAngle(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white text-xs outline-none focus:border-[#C7A66A] cursor-pointer"
+              className="w-full px-3.5 py-2.5 sm:py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-white text-base sm:text-xs outline-none focus:border-[#C7A66A] cursor-pointer"
             >
               <option value="Khẳng định Đẳng cấp Doanh nhân">Khẳng định Đẳng cấp & Vị thế Doanh nhân</option>
               <option value="Ưu đãi Tài chính 0% & Thuế trước bạ">Ưu đãi Tài chính 0% & Hỗ trợ Lệ phí trước bạ</option>

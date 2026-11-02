@@ -184,11 +184,11 @@ export default function LeadManagement({
 
       {/* KANBAN VIEW */}
       {viewMode === 'kanban' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 overflow-x-auto pb-4">
+        <div className="flex lg:grid lg:grid-cols-6 gap-3.5 sm:gap-4 overflow-x-auto pb-4 snap-x">
           {statuses.map((st) => {
             const columnLeads = filteredLeads.filter(l => l.status === st.id);
             return (
-              <div key={st.id} className="min-w-[240px] rounded-2xl bg-[#0f1521] border border-slate-800/80 flex flex-col max-h-[750px]">
+              <div key={st.id} className="min-w-[260px] sm:min-w-[280px] lg:min-w-0 shrink-0 lg:shrink rounded-2xl bg-[#0f1521] border border-slate-800/80 flex flex-col max-h-[750px] snap-center">
                 {/* Column Header */}
                 <div className={`p-3.5 border-b border-slate-800 flex items-center justify-between rounded-t-2xl ${st.color}`}>
                   <span className="text-xs font-bold">{st.label}</span>
@@ -504,18 +504,18 @@ export default function LeadManagement({
                     required
                     value={newLeadForm.phone}
                     onChange={(e) => setNewLeadForm({ ...newLeadForm, phone: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A]"
+                    className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-base sm:text-xs text-white outline-none focus:border-[#C7A66A]"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-slate-300 font-bold mb-1">Mẫu xe quan tâm</label>
                   <select
                     value={newLeadForm.interestedVehicle}
                     onChange={(e) => setNewLeadForm({ ...newLeadForm, interestedVehicle: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A]"
+                    className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-base sm:text-xs text-white outline-none focus:border-[#C7A66A]"
                   >
                     {VEHICLE_OPTIONS.map(v => <option key={v} value={v}>{v}</option>)}
                   </select>
@@ -525,7 +525,7 @@ export default function LeadManagement({
                   <select
                     value={newLeadForm.vehicleSegment}
                     onChange={(e) => setNewLeadForm({ ...newLeadForm, vehicleSegment: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A]"
+                    className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-base sm:text-xs text-white outline-none focus:border-[#C7A66A]"
                   >
                     <option value="Luxury SUV">Luxury SUV</option>
                     <option value="Luxury Sedan">Luxury Sedan</option>
@@ -534,13 +534,13 @@ export default function LeadManagement({
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-slate-300 font-bold mb-1">Nguồn lead</label>
                   <select
                     value={newLeadForm.leadSource}
                     onChange={(e) => setNewLeadForm({ ...newLeadForm, leadSource: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A]"
+                    className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-base sm:text-xs text-white outline-none focus:border-[#C7A66A]"
                   >
                     <option value="Meta Ads">Meta Ads (Facebook/Instagram)</option>
                     <option value="Google Ads">Google Search Ads</option>
@@ -554,7 +554,7 @@ export default function LeadManagement({
                   <select
                     value={newLeadForm.assignedSalesperson}
                     onChange={(e) => setNewLeadForm({ ...newLeadForm, assignedSalesperson: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A]"
+                    className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-base sm:text-xs text-white outline-none focus:border-[#C7A66A]"
                   >
                     {SALESPERSON_LIST.map(s => <option key={s} value={s}>{s}</option>)}
                   </select>

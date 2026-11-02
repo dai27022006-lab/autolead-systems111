@@ -205,17 +205,17 @@ export default function BuyerDemo({ onNavigateToCRM }) {
 
       {/* 5-Step Visual Stepper */}
       <div className="mb-8">
-        <div className="grid grid-cols-5 gap-2 text-center text-xs">
+        <div className="grid grid-cols-5 gap-1.5 sm:gap-2 text-center text-xs">
           {[
-            { num: 1, label: '1. Chọn xe' },
-            { num: 2, label: '2. Thông tin khách' },
-            { num: 3, label: '3. AI Sàng lọc' },
-            { num: 4, label: '4. Khóa lịch trống' },
-            { num: 5, label: '5. Hoàn tất' }
+            { num: 1, label: '1. Chọn xe', short: '1. Xe' },
+            { num: 2, label: '2. Thông tin khách', short: '2. Khách' },
+            { num: 3, label: '3. AI Sàng lọc', short: '3. AI' },
+            { num: 4, label: '4. Khóa lịch trống', short: '4. Lịch' },
+            { num: 5, label: '5. Hoàn tất', short: '5. Xong' }
           ].map((st) => (
             <div
               key={st.num}
-              className={`p-2.5 rounded-xl border transition-all ${
+              className={`p-2 sm:p-2.5 rounded-xl border transition-all ${
                 currentStep === st.num
                   ? 'bg-[#1E2634] border-[#C7A66A] text-[#C7A66A] font-bold shadow-md'
                   : currentStep > st.num
@@ -223,7 +223,8 @@ export default function BuyerDemo({ onNavigateToCRM }) {
                   : 'bg-[#0d121c] border-slate-800 text-slate-500'
               }`}
             >
-              <span className="block text-[11px] truncate">{st.label}</span>
+              <span className="block text-[10px] sm:text-[11px] truncate sm:hidden">{st.short}</span>
+              <span className="hidden sm:block text-[11px] truncate">{st.label}</span>
             </div>
           ))}
         </div>
@@ -321,7 +322,7 @@ export default function BuyerDemo({ onNavigateToCRM }) {
 
       {/* STEP 2: ENTER CONTACT INFORMATION */}
       {currentStep === 2 && (
-        <div className="max-w-xl mx-auto rounded-3xl bg-[#141B26] border border-slate-800 p-8 shadow-2xl">
+        <div className="max-w-xl mx-auto rounded-2xl sm:rounded-3xl bg-[#141B26] border border-slate-800 p-5 sm:p-8 shadow-2xl">
           <div className="text-center mb-6">
             <h3 className="text-xl font-black text-white">Bước 2: Nhập Thông Tin Khách Hàng Demo</h3>
             <p className="text-xs text-slate-400 mt-1">
@@ -360,7 +361,7 @@ export default function BuyerDemo({ onNavigateToCRM }) {
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
                   placeholder="Ví dụ: Nguyễn Thành Đại"
-                  className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A]"
+                  className="w-full pl-9 pr-3 py-2.5 sm:py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-base sm:text-xs text-white outline-none focus:border-[#C7A66A]"
                 />
               </div>
               <p className="text-[10px] text-slate-500 mt-1">
@@ -380,7 +381,7 @@ export default function BuyerDemo({ onNavigateToCRM }) {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="0912 345 678"
-                  className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A]"
+                  className="w-full pl-9 pr-3 py-2.5 sm:py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-base sm:text-xs text-white outline-none focus:border-[#C7A66A]"
                 />
               </div>
               <p className="text-[10px] text-slate-500 mt-1">
@@ -399,16 +400,16 @@ export default function BuyerDemo({ onNavigateToCRM }) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="dai.nguyen@example.com"
-                  className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A]"
+                  className="w-full pl-9 pr-3 py-2.5 sm:py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-base sm:text-xs text-white outline-none focus:border-[#C7A66A]"
                 />
               </div>
             </div>
 
-            <div className="pt-4 flex items-center justify-between">
+            <div className="pt-4 flex items-center justify-between gap-3">
               <button
                 type="button"
                 onClick={() => setCurrentStep(1)}
-                className="px-4 py-2.5 rounded-xl bg-slate-800 text-slate-300 font-semibold cursor-pointer"
+                className="px-4 py-2.5 rounded-xl bg-slate-800 text-slate-300 font-semibold cursor-pointer min-h-[44px]"
               >
                 Quay lại
               </button>
@@ -416,9 +417,9 @@ export default function BuyerDemo({ onNavigateToCRM }) {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="px-6 py-2.5 rounded-xl bg-[#C7A66A] hover:bg-[#D4AF37] text-[#101B2B] font-bold cursor-pointer flex items-center gap-2"
+                className="px-5 py-2.5 rounded-xl bg-[#C7A66A] hover:bg-[#D4AF37] text-[#101B2B] font-bold cursor-pointer flex items-center gap-2 min-h-[44px]"
               >
-                {isLoading ? <span>Đang lưu Lead...</span> : <span>Lưu Lead & Bắt Đầu Sàng Lọc AI $\rightarrow$</span>}
+                {isLoading ? <span>Đang lưu Lead...</span> : <span>Lưu Lead & Bắt Đầu AI $\rightarrow$</span>}
               </button>
             </div>
           </form>
@@ -427,7 +428,7 @@ export default function BuyerDemo({ onNavigateToCRM }) {
 
       {/* STEP 3: AI QUALIFICATION QUESTIONNAIRE */}
       {currentStep === 3 && (
-        <div className="max-w-2xl mx-auto rounded-3xl bg-[#141B26] border border-slate-800 p-8 shadow-2xl space-y-6">
+        <div className="max-w-2xl mx-auto rounded-2xl sm:rounded-3xl bg-[#141B26] border border-slate-800 p-5 sm:p-8 shadow-2xl space-y-6">
           <div className="text-center">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C7A66A]/20 text-[#C7A66A] text-xs font-bold uppercase tracking-wider mb-2">
               <Bot className="w-3.5 h-3.5" />
@@ -439,7 +440,7 @@ export default function BuyerDemo({ onNavigateToCRM }) {
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#0d121c] border border-slate-800 text-xs flex justify-between">
+          <div className="p-3 sm:p-4 rounded-xl bg-[#0d121c] border border-slate-800 text-xs flex flex-col sm:flex-row justify-between gap-1.5">
             <span>Khách hàng: <strong className="text-white">{customerName}</strong> ({phone})</span>
             <span>Mẫu xe: <strong className="text-[#C7A66A]">{selectedCar.name}</strong></span>
           </div>
@@ -576,7 +577,7 @@ export default function BuyerDemo({ onNavigateToCRM }) {
 
       {/* STEP 4: PICK APPOINTMENT SLOT (Conflict Prevention Enabled) */}
       {currentStep === 4 && (
-        <div className="max-w-2xl mx-auto rounded-3xl bg-[#141B26] border border-slate-800 p-8 shadow-2xl space-y-6">
+        <div className="max-w-2xl mx-auto rounded-2xl sm:rounded-3xl bg-[#141B26] border border-slate-800 p-5 sm:p-8 shadow-2xl space-y-6">
           <div className="text-center">
             <h3 className="text-xl font-black text-white">Bước 4: Chọn Khung Giờ Trống & Đặt Lịch Lái Thử</h3>
             <p className="text-xs text-slate-400 mt-1">
@@ -617,7 +618,7 @@ export default function BuyerDemo({ onNavigateToCRM }) {
               value={appointmentDate}
               min={new Date().toISOString().split('T')[0]}
               onChange={(e) => setAppointmentDate(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white text-xs outline-none focus:border-[#C7A66A]"
+              className="w-full px-4 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-base sm:text-xs text-white outline-none focus:border-[#C7A66A]"
             />
           </div>
 
@@ -631,14 +632,14 @@ export default function BuyerDemo({ onNavigateToCRM }) {
             {isLoading ? (
               <div className="py-6 text-center text-xs text-slate-400">Đang kiểm tra lịch trống của xe...</div>
             ) : (
-              <div className="grid grid-cols-2 gap-3 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 text-xs">
                 {availableSlots.map((slotObj) => (
                   <button
                     key={slotObj.slot}
                     type="button"
                     disabled={!slotObj.isAvailable}
                     onClick={() => setSelectedSlot(slotObj.slot)}
-                    className={`p-3.5 rounded-xl border text-left transition-all ${
+                    className={`p-3.5 rounded-xl border text-left transition-all min-h-[48px] ${
                       !slotObj.isAvailable
                         ? 'bg-[#0a0e16] border-slate-900 text-slate-600 cursor-not-allowed line-through'
                         : selectedSlot === slotObj.slot
@@ -661,11 +662,11 @@ export default function BuyerDemo({ onNavigateToCRM }) {
             )}
           </div>
 
-          <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
+          <div className="pt-4 border-t border-slate-800 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
             <button
               type="button"
               onClick={() => setCurrentStep(3)}
-              className="px-4 py-2.5 rounded-xl bg-slate-800 text-slate-300 font-semibold text-xs cursor-pointer"
+              className="px-4 py-2.5 rounded-xl bg-slate-800 text-slate-300 font-semibold text-xs cursor-pointer text-center min-h-[44px]"
             >
               Quay lại
             </button>
@@ -674,7 +675,7 @@ export default function BuyerDemo({ onNavigateToCRM }) {
               type="button"
               onClick={handleBookAppointment}
               disabled={isLoading || !selectedSlot}
-              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#C7A66A] to-[#B08D4C] hover:from-[#D4AF37] hover:to-[#C7A66A] text-[#101B2B] text-xs font-bold cursor-pointer flex items-center gap-2 shadow-lg"
+              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#C7A66A] to-[#B08D4C] hover:from-[#D4AF37] hover:to-[#C7A66A] text-[#101B2B] text-xs font-bold cursor-pointer flex items-center justify-center gap-2 shadow-lg min-h-[44px]"
             >
               {isLoading ? <span>Đang xác nhận lịch...</span> : <span>Xác Nhận Đặt Lịch Lái Thử Thành Công $\rightarrow$</span>}
             </button>
@@ -684,7 +685,7 @@ export default function BuyerDemo({ onNavigateToCRM }) {
 
       {/* STEP 5: SUCCESS CONFIRMATION & SEAMLESS TRANSITION TO CRM */}
       {currentStep === 5 && confirmedAppointment && (
-        <div className="max-w-2xl mx-auto rounded-3xl bg-[#141B26] border border-[#C7A66A]/50 p-8 sm:p-10 shadow-2xl text-center space-y-6">
+        <div className="max-w-2xl mx-auto rounded-2xl sm:rounded-3xl bg-[#141B26] border border-[#C7A66A]/50 p-5 sm:p-10 shadow-2xl text-center space-y-6">
           <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-9 h-9" />
           </div>

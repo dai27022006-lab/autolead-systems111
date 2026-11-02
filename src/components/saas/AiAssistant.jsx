@@ -218,11 +218,11 @@ export default function AiAssistant({ leads }) {
               value={inputMsg}
               onChange={(e) => setInputMsg(e.target.value)}
               placeholder="Nhập câu hỏi mô phỏng của người mua xe..."
-              className="flex-1 px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white text-xs outline-none focus:border-[#C7A66A]"
+              className="flex-1 px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white text-base sm:text-xs outline-none focus:border-[#C7A66A]"
             />
             <button
               type="submit"
-              className="px-4 py-2.5 rounded-xl bg-[#C7A66A] hover:bg-[#D4AF37] text-[#101B2B] text-xs font-bold flex items-center justify-center cursor-pointer"
+              className="px-4 py-2.5 min-h-[44px] min-w-[44px] rounded-xl bg-[#C7A66A] hover:bg-[#D4AF37] text-[#101B2B] text-xs font-bold flex items-center justify-center cursor-pointer shrink-0"
             >
               <Send className="w-3.5 h-3.5" />
             </button>

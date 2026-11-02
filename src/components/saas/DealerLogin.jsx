@@ -33,8 +33,8 @@ export default function DealerLogin({ onLoginSuccess, onBackToBuyer }) {
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center p-4">
-      <div className="max-w-md w-full rounded-3xl bg-[#141B26] border border-slate-800 p-8 shadow-2xl space-y-6">
+    <div className="min-h-[80vh] flex items-center justify-center p-3 sm:p-4">
+      <div className="max-w-md w-full rounded-2xl sm:rounded-3xl bg-[#141B26] border border-slate-800 p-5 sm:p-8 shadow-2xl space-y-6">
         <div className="text-center">
           <div className="w-12 h-12 rounded-2xl bg-[#1E2634] border border-[#C7A66A]/40 flex items-center justify-center mx-auto mb-3 text-[#C7A66A]">
             <Building2 className="w-6 h-6" />
@@ -64,7 +64,7 @@ export default function DealerLogin({ onLoginSuccess, onBackToBuyer }) {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A]"
+                className="w-full pl-9 pr-3 py-2.5 sm:py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-base sm:text-xs text-white outline-none focus:border-[#C7A66A]"
               />
             </div>
           </div>
@@ -78,7 +78,7 @@ export default function DealerLogin({ onLoginSuccess, onBackToBuyer }) {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A]"
+                className="w-full pl-9 pr-3 py-2.5 sm:py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-base sm:text-xs text-white outline-none focus:border-[#C7A66A]"
               />
             </div>
           </div>
@@ -86,7 +86,7 @@ export default function DealerLogin({ onLoginSuccess, onBackToBuyer }) {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 rounded-xl bg-[#C7A66A] hover:bg-[#D4AF37] text-[#101B2B] font-bold transition-all shadow-md cursor-pointer"
+            className="w-full py-3 rounded-xl bg-[#C7A66A] hover:bg-[#D4AF37] text-[#101B2B] font-bold transition-all shadow-md cursor-pointer min-h-[44px]"
           >
             {isLoading ? 'Đang xác thực...' : 'Đăng Nhập Hệ Thống'}
           </button>

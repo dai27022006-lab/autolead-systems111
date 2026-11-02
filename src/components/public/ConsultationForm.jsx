@@ -173,7 +173,7 @@ export default function ConsultationForm({ isModal = false, onClose }) {
                   onChange={(e) => setFormData({ ...formData, showroom_name: e.target.value })}
                   placeholder="VD: Mercedes Haxaco Sài Gòn"
                   disabled={isSubmitting}
-                  className={`w-full px-3.5 py-2.5 rounded-xl bg-[#F8F9F5] border text-xs text-[#142A43] placeholder-[#94A3B8] focus:bg-white focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
+                  className={`w-full px-3.5 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border text-base sm:text-xs text-[#142A43] placeholder-[#94A3B8] focus:bg-white focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
                     errors.showroom_name
                       ? 'border-rose-500 focus:ring-rose-500'
                       : 'border-[#DCE3EC] focus:border-[#F47721] focus:ring-[#F47721]'
@@ -198,7 +198,7 @@ export default function ConsultationForm({ isModal = false, onClose }) {
                   onChange={(e) => setFormData({ ...formData, contact_name: e.target.value })}
                   placeholder="VD: Trần Tuấn Anh (Trưởng phòng)"
                   disabled={isSubmitting}
-                  className={`w-full px-3.5 py-2.5 rounded-xl bg-[#F8F9F5] border text-xs text-[#142A43] placeholder-[#94A3B8] focus:bg-white focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
+                  className={`w-full px-3.5 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border text-base sm:text-xs text-[#142A43] placeholder-[#94A3B8] focus:bg-white focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
                     errors.contact_name
                       ? 'border-rose-500 focus:ring-rose-500'
                       : 'border-[#DCE3EC] focus:border-[#F47721] focus:ring-[#F47721]'
@@ -226,7 +226,7 @@ export default function ConsultationForm({ isModal = false, onClose }) {
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   placeholder="VD: 0912 345 678"
                   disabled={isSubmitting}
-                  className={`w-full px-3.5 py-2.5 rounded-xl bg-[#F8F9F5] border text-xs text-[#142A43] placeholder-[#94A3B8] focus:bg-white focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
+                  className={`w-full px-3.5 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border text-base sm:text-xs text-[#142A43] placeholder-[#94A3B8] focus:bg-white focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
                     errors.phone
                       ? 'border-rose-500 focus:ring-rose-500'
                       : 'border-[#DCE3EC] focus:border-[#F47721] focus:ring-[#F47721]'
@@ -249,7 +249,7 @@ export default function ConsultationForm({ isModal = false, onClose }) {
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="VD: director@dealership.vn"
                   disabled={isSubmitting}
-                  className={`w-full px-3.5 py-2.5 rounded-xl bg-[#F8F9F5] border text-xs text-[#142A43] placeholder-[#94A3B8] focus:bg-white focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
+                  className={`w-full px-3.5 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border text-base sm:text-xs text-[#142A43] placeholder-[#94A3B8] focus:bg-white focus:outline-none focus:ring-1 transition-all disabled:opacity-50 ${
                     errors.email
                       ? 'border-rose-500 focus:ring-rose-500'
                       : 'border-[#DCE3EC] focus:border-[#F47721] focus:ring-[#F47721]'
@@ -272,7 +272,7 @@ export default function ConsultationForm({ isModal = false, onClose }) {
                 value={formData.showroom_type}
                 onChange={(e) => setFormData({ ...formData, showroom_type: e.target.value })}
                 disabled={isSubmitting}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-xs text-[#142A43] focus:bg-white focus:outline-none focus:border-[#F47721] focus:ring-1 focus:ring-[#F47721] transition-all cursor-pointer disabled:opacity-50"
+                className="w-full px-3.5 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] focus:bg-white focus:outline-none focus:border-[#F47721] focus:ring-1 focus:ring-[#F47721] transition-all cursor-pointer disabled:opacity-50"
               >
                 <option value="luxury">Đại lý ô tô hạng sang mới (Mercedes, BMW, Porsche, Lexus...)</option>
                 <option value="preowned">Showroom ô tô đã qua sử dụng / Xe lướt cao cấp</option>
@@ -291,7 +291,7 @@ export default function ConsultationForm({ isModal = false, onClose }) {
                   value={formData.showroom_location}
                   onChange={(e) => setFormData({ ...formData, showroom_location: e.target.value })}
                   disabled={isSubmitting}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-xs text-[#142A43] focus:bg-white focus:outline-none focus:border-[#F47721] focus:ring-1 focus:ring-[#F47721] transition-all cursor-pointer disabled:opacity-50"
+                  className="w-full px-3.5 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] focus:bg-white focus:outline-none focus:border-[#F47721] focus:ring-1 focus:ring-[#F47721] transition-all cursor-pointer disabled:opacity-50"
                 >
                   <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
                   <option value="Hà Nội">Hà Nội</option>
@@ -318,7 +318,7 @@ export default function ConsultationForm({ isModal = false, onClose }) {
                 value={formData.monthly_lead_volume}
                 onChange={(e) => setFormData({ ...formData, monthly_lead_volume: e.target.value })}
                 disabled={isSubmitting}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-xs text-[#142A43] focus:bg-white focus:outline-none focus:border-[#F47721] focus:ring-1 focus:ring-[#F47721] transition-all cursor-pointer disabled:opacity-50"
+                className="w-full px-3.5 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] focus:bg-white focus:outline-none focus:border-[#F47721] focus:ring-1 focus:ring-[#F47721] transition-all cursor-pointer disabled:opacity-50"
               >
                 <option value="<50">Dưới 50 lead / tháng</option>
                 <option value="50-150">50 - 150 lead / tháng</option>
@@ -434,7 +434,7 @@ export default function ConsultationForm({ isModal = false, onClose }) {
           </p>
         </div>
 
-        <div className="p-6 sm:p-10 rounded-3xl bg-white border border-[#DCE3EC] shadow-sm">
+        <div className="p-4 sm:p-10 rounded-2xl sm:rounded-3xl bg-white border border-[#DCE3EC] shadow-sm">
           {content}
         </div>
       </div>

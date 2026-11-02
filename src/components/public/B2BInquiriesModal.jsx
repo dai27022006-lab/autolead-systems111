@@ -31,28 +31,28 @@ export default function B2BInquiriesModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-4xl bg-[#0E2034] text-white rounded-3xl shadow-2xl border border-white/20 overflow-hidden my-8 flex flex-col max-h-[85vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in">
+      <div className="relative w-full max-w-4xl bg-[#0E2034] text-white rounded-2xl sm:rounded-3xl shadow-2xl border border-white/20 overflow-hidden my-4 sm:my-8 flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="p-6 bg-[#07182D] border-b border-white/10 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#F47721] flex items-center justify-center text-white shadow-md">
+        <div className="p-4 sm:p-6 bg-[#07182D] border-b border-white/10 flex items-start sm:items-center justify-between gap-3">
+          <div className="flex items-start sm:items-center gap-3 min-w-0">
+            <div className="w-9 h-9 rounded-xl bg-[#F47721] flex items-center justify-center text-white shadow-md shrink-0 mt-0.5 sm:mt-0">
               <Database className="w-5 h-5" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="font-bold text-base sm:text-lg">Danh Sách Đăng Ký Tư Vấn B2B Showroom</h3>
-                <span className="px-2 py-0.5 rounded-full bg-[#159B68]/20 border border-[#159B68]/40 text-[#75A94C] text-[10px] font-mono font-bold">
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="font-bold text-sm sm:text-lg leading-snug">Danh Sách Đăng Ký Tư Vấn B2B</h3>
+                <span className="px-2 py-0.5 rounded-full bg-[#159B68]/20 border border-[#159B68]/40 text-[#75A94C] text-[10px] font-mono font-bold shrink-0">
                   Domain A ({leads.length} bản ghi)
                 </span>
               </div>
-              <p className="text-xs text-slate-400">
-                Lưu trữ: {source === 'supabase' ? 'Supabase Table "showroom_leads"' : source === 'express_server' ? 'Express API "/api/dealer/b2b-inquiries"' : 'Trình duyệt LocalStorage'}
+              <p className="text-[11px] sm:text-xs text-slate-400 truncate mt-0.5">
+                Lưu trữ: {source === 'supabase' ? 'Supabase Table "showroom_leads"' : source === 'express_server' ? 'Express API' : 'LocalStorage'}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <button
               type="button"
               onClick={fetchLeads}

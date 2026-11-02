@@ -40,7 +40,7 @@ export default function DealershipSettings({ onResetData }) {
       )}
 
       {/* Showroom Information */}
-      <div className="p-6 rounded-2xl bg-[#141B26] border border-slate-800 shadow-xl">
+      <div className="p-4 sm:p-6 rounded-2xl bg-[#141B26] border border-slate-800 shadow-xl">
         <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
           <Building2 className="w-4 h-4 text-[#C7A66A]" />
           Hồ Sơ Đại Lý & Showroom
@@ -54,7 +54,7 @@ export default function DealershipSettings({ onResetData }) {
                 type="text"
                 value={profile.name}
                 onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A]"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A] text-base sm:text-xs"
               />
             </div>
             <div>
@@ -63,7 +63,7 @@ export default function DealershipSettings({ onResetData }) {
                 type="text"
                 value={profile.hotline}
                 onChange={(e) => setProfile({ ...profile, hotline: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A]"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A] text-base sm:text-xs"
               />
             </div>
           </div>
@@ -74,7 +74,7 @@ export default function DealershipSettings({ onResetData }) {
               type="text"
               value={profile.address}
               onChange={(e) => setProfile({ ...profile, address: e.target.value })}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A]"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A] text-base sm:text-xs"
             />
           </div>
 
@@ -85,7 +85,7 @@ export default function DealershipSettings({ onResetData }) {
                 type="text"
                 value={`${profile.slaResponseMinutes} phút (Tối đa 60 giây)`}
                 disabled
-                className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-800 text-slate-400 font-mono"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-800 text-slate-400 font-mono text-base sm:text-xs"
               />
             </div>
             <div>
@@ -94,7 +94,7 @@ export default function DealershipSettings({ onResetData }) {
                 type="text"
                 value={`${profile.testDriveSlotDuration} phút / phiên`}
                 disabled
-                className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-800 text-slate-400 font-mono"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-800 text-slate-400 font-mono text-base sm:text-xs"
               />
             </div>
           </div>
@@ -102,7 +102,7 @@ export default function DealershipSettings({ onResetData }) {
           <div className="pt-2">
             <button
               type="submit"
-              className="px-5 py-2.5 rounded-xl bg-[#C7A66A] hover:bg-[#D4AF37] text-[#101B2B] text-xs font-bold flex items-center gap-2 cursor-pointer shadow-md"
+              className="w-full sm:w-auto px-5 py-2.5 min-h-[44px] justify-center rounded-xl bg-[#C7A66A] hover:bg-[#D4AF37] text-[#101B2B] text-xs font-bold flex items-center gap-2 cursor-pointer shadow-md"
             >
               <Save className="w-4 h-4" />
               <span>Lưu Cấu Hình Showroom</span>

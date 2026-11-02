@@ -7,6 +7,7 @@ import {
   PixelCalendar,
   PixelFlag
 } from './PixelIcons';
+import salesConsultationBg from '../../assets/dealership-sales-consultation.jpg';
 
 export default function HowItWorks() {
   const steps = [
@@ -117,15 +118,15 @@ export default function HowItWorks() {
         </div>
 
         {/* Mobile Racetrack (Vertical) */}
-        <div className="lg:hidden space-y-4 mb-16 relative pl-8 before:absolute before:left-3.5 before:top-2 before:bottom-2 before:w-1.5 before:bg-[#142A43] before:border-l before:border-dashed before:border-[#FFE875]">
+        <div className="lg:hidden space-y-4 mb-16 relative pl-10 before:absolute before:left-4 before:top-2 before:bottom-2 before:w-1.5 before:bg-[#142A43] before:border-l before:border-dashed before:border-[#FFE875]">
           {steps.map((item) => {
             const Icon = item.icon;
             return (
               <div key={item.num} className="relative space-y-1">
-                <div className="absolute -left-[35px] top-4 w-7 h-7 rounded-xl bg-[#07182D] border-2 border-[#F47721] flex items-center justify-center text-[10px] font-mono font-bold text-[#F47721] shadow-md">
+                <div className="absolute -left-[38px] top-4 w-7 h-7 rounded-xl bg-[#07182D] border-2 border-[#F47721] flex items-center justify-center text-[10px] font-mono font-bold text-[#F47721] shadow-md">
                   <Icon size={14} />
                 </div>
-                <div className="p-5 rounded-2xl bg-white border border-[#DCE3EC] shadow-sm space-y-1.5 text-left">
+                <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#DCE3EC] shadow-sm space-y-1.5 text-left">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-mono font-bold text-[#F47721]">CHẶNG {item.num}</span>
                     <span className="text-[10px] font-mono text-[#64748B] uppercase">{item.channel}</span>
@@ -143,7 +144,7 @@ export default function HowItWorks() {
           <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
             <div className="lg:col-span-7 h-64 sm:h-72 lg:h-80 relative overflow-hidden">
               <img
-                src="/assets/dealership-sales-consultation.jpg"
+                src={salesConsultationBg}
                 alt="Chuyên viên bán hàng tư vấn khách lái thử tại showroom ô tô"
                 className="w-full h-full object-cover object-center"
                 loading="lazy"

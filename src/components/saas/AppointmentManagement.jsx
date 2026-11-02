@@ -270,35 +270,40 @@ export default function AppointmentManagement({
             <span className="text-xs font-mono font-bold text-[#C7A66A]">Ngày đang chọn: {selectedDate}</span>
           </div>
 
-          <div className="grid grid-cols-7 gap-2 text-center text-xs mb-6">
+          <div className="grid grid-cols-7 gap-1 sm:gap-2 text-center text-xs mb-6">
             {['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ Nhật'].map((d, i) => (
-              <span key={i} className="font-bold text-slate-400 uppercase text-[10px] py-1">{d}</span>
+              <span key={i} className="font-bold text-slate-400 uppercase text-[10px] py-1">
+                <span className="sm:hidden">{['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'][i]}</span>
+                <span className="hidden sm:inline">{d}</span>
+              </span>
             ))}
             {[
               '2026-11-02', '2026-11-03', '2026-11-04', '2026-11-05',
               '2026-11-06', '2026-11-07', '2026-11-08'
             ].map((dayStr, idx) => {
               const dayNum = 2 + idx;
-              const hasApt = appointments.some(a => a.appointmentDate === dayStr);
+              const dayApts = appointments.filter(a => a.appointmentDate === dayStr);
+              const hasApt = dayApts.length > 0;
               const isSelected = selectedDate === dayStr;
               return (
                 <button
                   key={dayStr}
                   onClick={() => setSelectedDate(dayStr)}
-                  className={`p-3 rounded-xl border transition-all cursor-pointer flex flex-col items-center justify-between min-h-[70px] ${
+                  className={`p-1.5 sm:p-3 rounded-xl border transition-all cursor-pointer flex flex-col items-center justify-between min-h-[55px] sm:min-h-[70px] ${
                     isSelected
                       ? 'bg-[#1E2634] border-[#C7A66A] shadow-md'
                       : 'bg-[#0d121c] border-slate-800 hover:border-slate-700'
                   }`}
                 >
-                  <span className={`text-sm font-bold ${isSelected ? 'text-[#C7A66A]' : 'text-white'}`}>
+                  <span className={`text-xs sm:text-sm font-bold ${isSelected ? 'text-[#C7A66A]' : 'text-white'}`}>
                     {dayNum}
                   </span>
                   {hasApt && (
-                    <span className="w-2 h-2 rounded-full bg-[#C7A66A] animate-pulse"></span>
+                    <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-[#C7A66A] animate-pulse"></span>
                   )}
-                  <span className="text-[10px] text-slate-500 font-mono">
-                    {appointments.filter(a => a.appointmentDate === dayStr).length} hẹn
+                  <span className="text-[9px] sm:text-[10px] text-slate-500 font-mono">
+                    <span className="sm:hidden">{dayApts.length}</span>
+                    <span className="hidden sm:inline">{dayApts.length} hẹn</span>
                   </span>
                 </button>
               );

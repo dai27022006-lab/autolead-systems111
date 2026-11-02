@@ -14,7 +14,9 @@ import {
   RefreshCw,
   Sparkles,
   ShieldCheck,
-  ChevronRight
+  ChevronRight,
+  Menu,
+  X
 } from 'lucide-react';
 
 export default function SaasLayout({
@@ -27,6 +29,7 @@ export default function SaasLayout({
   b2bCount
 }) {
   const [selectedShowroom, setSelectedShowroom] = useState('Mercedes-Benz Haxaco Saigon');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
     { id: 'overview', label: '1. Tổng quan Dashboard', icon: LayoutDashboard, badge: null },
@@ -42,10 +45,37 @@ export default function SaasLayout({
 
   return (
     <div className="min-h-screen bg-[#0b1019] text-[#F7F7F5] flex flex-col lg:flex-row">
-      {/* Sidebar */}
-      <aside className="w-full lg:w-72 bg-[#0e1421] border-b lg:border-b-0 lg:border-r border-[#1e2634] flex flex-col shrink-0">
-        {/* Brand Bar */}
-        <div className="p-5 border-b border-[#1e2634] flex items-center justify-between">
+      {/* Mobile Top Brand & Menu Bar (Hidden on Desktop) */}
+      <div className="lg:hidden bg-[#0e1421] border-b border-[#1e2634] p-3.5 flex items-center justify-between sticky top-0 z-40">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#1E2634] to-[#101B2B] border border-[#C7A66A]/50 flex items-center justify-center shrink-0">
+            <span className="text-[#C7A66A] font-extrabold text-sm">AL</span>
+          </div>
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5">
+              <span className="font-bold text-white text-sm">AutoLead SaaS</span>
+              <span className="text-[9px] font-bold px-1 rounded bg-[#C7A66A]/20 text-[#C7A66A] border border-[#C7A66A]/30">CRM</span>
+            </div>
+            <p className="text-[10px] text-slate-400 truncate">{selectedShowroom}</p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="w-9 h-9 rounded-xl bg-[#141B26] border border-slate-700 flex items-center justify-center text-slate-300 hover:text-white cursor-pointer shrink-0"
+          aria-label="Toggle Navigation"
+        >
+          {mobileMenuOpen ? <X className="w-5 h-5 text-[#C7A66A]" /> : <Menu className="w-5 h-5" />}
+        </button>
+      </div>
+
+      {/* Sidebar: Persistent on Desktop, Collapsible Drawer on Mobile */}
+      <aside className={`w-full lg:w-72 bg-[#0e1421] border-b lg:border-b-0 lg:border-r border-[#1e2634] flex flex-col shrink-0 ${
+        mobileMenuOpen ? 'flex' : 'hidden lg:flex'
+      }`}>
+        {/* Desktop Brand Bar */}
+        <div className="hidden lg:flex p-5 border-b border-[#1e2634] items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#1E2634] to-[#101B2B] border border-[#C7A66A]/50 flex items-center justify-center">
               <span className="text-[#C7A66A] font-extrabold text-base">AL</span>
@@ -61,14 +91,14 @@ export default function SaasLayout({
         </div>
 
         {/* Showroom Selector (Multi-tenant simulation) */}
-        <div className="p-4 border-b border-[#1e2634] bg-[#0b1019]/60">
+        <div className="p-3.5 lg:p-4 border-b border-[#1e2634] bg-[#0b1019]/60">
           <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1.5">
             Đại lý đang vận hành:
           </label>
           <select
             value={selectedShowroom}
             onChange={(e) => setSelectedShowroom(e.target.value)}
-            className="w-full px-3 py-2 rounded-lg bg-[#141B26] border border-slate-700 text-xs text-white outline-none focus:border-[#C7A66A] cursor-pointer"
+            className="w-full px-3 py-2 rounded-lg bg-[#141B26] border border-slate-700 text-base sm:text-xs text-white outline-none focus:border-[#C7A66A] cursor-pointer"
           >
             <option value="Mercedes-Benz Haxaco Saigon">Mercedes-Benz Haxaco Sài Gòn</option>
             <option value="Porsche Saigon Gallery">Porsche Saigon Gallery</option>
@@ -77,26 +107,29 @@ export default function SaasLayout({
         </div>
 
         {/* Navigation Links */}
-        <nav className="p-3 space-y-1 flex-1 overflow-y-auto">
+        <nav className="p-3 space-y-1 flex-1 overflow-y-auto max-h-[60vh] lg:max-h-none">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
             return (
               <button
                 key={item.id}
-                onClick={() => setActiveTab(item.id)}
-                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                onClick={() => {
+                  setActiveTab(item.id);
+                  setMobileMenuOpen(false);
+                }}
+                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer min-h-[44px] ${
                   isActive
                     ? 'bg-gradient-to-r from-[#1E2634] to-[#171D27] text-[#C7A66A] border border-[#C7A66A]/40 shadow-sm'
                     : 'text-slate-400 hover:text-white hover:bg-[#141B26]'
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-[#C7A66A]' : 'text-slate-400'}`} />
-                  <span>{item.label}</span>
+                  <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#C7A66A]' : 'text-slate-400'}`} />
+                  <span className="truncate">{item.label}</span>
                 </div>
                 {item.badge && (
-                  <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
+                  <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full shrink-0 ${
                     isActive ? 'bg-[#C7A66A] text-[#101B2B]' : 'bg-slate-800 text-slate-300'
                   }`}>
                     {item.badge}
@@ -110,8 +143,11 @@ export default function SaasLayout({
         {/* Sidebar Footer: Back to Public Site */}
         <div className="p-4 border-t border-[#1e2634] space-y-2 bg-[#0a0e17]">
           <button
-            onClick={onBackToPublic}
-            className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg bg-[#141B26] hover:bg-[#1a2332] text-xs font-semibold text-slate-300 border border-slate-700/80 transition-colors cursor-pointer"
+            onClick={() => {
+              setMobileMenuOpen(false);
+              onBackToPublic();
+            }}
+            className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg bg-[#141B26] hover:bg-[#1a2332] text-xs font-semibold text-slate-300 border border-slate-700/80 transition-colors cursor-pointer min-h-[44px]"
           >
             <ArrowLeft className="w-3.5 h-3.5 text-[#C7A66A]" />
             <span>Xem Website B2B Chào Hàng</span>
@@ -126,35 +162,34 @@ export default function SaasLayout({
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         {/* Top Header */}
-        <header className="h-16 px-6 bg-[#0e1421]/80 backdrop-blur-md border-b border-[#1e2634] flex items-center justify-between shrink-0 sticky top-0 z-30">
-          <div className="flex items-center gap-3">
-            <span className="text-xs text-slate-400">Hệ thống tác nghiệp &gt;</span>
-            <span className="text-xs font-bold text-white capitalize">
+        <header className="h-14 lg:h-16 px-4 sm:px-6 bg-[#0e1421]/80 backdrop-blur-md border-b border-[#1e2634] flex items-center justify-between shrink-0 sticky top-0 z-30">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <span className="text-xs font-bold text-white capitalize truncate">
               {navItems.find(i => i.id === activeTab)?.label}
             </span>
-            <span className="hidden sm:inline-flex items-center gap-1.5 ml-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-medium">
+            <span className="hidden sm:inline-flex items-center gap-1.5 ml-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-medium shrink-0">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
               AI Agent Online (60s SLA)
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <button
               onClick={onResetData}
               title="Khôi phục lại dữ liệu kiểm thử gốc"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#171D27] hover:bg-[#202735] text-slate-300 hover:text-white border border-slate-700 text-xs transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#171D27] hover:bg-[#202735] text-slate-300 hover:text-white border border-slate-700 text-xs transition-colors cursor-pointer"
             >
               <RefreshCw className="w-3.5 h-3.5 text-[#C7A66A]" />
               <span className="hidden sm:inline">Reset Seed Data</span>
             </button>
-            <div className="w-8 h-8 rounded-full bg-[#1E2634] border border-[#C7A66A]/40 flex items-center justify-center text-[#C7A66A] font-bold text-xs">
+            <div className="w-8 h-8 rounded-full bg-[#1E2634] border border-[#C7A66A]/40 flex items-center justify-center text-[#C7A66A] font-bold text-xs shrink-0">
               AD
             </div>
           </div>
         </header>
 
         {/* Viewport Content */}
-        <main className="p-4 sm:p-6 lg:p-8 flex-1">
+        <main className="p-3 sm:p-6 lg:p-8 flex-1">
           {children}
         </main>
       </div>

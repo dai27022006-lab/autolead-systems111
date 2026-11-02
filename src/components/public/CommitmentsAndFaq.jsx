@@ -43,7 +43,7 @@ export default function CommitmentsAndFaq() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-5xl mx-auto">
           {/* Left Column: 3 Service Commitments */}
-          <div className="lg:col-span-5 p-7 rounded-3xl bg-[#F8F9F5] border border-[#DCE3EC] space-y-5 shadow-sm">
+          <div className="lg:col-span-5 p-5 sm:p-7 rounded-2xl sm:rounded-3xl bg-[#F8F9F5] border border-[#DCE3EC] space-y-5 shadow-sm">
             <div className="flex items-center gap-2.5 text-[#142A43] font-bold text-base pb-3 border-b border-[#DCE3EC]">
               <PixelShield size={24} />
               <h3>Cam Kết Dịch Vụ Của AutoLead</h3>
@@ -110,7 +110,7 @@ export default function CommitmentsAndFaq() {
                   <button
                     type="button"
                     onClick={() => setOpenFaq(isOpen ? null : idx)}
-                    className="w-full p-4 text-left flex items-center justify-between gap-3 text-xs sm:text-sm font-bold text-[#142A43] hover:text-[#F47721] transition-colors cursor-pointer bg-white"
+                    className="w-full p-4 min-h-[48px] text-left flex items-center justify-between gap-3 text-xs sm:text-sm font-bold text-[#142A43] hover:text-[#F47721] transition-colors cursor-pointer bg-white"
                   >
                     <span>{item.q}</span>
                     <ChevronDown
