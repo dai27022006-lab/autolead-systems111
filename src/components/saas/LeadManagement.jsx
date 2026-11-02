@@ -21,7 +21,6 @@ import {
 } from 'lucide-react';
 import { VEHICLE_OPTIONS, SALESPERSON_LIST } from '../../data/mockData.js';
 
-
 export default function LeadManagement({
   leads,
   onUpdateLeadStatus,
@@ -50,12 +49,12 @@ export default function LeadManagement({
   });
 
   const statuses = [
-    { id: 'New Lead', label: '1. New Lead', color: 'border-sky-500/50 bg-sky-950/20 text-sky-400' },
-    { id: 'Contacted', label: '2. Contacted', color: 'border-indigo-500/50 bg-indigo-950/20 text-indigo-400' },
-    { id: 'Qualified Lead', label: '3. Qualified Lead', color: 'border-[#C7A66A]/60 bg-[#C7A66A]/10 text-[#C7A66A]' },
-    { id: 'Appointment Booked', label: '4. Appt Booked', color: 'border-amber-500/50 bg-amber-950/20 text-amber-400' },
-    { id: 'Showroom Visit', label: '5. Showroom Visit', color: 'border-emerald-500/50 bg-emerald-950/20 text-emerald-400' },
-    { id: 'Sales Opportunity', label: '6. Opportunity', color: 'border-purple-500/50 bg-purple-950/20 text-purple-400' }
+    { id: 'New Lead', label: '1. New Lead', color: 'bg-sky-50 text-sky-800 border-sky-200' },
+    { id: 'Contacted', label: '2. Contacted', color: 'bg-indigo-50 text-indigo-800 border-indigo-200' },
+    { id: 'Qualified Lead', label: '3. Qualified Lead', color: 'bg-orange-50 text-[#F47721] border-orange-200 font-bold' },
+    { id: 'Appointment Booked', label: '4. Appt Booked', color: 'bg-amber-50 text-amber-800 border-amber-200' },
+    { id: 'Showroom Visit', label: '5. Showroom Visit', color: 'bg-emerald-50 text-emerald-800 border-emerald-200' },
+    { id: 'Sales Opportunity', label: '6. Opportunity', color: 'bg-purple-50 text-purple-800 border-purple-200' }
   ];
 
   // Filtering leads
@@ -98,9 +97,9 @@ export default function LeadManagement({
         {
           date: new Date().toLocaleString('vi-VN', { hour12: false }),
           author: 'Sales Consultant',
-          content: newNoteContent
+          content: newNoteContent.trim()
         },
-        ...selectedLead.notes
+        ...(selectedLead.notes || [])
       ]
     };
     onUpdateLead(updated);
@@ -113,19 +112,19 @@ export default function LeadManagement({
       {/* Top Header & Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-extrabold text-white">Quản Trị Khách Hàng Tiềm Năng (CRM)</h2>
-          <p className="text-xs text-slate-400">
+          <h2 className="text-xl font-extrabold text-[#142A43]">Quản Trị Khách Hàng Tiềm Năng (CRM)</h2>
+          <p className="text-xs text-[#64748B]">
             Theo dõi hành trình người mua xe qua 6 trạng thái tác nghiệp chuẩn (Domain B: Customer Leads)
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           {/* View Mode Toggle */}
-          <div className="flex items-center p-1 rounded-xl bg-[#141B26] border border-slate-800">
+          <div className="flex items-center p-1 rounded-xl bg-white border border-[#DCE3EC] shadow-2xs">
             <button
               onClick={() => setViewMode('kanban')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                viewMode === 'kanban' ? 'bg-[#1E2634] text-[#C7A66A] shadow' : 'text-slate-400 hover:text-white'
+                viewMode === 'kanban' ? 'bg-[#F47721] text-white shadow-xs font-bold' : 'text-[#64748B] hover:text-[#142A43]'
               }`}
             >
               <Kanban className="w-3.5 h-3.5" />
@@ -134,7 +133,7 @@ export default function LeadManagement({
             <button
               onClick={() => setViewMode('table')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                viewMode === 'table' ? 'bg-[#1E2634] text-[#C7A66A] shadow' : 'text-slate-400 hover:text-white'
+                viewMode === 'table' ? 'bg-[#F47721] text-white shadow-xs font-bold' : 'text-[#64748B] hover:text-[#142A43]'
               }`}
             >
               <TableIcon className="w-3.5 h-3.5" />
@@ -145,7 +144,7 @@ export default function LeadManagement({
           {/* Add Lead Button */}
           <button
             onClick={() => setIsAddModalOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#C7A66A] hover:bg-[#D4AF37] text-[#101B2B] text-xs font-bold transition-all shadow-md cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#F47721] hover:bg-[#E76513] text-white text-xs font-bold transition-all shadow-md cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Thêm Lead Mới</span>
@@ -154,7 +153,7 @@ export default function LeadManagement({
       </div>
 
       {/* Search & Filter Bar */}
-      <div className="p-4 rounded-2xl bg-[#141B26] border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="p-4 rounded-2xl bg-white border border-[#DCE3EC] flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
         <div className="relative w-full sm:w-80">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
@@ -162,23 +161,23 @@ export default function LeadManagement({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Tìm theo tên, SĐT, mẫu xe..."
-            className="w-full pl-9 pr-4 py-2 rounded-xl bg-[#0d121c] border border-slate-700/80 text-white text-xs outline-none focus:border-[#C7A66A]"
+            className="w-full pl-9 pr-4 py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-[#142A43] text-xs outline-none focus:border-[#F47721] focus:bg-white focus:ring-1 focus:ring-[#F47721] transition-all"
           />
         </div>
 
         <div className="flex items-center gap-3 w-full sm:w-auto">
-          <span className="text-xs text-slate-400 font-medium shrink-0">Phân khúc xe:</span>
+          <span className="text-xs text-[#64748B] font-medium shrink-0">Phân khúc xe:</span>
           <select
             value={selectedSegment}
             onChange={(e) => setSelectedSegment(e.target.value)}
-            className="px-3 py-2 rounded-xl bg-[#0d121c] border border-slate-700/80 text-white text-xs outline-none focus:border-[#C7A66A] cursor-pointer"
+            className="px-3 py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-[#142A43] text-xs outline-none focus:border-[#F47721] cursor-pointer"
           >
             <option value="ALL">Tất cả phân khúc</option>
             <option value="Luxury SUV">Luxury SUV</option>
             <option value="Luxury Sedan">Luxury Sedan</option>
             <option value="Xe lướt hạng sang">Xe lướt hạng sang</option>
           </select>
-          <span className="text-xs text-slate-500 font-mono">({filteredLeads.length} leads)</span>
+          <span className="text-xs text-[#64748B] font-mono">({filteredLeads.length} leads)</span>
         </div>
       </div>
 
@@ -188,11 +187,11 @@ export default function LeadManagement({
           {statuses.map((st) => {
             const columnLeads = filteredLeads.filter(l => l.status === st.id);
             return (
-              <div key={st.id} className="min-w-[260px] sm:min-w-[280px] lg:min-w-0 shrink-0 lg:shrink rounded-2xl bg-[#0f1521] border border-slate-800/80 flex flex-col max-h-[750px] snap-center">
+              <div key={st.id} className="min-w-[260px] sm:min-w-[280px] lg:min-w-0 shrink-0 lg:shrink rounded-2xl bg-[#F8F9F5] border border-[#DCE3EC] flex flex-col max-h-[750px] snap-center shadow-2xs">
                 {/* Column Header */}
-                <div className={`p-3.5 border-b border-slate-800 flex items-center justify-between rounded-t-2xl ${st.color}`}>
+                <div className={`p-3.5 border-b flex items-center justify-between rounded-t-2xl ${st.color}`}>
                   <span className="text-xs font-bold">{st.label}</span>
-                  <span className="text-xs font-mono font-black px-2 py-0.5 rounded-full bg-[#101B2B] border border-slate-700">
+                  <span className="text-xs font-mono font-black px-2 py-0.5 rounded-full bg-white border border-[#DCE3EC] text-[#142A43]">
                     {columnLeads.length}
                   </span>
                 </div>
@@ -203,30 +202,30 @@ export default function LeadManagement({
                     <div
                       key={lead.id}
                       onClick={() => setSelectedLead(lead)}
-                      className="p-3.5 rounded-xl bg-[#141B26] border border-slate-800 hover:border-[#C7A66A]/60 transition-all cursor-pointer group shadow-sm hover:shadow-md"
+                      className="p-3.5 rounded-xl bg-white border border-[#DCE3EC] hover:border-[#F47721] transition-all cursor-pointer group shadow-2xs hover:shadow-xs"
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-[10px] font-mono text-slate-500">{lead.id}</span>
+                        <span className="text-[10px] font-mono text-[#94A3B8]">{lead.id}</span>
                         {lead.qualificationDetails && (
-                          <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-[#C7A66A]/20 text-[#C7A66A]">
+                          <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-orange-50 text-[#F47721] border border-orange-200">
                             AI: {lead.qualificationDetails.aiScore}%
                           </span>
                         )}
                       </div>
 
-                      <h4 className="text-xs font-bold text-white group-hover:text-[#C7A66A] transition-colors">
+                      <h4 className="text-xs font-bold text-[#142A43] group-hover:text-[#F47721] transition-colors">
                         {lead.customerName}
                       </h4>
-                      <p className="text-[11px] text-slate-400 mt-0.5 truncate">{lead.interestedVehicle}</p>
+                      <p className="text-[11px] text-[#64748B] mt-0.5 truncate">{lead.interestedVehicle}</p>
 
-                      <div className="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-[10px] text-slate-500">
+                      <div className="mt-3 pt-2.5 border-t border-[#E2E8F0] flex items-center justify-between text-[10px] text-[#64748B]">
                         <span>{lead.phone}</span>
-                        <span className="text-slate-400 font-medium">{lead.vehicleSegment}</span>
+                        <span className="text-[#142A43] font-medium">{lead.vehicleSegment}</span>
                       </div>
 
                       {/* Quick Next Step Transition */}
-                      <div className="mt-2.5 pt-2 border-t border-slate-800/50 flex items-center justify-between">
-                        <span className="text-[10px] text-slate-500">Gán: {lead.assignedSalesperson.split(' ')[0]}</span>
+                      <div className="mt-2.5 pt-2 border-t border-[#E2E8F0] flex items-center justify-between">
+                        <span className="text-[10px] text-[#94A3B8]">Gán: {lead.assignedSalesperson.split(' ')[0]}</span>
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
@@ -236,7 +235,7 @@ export default function LeadManagement({
                             }
                           }}
                           title="Chuyển sang trạng thái kế tiếp"
-                          className="text-[10px] text-[#C7A66A] hover:underline flex items-center gap-0.5 font-bold cursor-pointer"
+                          className="text-[10px] text-[#F47721] hover:underline flex items-center gap-0.5 font-bold cursor-pointer"
                         >
                           Tiếp →
                         </button>
@@ -245,7 +244,7 @@ export default function LeadManagement({
                   ))}
 
                   {columnLeads.length === 0 && (
-                    <div className="py-8 text-center text-xs text-slate-600">
+                    <div className="py-8 text-center text-xs text-[#94A3B8]">
                       Chưa có lead ở bước này
                     </div>
                   )}
@@ -258,10 +257,10 @@ export default function LeadManagement({
 
       {/* TABLE VIEW */}
       {viewMode === 'table' && (
-        <div className="rounded-2xl bg-[#141B26] border border-slate-800 overflow-hidden shadow-xl">
+        <div className="rounded-2xl bg-white border border-[#DCE3EC] overflow-hidden shadow-xs">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-[#0e1421] text-slate-400 uppercase text-[10px] font-bold tracking-wider border-b border-slate-800">
+            <table className="w-full text-left text-xs text-[#142A43]">
+              <thead className="bg-[#F8F9F5] text-[#64748B] uppercase text-[10px] font-bold tracking-wider border-b border-[#DCE3EC]">
                 <tr>
                   <th className="py-3.5 px-4">Mã Lead</th>
                   <th className="py-3.5 px-4">Khách Hàng</th>
@@ -274,32 +273,32 @@ export default function LeadManagement({
                   <th className="py-3.5 px-4 text-right">Thao Tác</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 font-medium">
+              <tbody className="divide-y divide-[#E2E8F0] font-medium">
                 {filteredLeads.map((ld) => (
-                  <tr key={ld.id} className="hover:bg-[#18212e] transition-colors cursor-pointer" onClick={() => setSelectedLead(ld)}>
-                    <td className="py-3 px-4 font-mono text-slate-500">{ld.id}</td>
-                    <td className="py-3 px-4 text-white font-bold">{ld.customerName}</td>
-                    <td className="py-3 px-4 text-slate-300">{ld.phone}</td>
-                    <td className="py-3 px-4 text-slate-300">{ld.interestedVehicle}</td>
-                    <td className="py-3 px-4 text-slate-400">{ld.leadSource}</td>
+                  <tr key={ld.id} className="hover:bg-slate-50 transition-colors cursor-pointer" onClick={() => setSelectedLead(ld)}>
+                    <td className="py-3 px-4 font-mono text-[#94A3B8]">{ld.id}</td>
+                    <td className="py-3 px-4 text-[#142A43] font-bold">{ld.customerName}</td>
+                    <td className="py-3 px-4 text-[#64748B]">{ld.phone}</td>
+                    <td className="py-3 px-4 text-[#142A43]">{ld.interestedVehicle}</td>
+                    <td className="py-3 px-4 text-[#64748B]">{ld.leadSource}</td>
                     <td className="py-3 px-4">
-                      <span className="font-bold text-[#C7A66A] font-mono">
+                      <span className="font-bold text-[#F47721] font-mono">
                         {ld.qualificationDetails?.aiScore || 50}%
                       </span>
                     </td>
                     <td className="py-3 px-4">
-                      <span className="inline-block px-2.5 py-1 rounded text-[10px] font-bold bg-[#1E2634] text-white border border-slate-700">
+                      <span className="inline-block px-2.5 py-1 rounded text-[10px] font-bold bg-[#F8F9F5] text-[#142A43] border border-[#DCE3EC]">
                         {ld.status}
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-slate-400">{ld.assignedSalesperson}</td>
+                    <td className="py-3 px-4 text-[#64748B]">{ld.assignedSalesperson}</td>
                     <td className="py-3 px-4 text-right">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           setSelectedLead(ld);
                         }}
-                        className="px-2.5 py-1 rounded bg-[#1E2634] hover:bg-[#C7A66A] hover:text-[#101B2B] text-slate-300 transition-colors text-xs font-semibold cursor-pointer"
+                        className="px-2.5 py-1 rounded bg-[#F8F9F5] hover:bg-[#F47721] hover:text-white text-[#142A43] border border-[#DCE3EC] transition-colors text-xs font-semibold cursor-pointer"
                       >
                         Chi tiết
                       </button>
@@ -314,62 +313,62 @@ export default function LeadManagement({
 
       {/* LEAD DETAIL MODAL / DRAWER */}
       {selectedLead && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="bg-[#141B26] border border-slate-700 rounded-3xl p-6 sm:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
+          <div className="bg-white border border-[#DCE3EC] rounded-3xl p-6 sm:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative text-[#142A43]">
+            <div className="flex items-center justify-between pb-4 border-b border-[#E2E8F0]">
               <div>
-                <span className="text-xs font-mono text-slate-500">{selectedLead.id}</span>
-                <h3 className="text-xl font-bold text-white flex items-center gap-2 mt-0.5">
+                <span className="text-xs font-mono text-[#94A3B8]">{selectedLead.id}</span>
+                <h3 className="text-xl font-bold text-[#142A43] flex items-center gap-2 mt-0.5">
                   {selectedLead.customerName}
-                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#C7A66A]/20 text-[#C7A66A] border border-[#C7A66A]/40">
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-orange-50 text-[#F47721] border border-orange-200">
                     {selectedLead.status}
                   </span>
                 </h3>
               </div>
               <button
                 onClick={() => setSelectedLead(null)}
-                className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center cursor-pointer"
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-[#64748B] hover:text-[#142A43] flex items-center justify-center cursor-pointer transition-colors"
               >
                 ✕
               </button>
             </div>
 
             {/* Profile Information Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6 text-xs text-slate-300">
-              <div className="p-3.5 rounded-xl bg-[#0d121c] border border-slate-800 space-y-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6 text-xs text-[#142A43]">
+              <div className="p-3.5 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Số điện thoại:</span>
-                  <span className="font-bold text-white">{selectedLead.phone}</span>
+                  <span className="text-[#64748B]">Số điện thoại:</span>
+                  <span className="font-bold text-[#142A43]">{selectedLead.phone}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Email:</span>
+                  <span className="text-[#64748B]">Email:</span>
                   <span>{selectedLead.email || 'Chưa cung cấp'}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Nguồn chiến dịch:</span>
-                  <span className="text-sky-400 font-semibold">{selectedLead.leadSource}</span>
+                  <span className="text-[#64748B]">Nguồn chiến dịch:</span>
+                  <span className="text-sky-600 font-semibold">{selectedLead.leadSource}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Tư vấn viên phụ trách:</span>
-                  <span className="text-white font-medium">{selectedLead.assignedSalesperson}</span>
+                  <span className="text-[#64748B]">Tư vấn viên phụ trách:</span>
+                  <span className="text-[#142A43] font-medium">{selectedLead.assignedSalesperson}</span>
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#0d121c] border border-slate-800 space-y-2">
+              <div className="p-3.5 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Mẫu xe quan tâm:</span>
-                  <span className="font-bold text-[#C7A66A]">{selectedLead.interestedVehicle}</span>
+                  <span className="text-[#64748B]">Mẫu xe quan tâm:</span>
+                  <span className="font-bold text-[#F47721]">{selectedLead.interestedVehicle}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Phân khúc:</span>
+                  <span className="text-[#64748B]">Phân khúc:</span>
                   <span>{selectedLead.vehicleSegment}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Ngân sách dự kiến:</span>
-                  <span className="text-white font-semibold">{selectedLead.expectedBudget}</span>
+                  <span className="text-[#64748B]">Ngân sách dự kiến:</span>
+                  <span className="text-[#142A43] font-semibold">{selectedLead.expectedBudget}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Thời điểm mua:</span>
+                  <span className="text-[#64748B]">Thời điểm mua:</span>
                   <span>{selectedLead.expectedPurchasingTime}</span>
                 </div>
               </div>
@@ -377,20 +376,20 @@ export default function LeadManagement({
 
             {/* AI Qualification Breakdown */}
             {selectedLead.qualificationDetails && (
-              <div className="mb-6 p-4 rounded-xl bg-gradient-to-r from-[#171D27] to-[#1E2634] border border-[#C7A66A]/40">
+              <div className="mb-6 p-4 rounded-xl bg-orange-50/50 border border-orange-200">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-[#C7A66A]" />
-                    <span className="text-xs font-bold text-white uppercase tracking-wider">Đánh Giá AI Lead Qualification</span>
+                    <Sparkles className="w-4 h-4 text-[#F47721]" />
+                    <span className="text-xs font-bold text-[#142A43] uppercase tracking-wider">Đánh Giá AI Lead Qualification</span>
                   </div>
-                  <span className="text-sm font-black text-[#C7A66A]">
+                  <span className="text-sm font-black text-[#F47721]">
                     {selectedLead.qualificationDetails.aiScore}% Đạt Chuẩn
                   </span>
                 </div>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <p className="text-xs text-[#475569] leading-relaxed">
                   {selectedLead.qualificationDetails.aiExplanation}
                 </p>
-                <div className="mt-3 pt-2 border-t border-slate-800 text-xs text-amber-300 font-medium">
+                <div className="mt-3 pt-2 border-t border-orange-200/60 text-xs text-amber-700 font-medium">
                   💡 Gợi ý hành động: {selectedLead.qualificationDetails.suggestedAction}
                 </div>
               </div>
@@ -398,20 +397,20 @@ export default function LeadManagement({
 
             {/* Interaction History (Omnichannel Log) */}
             <div className="mb-6">
-              <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3 flex items-center gap-2">
-                <Clock className="w-4 h-4 text-slate-400" />
+              <h4 className="text-xs font-bold text-[#142A43] uppercase tracking-wider mb-3 flex items-center gap-2">
+                <Clock className="w-4 h-4 text-[#F47721]" />
                 Lịch Sử Tương Tác Đa Kênh (Omnichannel Timeline)
               </h4>
               <div className="space-y-2 max-h-40 overflow-y-auto pr-1">
                 {selectedLead.interactionHistory?.map((hist, hIdx) => (
-                  <div key={hIdx} className="p-2.5 rounded-lg bg-[#0d121c] border border-slate-800/80 text-xs flex items-center justify-between gap-3">
+                  <div key={hIdx} className="p-2.5 rounded-lg bg-[#F8F9F5] border border-[#DCE3EC] text-xs flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2 min-w-0">
-                      <span className="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-bold text-slate-300 uppercase shrink-0">
+                      <span className="px-2 py-0.5 rounded bg-slate-200 text-[10px] font-bold text-[#142A43] uppercase shrink-0">
                         {hist.channel}
                       </span>
-                      <span className="text-slate-300 truncate">{hist.detail}</span>
+                      <span className="text-[#142A43] truncate">{hist.detail}</span>
                     </div>
-                    <span className="text-[10px] font-mono text-slate-500 shrink-0">{hist.time}</span>
+                    <span className="text-[10px] font-mono text-[#94A3B8] shrink-0">{hist.time}</span>
                   </div>
                 ))}
               </div>
@@ -419,8 +418,8 @@ export default function LeadManagement({
 
             {/* Internal Notes & Add Note */}
             <div>
-              <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-2">
-                <FileText className="w-4 h-4 text-slate-400" />
+              <h4 className="text-xs font-bold text-[#142A43] uppercase tracking-wider mb-2 flex items-center gap-2">
+                <FileText className="w-4 h-4 text-[#F47721]" />
                 Ghi Chú Nội Bộ Showroom
               </h4>
               <div className="flex gap-2 mb-3">
@@ -429,11 +428,11 @@ export default function LeadManagement({
                   value={newNoteContent}
                   onChange={(e) => setNewNoteContent(e.target.value)}
                   placeholder="Thêm ghi chú tương tác..."
-                  className="flex-1 px-3 py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-white text-xs outline-none focus:border-[#C7A66A]"
+                  className="flex-1 px-3 py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-[#142A43] text-xs outline-none focus:border-[#F47721] focus:bg-white"
                 />
                 <button
                   onClick={handleAddNote}
-                  className="px-4 py-2 rounded-xl bg-[#1E2634] hover:bg-[#283244] text-[#C7A66A] text-xs font-bold border border-[#C7A66A]/40 cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-[#F47721] hover:bg-[#E76513] text-white text-xs font-bold cursor-pointer transition-colors"
                 >
                   Lưu
                 </button>
@@ -441,20 +440,20 @@ export default function LeadManagement({
 
               <div className="space-y-1.5 max-h-32 overflow-y-auto">
                 {selectedLead.notes?.map((nt, nIdx) => (
-                  <div key={nIdx} className="text-xs text-slate-400 p-2 rounded bg-[#0d121c]/50 border border-slate-800">
-                    <div className="flex justify-between text-[10px] text-slate-500 mb-0.5">
-                      <span className="font-bold text-slate-400">{nt.author}</span>
+                  <div key={nIdx} className="text-xs text-[#64748B] p-2 rounded bg-[#F8F9F5] border border-[#DCE3EC]">
+                    <div className="flex justify-between text-[10px] text-[#94A3B8] mb-0.5">
+                      <span className="font-bold text-[#142A43]">{nt.author}</span>
                       <span>{nt.date}</span>
                     </div>
-                    <p className="text-slate-300">{nt.content}</p>
+                    <p className="text-[#142A43]">{nt.content}</p>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Quick Status Updater */}
-            <div className="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
-              <span className="text-xs text-slate-400">Thay đổi trạng thái:</span>
+            <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between">
+              <span className="text-xs text-[#64748B]">Thay đổi trạng thái:</span>
               <div className="flex flex-wrap gap-1.5">
                 {statuses.map(st => (
                   <button
@@ -465,8 +464,8 @@ export default function LeadManagement({
                     }}
                     className={`px-2.5 py-1 rounded-lg text-[10px] font-bold border transition-colors cursor-pointer ${
                       selectedLead.status === st.id
-                        ? 'bg-[#C7A66A] text-[#101B2B] border-[#C7A66A]'
-                        : 'bg-[#1E2634] text-slate-300 border-slate-700 hover:border-slate-500'
+                        ? 'bg-[#F47721] text-white border-[#F47721] shadow-2xs'
+                        : 'bg-white text-[#64748B] border-[#DCE3EC] hover:border-slate-400'
                     }`}
                   >
                     {st.label.split('. ')[1]}
@@ -480,52 +479,52 @@ export default function LeadManagement({
 
       {/* ADD LEAD MODAL */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="bg-[#141B26] border border-slate-700 rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl">
-            <h3 className="text-xl font-bold text-white mb-1">Thêm Khách Hàng Tiềm Năng Mới</h3>
-            <p className="text-xs text-slate-400 mb-6">Nhập thông tin người mua xe để bắt đầu quy trình chăm sóc AI (Domain B)</p>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
+          <div className="bg-white border border-[#DCE3EC] rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl text-[#142A43]">
+            <h3 className="text-xl font-bold text-[#142A43] mb-1">Thêm Khách Hàng Tiềm Năng Mới</h3>
+            <p className="text-xs text-[#64748B] mb-6">Nhập thông tin người mua xe để bắt đầu quy trình chăm sóc AI (Domain B)</p>
 
             <form onSubmit={handleCreateLead} className="space-y-4 text-xs">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-slate-300 font-bold mb-1">Tên khách hàng *</label>
+                  <label className="block text-[#142A43] font-bold mb-1">Tên khách hàng *</label>
                   <input
                     type="text"
                     required
                     value={newLeadForm.customerName}
                     onChange={(e) => setNewLeadForm({ ...newLeadForm, customerName: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A]"
+                    className="w-full px-3 py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-[#142A43] outline-none focus:border-[#F47721] focus:bg-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-300 font-bold mb-1">Số điện thoại *</label>
+                  <label className="block text-[#142A43] font-bold mb-1">Số điện thoại *</label>
                   <input
                     type="text"
                     required
                     value={newLeadForm.phone}
                     onChange={(e) => setNewLeadForm({ ...newLeadForm, phone: e.target.value })}
-                    className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-base sm:text-xs text-white outline-none focus:border-[#C7A66A]"
+                    className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] outline-none focus:border-[#F47721] focus:bg-white"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-slate-300 font-bold mb-1">Mẫu xe quan tâm</label>
+                  <label className="block text-[#142A43] font-bold mb-1">Mẫu xe quan tâm</label>
                   <select
                     value={newLeadForm.interestedVehicle}
                     onChange={(e) => setNewLeadForm({ ...newLeadForm, interestedVehicle: e.target.value })}
-                    className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-base sm:text-xs text-white outline-none focus:border-[#C7A66A]"
+                    className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] outline-none focus:border-[#F47721] cursor-pointer"
                   >
                     {VEHICLE_OPTIONS.map(v => <option key={v} value={v}>{v}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-slate-300 font-bold mb-1">Phân khúc xe</label>
+                  <label className="block text-[#142A43] font-bold mb-1">Phân khúc xe</label>
                   <select
                     value={newLeadForm.vehicleSegment}
                     onChange={(e) => setNewLeadForm({ ...newLeadForm, vehicleSegment: e.target.value })}
-                    className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-base sm:text-xs text-white outline-none focus:border-[#C7A66A]"
+                    className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] outline-none focus:border-[#F47721] cursor-pointer"
                   >
                     <option value="Luxury SUV">Luxury SUV</option>
                     <option value="Luxury Sedan">Luxury Sedan</option>
@@ -536,11 +535,11 @@ export default function LeadManagement({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-slate-300 font-bold mb-1">Nguồn lead</label>
+                  <label className="block text-[#142A43] font-bold mb-1">Nguồn lead</label>
                   <select
                     value={newLeadForm.leadSource}
                     onChange={(e) => setNewLeadForm({ ...newLeadForm, leadSource: e.target.value })}
-                    className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-base sm:text-xs text-white outline-none focus:border-[#C7A66A]"
+                    className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] outline-none focus:border-[#F47721] cursor-pointer"
                   >
                     <option value="Meta Ads">Meta Ads (Facebook/Instagram)</option>
                     <option value="Google Ads">Google Search Ads</option>
@@ -550,11 +549,11 @@ export default function LeadManagement({
                   </select>
                 </div>
                 <div>
-                  <label className="block text-slate-300 font-bold mb-1">Tư vấn viên phân bổ</label>
+                  <label className="block text-[#142A43] font-bold mb-1">Tư vấn viên phân bổ</label>
                   <select
                     value={newLeadForm.assignedSalesperson}
                     onChange={(e) => setNewLeadForm({ ...newLeadForm, assignedSalesperson: e.target.value })}
-                    className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#0d121c] border border-slate-700 text-base sm:text-xs text-white outline-none focus:border-[#C7A66A]"
+                    className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] outline-none focus:border-[#F47721] cursor-pointer"
                   >
                     {SALESPERSON_LIST.map(s => <option key={s} value={s}>{s}</option>)}
                   </select>
@@ -565,13 +564,13 @@ export default function LeadManagement({
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-xs font-semibold cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#142A43] text-xs font-semibold cursor-pointer transition-colors"
                 >
                   Hủy
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-[#C7A66A] text-[#101B2B] text-xs font-bold hover:bg-[#D4AF37] cursor-pointer"
+                  className="px-5 py-2 rounded-xl bg-[#F47721] text-white text-xs font-bold hover:bg-[#E76513] cursor-pointer transition-colors shadow-xs"
                 >
                   Khởi Tạo Lead
                 </button>

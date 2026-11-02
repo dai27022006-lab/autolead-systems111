@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Settings, Building2, Users, ShieldCheck, RefreshCw, Save, Check } from 'lucide-react';
 import { SALESPERSON_LIST, QUALIFICATION_CRITERIA_LIST } from '../../data/mockData.js';
 
-
-
 export default function DealershipSettings({ onResetData }) {
   const [profile, setProfile] = useState({
     name: 'Mercedes-Benz Haxaco Sài Gòn',
@@ -23,78 +21,78 @@ export default function DealershipSettings({ onResetData }) {
   };
 
   return (
-    <div className="space-y-8 max-w-4xl">
+    <div className="space-y-6 sm:space-y-8 max-w-4xl">
       {/* Header */}
       <div>
-        <h2 className="text-xl font-extrabold text-white">Cấu Hình Vận Hành Showroom (Settings)</h2>
-        <p className="text-xs text-slate-400">
+        <h2 className="text-xl font-extrabold text-[#142A43]">Cấu Hình Vận Hành Showroom (Settings)</h2>
+        <p className="text-xs text-[#64748B]">
           Thiết lập thông tin đại lý, nhân sự tư vấn và chính sách tiêu chuẩn chất lượng dịch vụ
         </p>
       </div>
 
       {savedAlert && (
-        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs flex items-center gap-2">
-          <Check className="w-4 h-4" />
+        <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs flex items-center gap-2 shadow-2xs">
+          <Check className="w-4 h-4 text-emerald-600" />
           <span>Đã lưu thành công các thiết lập tác nghiệp!</span>
         </div>
       )}
 
       {/* Showroom Information */}
-      <div className="p-4 sm:p-6 rounded-2xl bg-[#141B26] border border-slate-800 shadow-xl">
-        <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
-          <Building2 className="w-4 h-4 text-[#C7A66A]" />
+      <div className="p-5 sm:p-6 rounded-2xl bg-white border border-[#DCE3EC] shadow-xs">
+        <h3 className="text-base font-bold text-[#142A43] mb-4 flex items-center gap-2">
+          <Building2 className="w-4 h-4 text-[#F47721]" />
           Hồ Sơ Đại Lý & Showroom
         </h3>
 
         <form onSubmit={handleSave} className="space-y-4 text-xs">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-slate-300 font-bold mb-1">Tên đại lý ô tô</label>
+              <label className="block text-[#142A43] font-bold mb-1">Tên đại lý ô tô</label>
               <input
                 type="text"
                 value={profile.name}
                 onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A] text-base sm:text-xs"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-[#142A43] outline-none focus:border-[#F47721] focus:bg-white text-base sm:text-xs"
               />
             </div>
             <div>
-              <label className="block text-slate-300 font-bold mb-1">Hotline tiếp nhận</label>
+              <label className="block text-[#142A43] font-bold mb-1">Hotline tiếp nhận</label>
               <input
                 type="text"
                 value={profile.hotline}
                 onChange={(e) => setProfile({ ...profile, hotline: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A] text-base sm:text-xs"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-[#142A43] outline-none focus:border-[#F47721] focus:bg-white text-base sm:text-xs"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-slate-300 font-bold mb-1">Địa chỉ showroom</label>
+            <label className="block text-[#142A43] font-bold mb-1">Địa chỉ showroom</label>
             <input
               type="text"
               value={profile.address}
               onChange={(e) => setProfile({ ...profile, address: e.target.value })}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white outline-none focus:border-[#C7A66A] text-base sm:text-xs"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-[#142A43] outline-none focus:border-[#F47721] focus:bg-white text-base sm:text-xs"
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-slate-300 font-bold mb-1">Cam kết thời gian phản hồi AI (SLA)</label>
+              <label className="block text-[#142A43] font-bold mb-1">Cam kết thời gian phản hồi AI (SLA)</label>
               <input
                 type="text"
                 value={`${profile.slaResponseMinutes} phút (Tối đa 60 giây)`}
                 disabled
-                className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-800 text-slate-400 font-mono text-base sm:text-xs"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 border border-[#DCE3EC] text-[#94A3B8] font-mono text-base sm:text-xs"
               />
             </div>
             <div>
-              <label className="block text-slate-300 font-bold mb-1">Thời lượng mỗi ca lái thử</label>
+              <label className="block text-[#142A43] font-bold mb-1">Thời lượng mỗi ca lái thử</label>
               <input
                 type="text"
                 value={`${profile.testDriveSlotDuration} phút / phiên`}
                 disabled
-                className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-800 text-slate-400 font-mono text-base sm:text-xs"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 border border-[#DCE3EC] text-[#94A3B8] font-mono text-base sm:text-xs"
               />
             </div>
           </div>
@@ -102,7 +100,7 @@ export default function DealershipSettings({ onResetData }) {
           <div className="pt-2">
             <button
               type="submit"
-              className="w-full sm:w-auto px-5 py-2.5 min-h-[44px] justify-center rounded-xl bg-[#C7A66A] hover:bg-[#D4AF37] text-[#101B2B] text-xs font-bold flex items-center gap-2 cursor-pointer shadow-md"
+              className="w-full sm:w-auto px-5 py-2.5 min-h-[44px] justify-center rounded-xl bg-[#F47721] hover:bg-[#E76513] text-white text-xs font-bold flex items-center gap-2 cursor-pointer shadow-md transition-all"
             >
               <Save className="w-4 h-4" />
               <span>Lưu Cấu Hình Showroom</span>
@@ -112,33 +110,33 @@ export default function DealershipSettings({ onResetData }) {
       </div>
 
       {/* Sales Team Members */}
-      <div className="p-6 rounded-2xl bg-[#141B26] border border-slate-800 shadow-xl">
-        <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
-          <Users className="w-4 h-4 text-[#C7A66A]" />
+      <div className="p-5 sm:p-6 rounded-2xl bg-white border border-[#DCE3EC] shadow-xs">
+        <h3 className="text-base font-bold text-[#142A43] mb-4 flex items-center gap-2">
+          <Users className="w-4 h-4 text-[#F47721]" />
           Đội Ngũ Nhân Viên Tư Vấn Sales Phụ Trách ({SALESPERSON_LIST.length})
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
           {SALESPERSON_LIST.map((sales, idx) => (
-            <div key={idx} className="p-3 rounded-xl bg-[#0d121c] border border-slate-800 flex items-center justify-between">
+            <div key={idx} className="p-3 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] flex items-center justify-between">
               <div>
-                <span className="font-bold text-white block">{sales}</span>
-                <span className="text-[11px] text-slate-500">Trạng thái: Sẵn sàng nhận lịch</span>
+                <span className="font-bold text-[#142A43] block">{sales}</span>
+                <span className="text-[11px] text-[#64748B]">Trạng thái: Sẵn sàng nhận lịch</span>
               </div>
-              <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Database Management & Demo Reset */}
-      <div className="p-6 rounded-2xl bg-gradient-to-br from-[#1F1717] to-[#141B26] border border-rose-500/30 shadow-xl">
+      <div className="p-5 sm:p-6 rounded-2xl bg-rose-50/40 border border-rose-200 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h3 className="text-base font-bold text-white flex items-center gap-2">
-              <RefreshCw className="w-4 h-4 text-rose-400" />
+            <h3 className="text-base font-bold text-[#142A43] flex items-center gap-2">
+              <RefreshCw className="w-4 h-4 text-rose-600" />
               Khôi Phục Dữ Liệu Kiểm Thử Gốc (Reset Demo Data)
             </h3>
-            <p className="text-xs text-slate-400 mt-1 max-w-md">
+            <p className="text-xs text-[#64748B] mt-1 max-w-md">
               Xóa các thay đổi tạm và đặt lại toàn bộ trạng thái khách hàng, lịch hẹn và chiến dịch về bộ dữ liệu mẫu chuẩn của nhóm.
             </p>
           </div>
@@ -149,7 +147,7 @@ export default function DealershipSettings({ onResetData }) {
                 onResetData();
               }
             }}
-            className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold transition-all shadow-lg cursor-pointer shrink-0"
+            className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition-all shadow-md cursor-pointer shrink-0"
           >
             Reset Dữ Liệu Về Mặc Định
           </button>

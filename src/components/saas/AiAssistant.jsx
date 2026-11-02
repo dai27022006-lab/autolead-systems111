@@ -14,7 +14,6 @@ import {
 } from 'lucide-react';
 import { VEHICLE_OPTIONS } from '../../data/mockData.js';
 
-
 export default function AiAssistant({ leads }) {
   const [selectedLead, setSelectedLead] = useState(leads[0] || null);
   const [selectedScenario, setSelectedScenario] = useState('zalo_greeting');
@@ -82,44 +81,44 @@ export default function AiAssistant({ leads }) {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#C7A66A]"></span>
-            <span className="text-xs font-bold uppercase tracking-wider text-[#C7A66A]">
+            <span className="w-2 h-2 rounded-full bg-[#F47721]"></span>
+            <span className="text-xs font-bold uppercase tracking-wider text-[#F47721]">
               Chức Năng 2 Trong Lời Chào Hàng
             </span>
           </div>
-          <h2 className="text-xl font-extrabold text-white mt-0.5">
+          <h2 className="text-xl font-extrabold text-[#142A43] mt-0.5">
             Trợ Lý AI Tác Nghiệp & Theo Dõi Tương Tác Đa Kênh
           </h2>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-[#64748B]">
             Hỗ trợ nhân viên tư vấn xử lý từ chối, tạo kịch bản Zalo tự động và mô phỏng tương tác thực tế
           </p>
         </div>
 
-        <div className="px-3.5 py-1.5 rounded-xl bg-[#141B26] border border-[#C7A66A]/40 text-xs font-mono font-bold text-[#C7A66A] flex items-center gap-2">
+        <div className="px-3.5 py-1.5 rounded-xl bg-white border border-[#DCE3EC] text-xs font-mono font-bold text-[#F47721] flex items-center gap-2 shadow-2xs">
           <Bot className="w-4 h-4" />
           <span>Simulated Omnichannel Engine</span>
         </div>
       </div>
 
       {/* Grid: AI Script Generator + Simulated Live Chat Simulator */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
         {/* Left: AI Response Scripts for Sales */}
-        <div className="p-6 rounded-3xl bg-[#141B26] border border-slate-800 shadow-xl flex flex-col justify-between">
+        <div className="p-5 sm:p-6 rounded-3xl bg-white border border-[#DCE3EC] shadow-xs flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-5">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#C7A66A]" />
+            <div className="flex items-center justify-between pb-4 border-b border-[#E2E8F0] mb-5">
+              <h3 className="text-base font-bold text-[#142A43] flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-[#F47721]" />
                 Kịch Bản AI Gợi Ý Cho Nhân Viên Sales
               </h3>
               <select
                 value={selectedLead?.id}
                 onChange={(e) => setSelectedLead(leads.find(l => l.id === e.target.value))}
-                className="px-2.5 py-1 rounded-lg bg-[#0d121c] border border-slate-700 text-xs text-slate-200 outline-none"
+                className="px-2.5 py-1 rounded-lg bg-[#F8F9F5] border border-[#DCE3EC] text-xs text-[#142A43] outline-none focus:border-[#F47721]"
               >
                 {leads.map(l => (
                   <option key={l.id} value={l.id}>{l.customerName} ({l.interestedVehicle?.slice(0, 15)}...)</option>
@@ -140,8 +139,8 @@ export default function AiAssistant({ leads }) {
                   onClick={() => setSelectedScenario(sc.id)}
                   className={`p-2.5 rounded-xl text-xs font-semibold text-left border transition-all cursor-pointer ${
                     selectedScenario === sc.id
-                      ? 'bg-[#1E2634] text-[#C7A66A] border-[#C7A66A]'
-                      : 'bg-[#0d121c] text-slate-400 border-slate-800 hover:border-slate-700'
+                      ? 'bg-orange-50 text-[#F47721] border-2 border-[#F47721] font-bold shadow-2xs'
+                      : 'bg-[#F8F9F5] text-[#64748B] border border-[#DCE3EC] hover:border-slate-300'
                   }`}
                 >
                   {sc.label}
@@ -150,42 +149,42 @@ export default function AiAssistant({ leads }) {
             </div>
 
             {/* Script Display */}
-            <div className="p-4 rounded-2xl bg-[#0d121c] border border-slate-800">
-              <div className="flex items-center justify-between mb-2 pb-2 border-b border-slate-800 text-xs">
-                <span className="font-bold text-[#C7A66A]">{scripts[selectedScenario].title}</span>
+            <div className="p-4 rounded-2xl bg-[#F8F9F5] border border-[#DCE3EC]">
+              <div className="flex items-center justify-between mb-2 pb-2 border-b border-[#E2E8F0] text-xs">
+                <span className="font-bold text-[#F47721]">{scripts[selectedScenario].title}</span>
                 <button
                   onClick={() => copyScript(scripts[selectedScenario].text)}
-                  className="text-slate-400 hover:text-white flex items-center gap-1 cursor-pointer font-medium"
+                  className="text-[#64748B] hover:text-[#142A43] flex items-center gap-1 cursor-pointer font-medium"
                 >
-                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copied ? 'Đã chép' : 'Sao chép tin nhắn'}</span>
                 </button>
               </div>
-              <div className="text-xs text-slate-300 whitespace-pre-line leading-relaxed font-sans max-h-56 overflow-y-auto">
+              <div className="text-xs text-[#142A43] whitespace-pre-line leading-relaxed font-sans max-h-56 overflow-y-auto">
                 {scripts[selectedScenario].text}
               </div>
             </div>
           </div>
 
-          <div className="mt-6 pt-4 border-t border-slate-800 text-[11px] text-slate-400 flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+          <div className="mt-6 pt-4 border-t border-[#E2E8F0] text-[11px] text-[#64748B] flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
             <span>Kịch bản đã được kiểm chứng tỷ lệ phản hồi Zalo &gt; 65% trong ngành xe ô tô.</span>
           </div>
         </div>
 
         {/* Right: Simulated Omnichannel Zalo & Call Chat Sandbox */}
-        <div className="p-6 rounded-3xl bg-[#141B26] border border-slate-800 shadow-xl flex flex-col h-[520px]">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
+        <div className="p-5 sm:p-6 rounded-3xl bg-white border border-[#DCE3EC] shadow-xs flex flex-col h-[520px]">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0] mb-3">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white text-xs">
                 Z
               </div>
               <div>
-                <h4 className="text-xs font-bold text-white">Mô Phỏng Trò Chuyện Zalo OA Khách Hàng</h4>
-                <span className="text-[10px] text-emerald-400 font-medium">AI Chăm Sóc Tự Động • Hoạt động 24/7</span>
+                <h4 className="text-xs font-bold text-[#142A43]">Mô Phỏng Trò Chuyện Zalo OA Khách Hàng</h4>
+                <span className="text-[10px] text-emerald-700 font-medium">AI Chăm Sóc Tự Động • Hoạt động 24/7</span>
               </div>
             </div>
-            <span className="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-mono text-slate-400">
+            <span className="px-2 py-0.5 rounded bg-slate-100 text-[10px] font-mono text-[#64748B] border border-[#DCE3EC]">
               Response: &lt;60s
             </span>
           </div>
@@ -200,29 +199,29 @@ export default function AiAssistant({ leads }) {
                 <div
                   className={`max-w-[80%] p-3 rounded-2xl ${
                     msg.sender === 'customer'
-                      ? 'bg-blue-600 text-white rounded-tr-none'
-                      : 'bg-[#1E2634] text-slate-200 border border-slate-700/80 rounded-tl-none'
+                      ? 'bg-blue-600 text-white rounded-tr-none shadow-2xs'
+                      : 'bg-[#F8F9F5] text-[#142A43] border border-[#DCE3EC] rounded-tl-none shadow-2xs'
                   }`}
                 >
                   <p className="leading-relaxed">{msg.text}</p>
                 </div>
-                <span className="text-[9px] text-slate-500 font-mono mt-0.5 px-1">{msg.time}</span>
+                <span className="text-[9px] text-[#94A3B8] font-mono mt-0.5 px-1">{msg.time}</span>
               </div>
             ))}
           </div>
 
           {/* Chat Input */}
-          <form onSubmit={handleSendChat} className="pt-3 border-t border-slate-800 flex gap-2">
+          <form onSubmit={handleSendChat} className="pt-3 border-t border-[#E2E8F0] flex gap-2">
             <input
               type="text"
               value={inputMsg}
               onChange={(e) => setInputMsg(e.target.value)}
               placeholder="Nhập câu hỏi mô phỏng của người mua xe..."
-              className="flex-1 px-3.5 py-2.5 rounded-xl bg-[#0d121c] border border-slate-700 text-white text-base sm:text-xs outline-none focus:border-[#C7A66A]"
+              className="flex-1 px-3.5 py-2.5 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-[#142A43] text-base sm:text-xs outline-none focus:border-[#F47721] focus:bg-white"
             />
             <button
               type="submit"
-              className="px-4 py-2.5 min-h-[44px] min-w-[44px] rounded-xl bg-[#C7A66A] hover:bg-[#D4AF37] text-[#101B2B] text-xs font-bold flex items-center justify-center cursor-pointer shrink-0"
+              className="px-4 py-2.5 min-h-[44px] min-w-[44px] rounded-xl bg-[#F47721] hover:bg-[#E76513] text-white text-xs font-bold flex items-center justify-center cursor-pointer shrink-0 transition-colors shadow-xs"
             >
               <Send className="w-3.5 h-3.5" />
             </button>

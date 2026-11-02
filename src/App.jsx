@@ -286,9 +286,9 @@ export default function App() {
           EXPERIENCE C: DEALER SAAS CRM & OPERATIONS PLATFORM (ĐẠI)
       ========================================================================= */}
       {currentView === 'saas' && (
-        <div className="flex-1 flex flex-col bg-[#0b1019] text-[#F7F7F5]">
+        <div className="flex-1 flex flex-col bg-[#F8F9F5] text-[#142A43] min-h-screen">
           {/* Seamless Experience Switcher Top Banner */}
-          <header className="sticky top-0 z-40 bg-[#07182D] border-b border-white/10 px-2.5 sm:px-4 py-2 sm:py-2.5 shadow-md">
+          <header className="sticky top-0 z-40 bg-[#142A43] border-b border-white/10 px-2.5 sm:px-4 py-2 sm:py-2.5 shadow-md">
             <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
               <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                 <button
@@ -310,9 +310,9 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => navigateToView('buyer')}
-                  className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-slate-200 transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#F47721] hover:bg-[#E76513] text-xs font-bold text-white transition-all cursor-pointer shadow-xs"
                 >
-                  <Sparkles className="w-3.5 h-3.5 text-[#F47721]" />
+                  <Sparkles className="w-3.5 h-3.5" />
                   <span className="sm:hidden">Buyer Demo</span>
                   <span className="hidden sm:inline">Chạy Thử Buyer Demo</span>
                 </button>
