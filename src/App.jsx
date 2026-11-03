@@ -47,6 +47,7 @@ import { storageService } from './services/storage';
 import DualInterfaceHeader from './components/common/DualInterfaceHeader';
 import { ArrowLeft, Sparkles, ShieldCheck } from 'lucide-react';
 import { initScrollEngine, destroyScrollEngine } from './utils/scrollEngine';
+import ErrorBoundary from './components/common/ErrorBoundary';
 
 function PublicLayout({ children, onOpenContact, onOpenLeadViewer }) {
   return (
@@ -525,9 +526,11 @@ function AppContent() {
 
 export default function App() {
   return (
-    <HashRouter>
-      <ScrollToTop />
-      <AppContent />
-    </HashRouter>
+    <ErrorBoundary>
+      <HashRouter>
+        <ScrollToTop />
+        <AppContent />
+      </HashRouter>
+    </ErrorBoundary>
   );
 }

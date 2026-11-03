@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   X,
   Car,
@@ -26,12 +26,23 @@ import { getCarDetails } from '../../data/carDetailsData.js';
 import { buttonMotion, EASINGS } from '../../utils/motion';
 
 export default function CarDetailModal({ car, isOpen, onClose, onSelectAndProceed }) {
+  // CRITICAL: All React Hooks MUST be called unconditionally at the very top of the component!
   const shouldReduceMotion = useReducedMotion();
+  const [activeTab, setActiveTab] = useState('pricing'); // 'pricing' | 'promotions' | 'specs' | 'features' | 'showroom'
+  const [selectedCity, setSelectedCity] = useState('tphcm'); // 'tphcm' | 'hanoi' | 'provinces'
+
+  // Reset tab to pricing whenever a new car modal is opened
+  useEffect(() => {
+    if (isOpen) {
+      setActiveTab('pricing');
+      setSelectedCity('tphcm');
+    }
+  }, [isOpen, car?.id]);
+
+  // If modal is closed or no car is passed, return null safely AFTER all hooks are declared
   if (!isOpen || !car) return null;
 
   const details = getCarDetails(car);
-  const [activeTab, setActiveTab] = useState('pricing'); // 'pricing' | 'promotions' | 'specs' | 'features' | 'showroom'
-  const [selectedCity, setSelectedCity] = useState('tphcm'); // 'tphcm' | 'hanoi' | 'provinces'
 
   const handleSelectCar = () => {
     if (onSelectAndProceed) {
@@ -47,6 +58,7 @@ export default function CarDetailModal({ car, isOpen, onClose, onSelectAndProcee
         exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 12 }}
         transition={{ duration: shouldReduceMotion ? 0.01 : 0.25, ease: EASINGS.gentleOut }}
         className="relative w-full max-w-4xl bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-[#DCE3EC] overflow-hidden my-4 sm:my-8 text-[#142A43] max-h-[92vh] flex flex-col"
+        onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
         <div className="p-4 sm:p-5 bg-[#07182D] text-white flex items-center justify-between border-b border-white/10 shrink-0">
@@ -56,17 +68,17 @@ export default function CarDetailModal({ car, isOpen, onClose, onSelectAndProcee
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-black text-sm sm:text-base truncate">{details.name}</span>
+                <span className="font-black text-sm sm:text-base truncate">{details?.name || car.name}</span>
                 <span className="px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-bold text-white border border-white/30 shrink-0">
-                  {details.segment}
+                  {details?.segment || car.segment || 'Luxury Car'}
                 </span>
-                {details.badge && (
+                {details?.badge && (
                   <span className="px-2 py-0.5 rounded-full bg-[#F47721] text-[10px] font-black text-white uppercase tracking-wider shrink-0 shadow-xs">
                     {details.badge}
                   </span>
                 )}
               </div>
-              <p className="text-[11px] text-slate-300 truncate mt-0.5">{details.subtitle}</p>
+              <p className="text-[11px] text-slate-300 truncate mt-0.5">{details?.subtitle || 'Thông số chi tiết và bảng giá lăn bánh chính thức'}</p>
             </div>
           </div>
 
@@ -86,13 +98,13 @@ export default function CarDetailModal({ car, isOpen, onClose, onSelectAndProcee
           <div className="bg-white rounded-2xl border border-[#DCE3EC] overflow-hidden shadow-xs grid grid-cols-1 md:grid-cols-12">
             <div className="md:col-span-5 relative h-52 sm:h-60 md:h-full min-h-[220px] bg-slate-900 overflow-hidden">
               <img
-                src={details.image || car.image}
-                alt={details.name}
+                src={details?.image || car.image}
+                alt={details?.name || car.name}
                 className="w-full h-full object-cover object-center"
               />
               <div className="absolute top-3 left-3 flex flex-col gap-1.5">
                 <span className="px-2.5 py-1 rounded-lg bg-[#07182D]/85 backdrop-blur-md text-[11px] font-bold text-white border border-white/20">
-                  {details.segment}
+                  {details?.segment || car.segment || 'Luxury Car'}
                 </span>
                 <span className="px-2.5 py-0.5 rounded-md bg-emerald-600 text-[10px] font-bold text-white shadow-xs">
                   ● Sẵn sàng lái thử
@@ -106,11 +118,11 @@ export default function CarDetailModal({ car, isOpen, onClose, onSelectAndProcee
                   Bảng Giá & Chi Phí Chính Thức
                 </span>
                 <h3 className="text-lg sm:text-xl font-black text-[#142A43] mt-0.5">
-                  {details.name}
+                  {details?.name || car.name}
                 </h3>
                 <div className="flex items-baseline gap-2 mt-2">
                   <span className="text-2xl sm:text-3xl font-black font-mono text-[#F47721]">
-                    {details.price}
+                    {details?.price || car.price}
                   </span>
                   <span className="text-xs text-[#64748B] font-medium">(Giá niêm yết)</span>
                 </div>
@@ -120,28 +132,30 @@ export default function CarDetailModal({ car, isOpen, onClose, onSelectAndProcee
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-3 border-t border-[#E2E8F0] text-xs">
                 <div className="p-2.5 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC]">
                   <span className="text-[10px] text-[#64748B] block font-medium">Lăn bánh TP.HCM:</span>
-                  <span className="font-bold text-[#142A43] font-mono text-xs">{details.onTheRoad.tphcm}</span>
+                  <span className="font-bold text-[#142A43] font-mono text-xs">{details?.onTheRoad?.tphcm || details?.price || car.price}</span>
                 </div>
                 <div className="p-2.5 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC]">
                   <span className="text-[10px] text-[#64748B] block font-medium">Trả trước từ (20%):</span>
-                  <span className="font-bold text-emerald-700 font-mono text-xs">{details.installment.minPrepay}</span>
+                  <span className="font-bold text-emerald-700 font-mono text-xs">{details?.installment?.minPrepay || 'Từ 20%'}</span>
                 </div>
                 <div className="p-2.5 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC]">
                   <span className="text-[10px] text-[#64748B] block font-medium">Trả góp mỗi tháng:</span>
-                  <span className="font-bold text-[#F47721] font-mono text-xs">{details.installment.monthlyPayment}</span>
+                  <span className="font-bold text-[#F47721] font-mono text-xs">{details?.installment?.monthlyPayment || 'Ưu đãi lãi suất'}</span>
                 </div>
               </div>
 
               {/* Direct CTA inside Hero */}
               <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
-                <button
+                <motion.button
                   type="button"
                   onClick={handleSelectCar}
+                  whileHover={shouldReduceMotion ? {} : buttonMotion.whileHover}
+                  whileTap={shouldReduceMotion ? {} : buttonMotion.whileTap}
                   className="flex-1 py-2.5 px-4 rounded-xl bg-[#F47721] hover:bg-[#E76513] text-white font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs min-h-[44px]"
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>Chọn Xe Này & Đặt Lịch Lái Thử Ngay →</span>
-                </button>
+                </motion.button>
               </div>
             </div>
           </div>
@@ -216,7 +230,7 @@ export default function CarDetailModal({ car, isOpen, onClose, onSelectAndProcee
 
           {/* TAB 1: PRICING & ON-THE-ROAD BREAKDOWN */}
           {activeTab === 'pricing' && (
-            <div className="space-y-4 animate-fade-in">
+            <div className="space-y-4">
               {/* Region Selector */}
               <div className="p-4 rounded-2xl bg-white border border-[#DCE3EC] shadow-xs">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E2E8F0] mb-4">
@@ -274,7 +288,7 @@ export default function CarDetailModal({ car, isOpen, onClose, onSelectAndProcee
                       Tổng Chi Phí Lăn Bánh Tạm Tính ({selectedCity === 'tphcm' ? 'TP.HCM' : selectedCity === 'hanoi' ? 'Hà Nội' : 'Tỉnh'}):
                     </span>
                     <span className="text-2xl sm:text-3xl font-black font-mono text-[#F47721] block mt-0.5">
-                      {details.onTheRoad[selectedCity]}
+                      {details?.onTheRoad?.[selectedCity] || details?.price || car.price}
                     </span>
                   </div>
                   <div className="text-xs text-[#64748B] sm:text-right">
@@ -296,7 +310,7 @@ export default function CarDetailModal({ car, isOpen, onClose, onSelectAndProcee
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-[#E2E8F0]">
-                      {details.fees.map((fee, idx) => (
+                      {(details?.fees || []).map((fee, idx) => (
                         <tr key={idx} className="hover:bg-slate-50">
                           <td className="py-2.5 px-3 font-semibold text-[#142A43]">{fee.name}</td>
                           <td className="py-2.5 px-3 font-mono font-bold text-right text-[#F47721] whitespace-nowrap">
@@ -319,68 +333,76 @@ export default function CarDetailModal({ car, isOpen, onClose, onSelectAndProcee
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs mb-3">
                   <div className="p-3 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC]">
-                    <span className="text-[11px] text-[#64748B] block">Vốn tự có cần chuẩn bị (20%):</span>
-                    <span className="font-mono font-bold text-sm text-emerald-700 mt-1 block">
-                      {details.installment.minPrepay}
+                    <span className="text-[11px] text-[#64748B] block">Số tiền trả trước tối thiểu:</span>
+                    <span className="font-bold text-emerald-700 text-sm font-mono mt-0.5 block">
+                      {details?.installment?.minPrepay || 'Từ 20% giá trị xe'}
                     </span>
                   </div>
                   <div className="p-3 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC]">
-                    <span className="text-[11px] text-[#64748B] block">Số tiền góp hàng tháng:</span>
-                    <span className="font-mono font-bold text-sm text-[#F47721] mt-1 block">
-                      {details.installment.monthlyPayment}
+                    <span className="text-[11px] text-[#64748B] block">Dự tính trả góp hàng tháng:</span>
+                    <span className="font-bold text-[#F47721] text-sm font-mono mt-0.5 block">
+                      {details?.installment?.monthlyPayment || 'Linh hoạt theo kỳ hạn'}
                     </span>
                   </div>
                   <div className="p-3 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC]">
                     <span className="text-[11px] text-[#64748B] block">Thời gian vay tối đa:</span>
-                    <span className="font-bold text-sm text-[#142A43] mt-1 block">
-                      {details.installment.tenor}
+                    <span className="font-bold text-[#142A43] text-sm mt-0.5 block">
+                      {details?.installment?.tenor || 'Lên đến 8 năm (96 tháng)'}
                     </span>
                   </div>
                 </div>
 
-                <p className="text-[11px] text-[#64748B] leading-relaxed bg-[#F8F9F5] p-3 rounded-xl border border-[#DCE3EC]">
-                  💡 <strong>Chính sách vay:</strong> {details.installment.bankRate}
-                </p>
+                <div className="p-3 rounded-xl bg-blue-50 border border-blue-200 text-blue-900 text-xs flex items-start gap-2.5">
+                  <Info className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+                  <p className="leading-relaxed">
+                    <strong>Chính sách đối tác tài chính:</strong> {details?.installment?.bankRate || 'Hỗ trợ thủ tục duyệt hồ sơ trong ngày, liên kết cùng hệ thống ngân hàng lớn.'}
+                  </p>
+                </div>
               </div>
             </div>
           )}
 
-          {/* TAB 2: PROMOTIONS & PERKS */}
+          {/* TAB 2: PROMOTIONS */}
           {activeTab === 'promotions' && (
-            <div className="space-y-4 animate-fade-in">
-              <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#DCE3EC] shadow-xs space-y-4">
-                <div className="flex items-center gap-2 pb-3 border-b border-[#E2E8F0]">
-                  <Gift className="w-5 h-5 text-[#F47721]" />
+            <div className="space-y-4">
+              <div className="p-5 rounded-2xl bg-white border border-[#DCE3EC] shadow-xs space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0]">
                   <div>
-                    <h4 className="font-bold text-sm text-[#142A43]">Chương Trình Khuyến Mãi & Ưu Đãi Độc Quyền</h4>
-                    <p className="text-xs text-[#64748B]">Áp dụng cho khách hàng hoàn tất đăng ký lái thử trực tuyến trong tháng</p>
+                    <h4 className="font-bold text-sm text-[#142A43] flex items-center gap-2">
+                      <Gift className="w-4 h-4 text-[#F47721]" />
+                      Chương Trình Khuyến Mãi Trong Tháng Dành Riêng Cho Khách Hàng
+                    </h4>
+                    <p className="text-xs text-[#64748B] mt-0.5">
+                      Áp dụng cho tất cả khách hàng đăng ký lái thử và đặt cọc qua cổng AutoLead Systems
+                    </p>
                   </div>
+                  <span className="px-2.5 py-1 rounded-full bg-red-100 text-red-700 font-bold text-xs shrink-0 animate-pulse">
+                    🔥 Đang áp dụng
+                  </span>
                 </div>
 
                 <div className="space-y-3">
-                  {details.promotions.map((promo, idx) => (
+                  {(details?.promotions || []).map((promo, idx) => (
                     <div
                       key={idx}
-                      className="p-3.5 rounded-xl bg-orange-50/60 border border-orange-200 flex items-start gap-3"
+                      className="p-3.5 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] flex items-start gap-3 text-xs text-[#142A43]"
                     >
-                      <div className="w-6 h-6 rounded-lg bg-[#F47721] text-white flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
-                        <CheckCircle2 className="w-4 h-4" />
-                      </div>
+                      <span className="w-5 h-5 rounded-md bg-[#F47721] text-white flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">
+                        {idx + 1}
+                      </span>
                       <div className="flex-1">
-                        <p className="text-xs font-bold text-[#142A43]">{promo}</p>
-                        <span className="text-[10px] text-[#64748B] mt-0.5 block">
-                          Chính hãng Mercedes-Benz / Porsche • Áp dụng toàn quốc
-                        </span>
+                        <span className="font-semibold text-sm leading-snug block">{promo}</span>
                       </div>
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                     </div>
                   ))}
                 </div>
 
-                <div className="p-4 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-xs text-[#64748B] flex items-start gap-2.5">
-                  <Info className="w-4 h-4 text-[#F47721] shrink-0 mt-0.5" />
-                  <p className="leading-relaxed">
-                    <strong>Lưu ý:</strong> Quà tặng phụ kiện và gói bảo dưỡng được kích hoạt ngay khi hoàn tất hợp đồng đặt cọc xe sau buổi lái thử thực tế tại Showroom.
-                  </p>
+                <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-center gap-2.5">
+                  <Sparkles className="w-4 h-4 text-amber-600 shrink-0" />
+                  <span>
+                    <strong>Quà tặng độc quyền:</strong> Khách hàng hoàn tất buổi lái thử nhận ngay bộ quà lưu niệm chính hãng và voucher dịch vụ trị giá 5.000.000 VNĐ.
+                  </span>
                 </div>
               </div>
             </div>
@@ -388,24 +410,28 @@ export default function CarDetailModal({ car, isOpen, onClose, onSelectAndProcee
 
           {/* TAB 3: SPECIFICATIONS */}
           {activeTab === 'specs' && (
-            <div className="space-y-4 animate-fade-in">
-              <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#DCE3EC] shadow-xs">
-                <div className="flex items-center gap-2 pb-3 border-b border-[#E2E8F0] mb-4">
-                  <Gauge className="w-5 h-5 text-[#F47721]" />
-                  <div>
-                    <h4 className="font-bold text-sm text-[#142A43]">Bảng Thông Số Kỹ Thuật Đầy Đủ</h4>
-                    <p className="text-xs text-[#64748B]">Được kiểm chứng theo tiêu chuẩn thông số nhà sản xuất chính hãng</p>
-                  </div>
+            <div className="space-y-4">
+              <div className="p-5 rounded-2xl bg-white border border-[#DCE3EC] shadow-xs">
+                <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0] mb-4">
+                  <h4 className="font-bold text-sm text-[#142A43] flex items-center gap-2">
+                    <Gauge className="w-4 h-4 text-[#F47721]" />
+                    Thông Số Kỹ Thuật Động Cơ & Vận Hành
+                  </h4>
+                  <span className="text-xs font-mono text-[#64748B]">Bản tiêu chuẩn Việt Nam</span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                  {details.specs.map((item, idx) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                  {(details?.specs || []).map((spec, idx) => (
                     <div
                       key={idx}
-                      className="p-3 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] flex flex-col justify-between hover:border-slate-300 transition-colors"
+                      className="p-3 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] flex flex-col justify-between"
                     >
-                      <span className="text-[11px] font-semibold text-[#64748B]">{item.label}</span>
-                      <span className="text-xs font-bold text-[#142A43] mt-1">{item.value}</span>
+                      <span className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider block">
+                        {spec.label}
+                      </span>
+                      <span className="text-xs sm:text-sm font-semibold text-[#142A43] mt-1 block">
+                        {spec.value}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -415,24 +441,24 @@ export default function CarDetailModal({ car, isOpen, onClose, onSelectAndProcee
 
           {/* TAB 4: FEATURES & SAFETY */}
           {activeTab === 'features' && (
-            <div className="space-y-4 animate-fade-in">
-              <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#DCE3EC] shadow-xs space-y-4">
-                <div className="flex items-center gap-2 pb-3 border-b border-[#E2E8F0]">
-                  <ShieldCheck className="w-5 h-5 text-[#F47721]" />
-                  <div>
-                    <h4 className="font-bold text-sm text-[#142A43]">Trang Bị Tiện Nghi & Công Nghệ An Toàn Nổi Bật</h4>
-                    <p className="text-xs text-[#64748B]">Những trang bị cao cấp bạn sẽ trực tiếp trải nghiệm khi lái thử</p>
-                  </div>
+            <div className="space-y-4">
+              <div className="p-5 rounded-2xl bg-white border border-[#DCE3EC] shadow-xs space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0]">
+                  <h4 className="font-bold text-sm text-[#142A43] flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-[#F47721]" />
+                    Trang Bị Tiện Nghi & Công Nghệ An Toàn Chủ Động
+                  </h4>
+                  <span className="text-xs font-mono text-emerald-700 font-bold">Chuẩn an toàn 5 sao</span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                  {details.features.map((feat, idx) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {(details?.features || []).map((feat, idx) => (
                     <div
                       key={idx}
-                      className="p-3.5 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] flex items-start gap-2.5 hover:border-slate-300 transition-colors"
+                      className="p-3 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] flex items-start gap-2.5 text-xs text-[#142A43]"
                     >
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                      <span className="leading-relaxed font-medium text-[#142A43]">{feat}</span>
+                      <CheckCircle2 className="w-4 h-4 text-[#159B68] shrink-0 mt-0.5" />
+                      <span className="leading-relaxed font-medium">{feat}</span>
                     </div>
                   ))}
                 </div>
@@ -440,48 +466,55 @@ export default function CarDetailModal({ car, isOpen, onClose, onSelectAndProcee
             </div>
           )}
 
-          {/* TAB 5: SHOWROOM & TEST DRIVE READINESS */}
+          {/* TAB 5: SHOWROOM & TEST DRIVE PREPARATION */}
           {activeTab === 'showroom' && (
-            <div className="space-y-4 animate-fade-in">
-              <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#DCE3EC] shadow-xs space-y-4">
-                <div className="flex items-center gap-2 pb-3 border-b border-[#E2E8F0]">
-                  <MapPin className="w-5 h-5 text-[#F47721]" />
-                  <div>
-                    <h4 className="font-bold text-sm text-[#142A43]">Tình Trạng Xe Sẵn Sàng Tại Showroom</h4>
-                    <p className="text-xs text-[#64748B]">Thông tin địa điểm đón tiếp và các màu sắc xe có sẵn</p>
-                  </div>
+            <div className="space-y-4">
+              <div className="p-5 rounded-2xl bg-white border border-[#DCE3EC] shadow-xs space-y-4">
+                <div className="pb-3 border-b border-[#E2E8F0]">
+                  <h4 className="font-bold text-sm text-[#142A43] flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-[#F47721]" />
+                    Thông Tin Địa Điểm Trưng Bày & Đội Xe Lái Thử Thực Tế
+                  </h4>
+                  <p className="text-xs text-[#64748B] mt-0.5">
+                    Hệ thống đại lý ủy quyền và showroom liên kết chính hãng trong mạng lưới AutoLead Systems
+                  </p>
                 </div>
 
-                <div className="space-y-3 text-xs">
-                  <div className="p-3.5 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC]">
-                    <span className="text-[11px] font-bold text-[#64748B] block uppercase">Showroom đón tiếp:</span>
-                    <span className="text-sm font-bold text-[#142A43] mt-1 block">
-                      {details.testDriveInfo.showroom}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] space-y-2">
+                    <span className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider block">
+                      Showroom Tiếp Nhận Trực Tiếp:
                     </span>
+                    <span className="text-sm font-bold text-[#142A43] block">
+                      {details?.testDriveInfo?.showroom || 'Hệ thống showroom chính hãng liên kết'}
+                    </span>
+                    <p className="text-xs text-[#64748B]">
+                      Hỗ trợ đón tiếp chu đáo, phục vụ cà phê cao cấp và hướng dẫn lộ trình lái thử chuyên nghiệp.
+                    </p>
                   </div>
 
-                  <div className="p-3.5 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC]">
-                    <span className="text-[11px] font-bold text-[#64748B] block uppercase mb-2">
-                      Màu sắc xe lái thử có sẵn:
+                  <div className="p-4 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] space-y-2">
+                    <span className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider block">
+                      Màu Sắc Sẵn Xe Trải Nghiệm:
                     </span>
-                    <div className="flex flex-wrap gap-2">
-                      {details.testDriveInfo.colorsAvailable.map((color, cIdx) => (
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {(details?.testDriveInfo?.colorsAvailable || ['Trắng', 'Đen', 'Xám']).map((col, idx) => (
                         <span
-                          key={cIdx}
-                          className="px-3 py-1 rounded-lg bg-white border border-[#DCE3EC] font-semibold text-[#142A43] text-xs shadow-2xs"
+                          key={idx}
+                          className="px-2.5 py-1 rounded-lg bg-white border border-[#DCE3EC] text-xs font-semibold text-[#142A43]"
                         >
-                          🚗 {color}
+                          {col}
                         </span>
                       ))}
                     </div>
                   </div>
+                </div>
 
-                  <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <span className="font-bold block">Cam kết chuẩn bị xe:</span>
-                      <p className="text-[11px] mt-0.5 leading-relaxed">{details.testDriveInfo.status}</p>
-                    </div>
+                <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-bold block">Cam kết chuẩn bị xe:</span>
+                    <p className="text-[11px] mt-0.5 leading-relaxed">{details?.testDriveInfo?.status || 'Xe sẵn sàng - Nhiên liệu đầy đủ, đón tiếp chuyên nghiệp.'}</p>
                   </div>
                 </div>
               </div>
@@ -493,7 +526,7 @@ export default function CarDetailModal({ car, isOpen, onClose, onSelectAndProcee
         <div className="p-4 sm:p-5 bg-white border-t border-[#DCE3EC] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 shrink-0">
           <div className="hidden sm:block">
             <span className="text-xs text-[#64748B] block">Đang xem thông tin mẫu xe:</span>
-            <span className="text-sm font-extrabold text-[#142A43]">{details.name}</span>
+            <span className="text-sm font-extrabold text-[#142A43]">{details?.name || car.name}</span>
           </div>
 
           <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">
