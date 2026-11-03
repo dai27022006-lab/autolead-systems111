@@ -17,7 +17,8 @@ import {
   ChevronRight,
   ShieldCheck,
   MessageSquare,
-  FileText
+  FileText,
+  Building2
 } from 'lucide-react';
 import { VEHICLE_OPTIONS, SALESPERSON_LIST } from '../../data/mockData.js';
 
@@ -218,13 +219,33 @@ export default function LeadManagement({
                         )}
                       </div>
 
-                      <h4 className="text-xs font-bold text-[#142A43] group-hover:text-[#F47721] transition-colors">
-                        {lead.customerName}
-                      </h4>
-                      <p className="text-[11px] text-[#64748B] mt-0.5 truncate">{lead.interestedVehicle}</p>
+                      <div className="flex items-start justify-between gap-1">
+                        <h4 className="text-xs font-bold text-[#142A43] group-hover:text-[#F47721] transition-colors">
+                          {lead.customerName}
+                        </h4>
+                        {lead.leadSource?.includes('Web') && (
+                          <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-700 border border-emerald-300 shrink-0">
+                            Portal Synced
+                          </span>
+                        )}
+                      </div>
 
-                      <div className="mt-3 pt-2.5 border-t border-[#E2E8F0] flex items-center justify-between text-[10px] text-[#64748B]">
-                        <span>{lead.phone}</span>
+                      <p className="text-[11px] text-[#64748B] mt-0.5 truncate font-medium">{lead.interestedVehicle}</p>
+
+                      {/* Showroom & Timing details matching Leader's specification */}
+                      <div className="mt-2 space-y-1 text-[10px] text-[#64748B]">
+                        <div className="flex items-center gap-1 text-[#142A43] font-semibold truncate">
+                          <Building2 className="w-3 h-3 text-[#F47721] shrink-0" />
+                          <span className="truncate">{lead.showroom || 'Mercedes-Benz Haxaco TP.HCM'}</span>
+                        </div>
+                        <div className="flex items-center justify-between text-[#64748B]">
+                          <span>⏱️ {lead.expectedPurchasingTime || 'Trong 2 tuần tới'}</span>
+                          <span className="text-emerald-700 font-bold">{lead.preferredContact || 'Zalo OA'}</span>
+                        </div>
+                      </div>
+
+                      <div className="mt-2.5 pt-2 border-t border-[#E2E8F0] flex items-center justify-between text-[10px] text-[#64748B]">
+                        <span className="font-mono">{lead.phone}</span>
                         <span className="text-[#142A43] font-medium">{lead.vehicleSegment}</span>
                       </div>
 
@@ -271,7 +292,8 @@ export default function LeadManagement({
                   <th className="py-3.5 px-4">Khách Hàng</th>
                   <th className="py-3.5 px-4">Số Điện Thoại</th>
                   <th className="py-3.5 px-4">Mẫu Xe Quan Tâm</th>
-                  <th className="py-3.5 px-4">Nguồn</th>
+                  <th className="py-3.5 px-4">Showroom Đón Tiếp</th>
+                  <th className="py-3.5 px-4">Nhu Cầu Mua</th>
                   <th className="py-3.5 px-4">AI Score</th>
                   <th className="py-3.5 px-4">Trạng Thái</th>
                   <th className="py-3.5 px-4">Sales Phụ Trách</th>
@@ -282,10 +304,24 @@ export default function LeadManagement({
                 {filteredLeads.map((ld) => (
                   <tr key={ld.id} className="hover:bg-slate-50 transition-colors cursor-pointer" onClick={() => setSelectedLead(ld)}>
                     <td className="py-3 px-4 font-mono text-[#94A3B8]">{ld.id}</td>
-                    <td className="py-3 px-4 text-[#142A43] font-bold">{ld.customerName}</td>
-                    <td className="py-3 px-4 text-[#64748B]">{ld.phone}</td>
-                    <td className="py-3 px-4 text-[#142A43]">{ld.interestedVehicle}</td>
-                    <td className="py-3 px-4 text-[#64748B]">{ld.leadSource || 'Khách đăng ký Web'}</td>
+                    <td className="py-3 px-4 text-[#142A43] font-bold">
+                      <div className="flex items-center gap-1.5">
+                        <span>{ld.customerName}</span>
+                        {ld.leadSource?.includes('Web') && (
+                          <span className="text-[9px] font-bold px-1 rounded bg-emerald-100 text-emerald-800">
+                            Portal
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="py-3 px-4 text-[#64748B] font-mono">{ld.phone}</td>
+                    <td className="py-3 px-4 text-[#142A43] font-medium">{ld.interestedVehicle}</td>
+                    <td className="py-3 px-4 text-[#64748B] max-w-[150px] truncate" title={ld.showroom}>
+                      {ld.showroom || 'Mercedes-Benz Haxaco TP.HCM'}
+                    </td>
+                    <td className="py-3 px-4 text-[#64748B]">
+                      {ld.expectedPurchasingTime || 'Trong 2 tuần tới'}
+                    </td>
                     <td className="py-3 px-4">
                       <span className="font-bold text-[#F47721] font-mono">
                         {ld.qualificationDetails?.aiScore || 50}%
@@ -365,8 +401,14 @@ export default function LeadManagement({
                   <span className="font-bold text-[#F47721]">{selectedLead.interestedVehicle || 'Chưa chọn mẫu xe'}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#64748B]">Phân khúc:</span>
-                  <span>{selectedLead.vehicleSegment || 'Tiêu chuẩn'}</span>
+                  <span className="text-[#64748B]">Showroom đón tiếp:</span>
+                  <span className="font-bold text-[#142A43] truncate max-w-[200px]" title={selectedLead.showroom}>
+                    {selectedLead.showroom || 'Mercedes-Benz Haxaco Điện Biên Phủ'}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#64748B]">Kênh ưu tiên:</span>
+                  <span className="text-emerald-700 font-bold">{selectedLead.preferredContact || 'Zalo OA'}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#64748B]">Ngân sách dự kiến:</span>
@@ -374,7 +416,7 @@ export default function LeadManagement({
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#64748B]">Thời điểm mua:</span>
-                  <span>{selectedLead.expectedPurchasingTime || 'Trong tháng này'}</span>
+                  <span className="font-semibold text-[#142A43]">{selectedLead.expectedPurchasingTime || 'Trong 2 tuần tới'}</span>
                 </div>
               </div>
             </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, CheckCircle2, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowRight, Sparkles, CheckCircle2, ShieldCheck, Zap, Car, Building2 } from 'lucide-react';
 import { PixelCarOrange } from './PixelIcons';
 import PixelFringe from './PixelFringe';
 import heroBg from '../../assets/hero-pixel-automotive-world.jpg';
@@ -37,7 +37,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
                 <PixelCarOrange size={20} />
                 <span className="text-[#F47721]">AUTOLEAD</span>
                 <span className="text-white/60">•</span>
-                <span>AI CHO ĐẠI LÝ Ô TÔ</span>
+                <span>HỆ THỐNG 2 GIAO DIỆN TÍCH HỢP</span>
               </div>
 
               {/* Main Headline */}
@@ -51,59 +51,48 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
 
               {/* Subtitle */}
               <p className="text-xs sm:text-base text-slate-200 font-normal leading-relaxed">
-                AutoLead Systems giúp đại lý ô tô thu hút đúng khách hàng, sàng lọc tự động theo 7 tiêu chí TQM và đặt lịch lái thử hiệu quả hơn.
+                AutoLead Systems xây dựng mô hình web thống nhất gồm <strong>2 giao diện kết nối qua CSDL chung</strong>: Cổng khách hàng đặt lịch & Hệ thống CRM tiếp nhận, phân luồng và quản lý lead cho đại lý.
               </p>
 
-              {/* CTAs */}
-              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
-                {onOpenContact ? (
-                  <button
-                    type="button"
-                    onClick={onOpenContact}
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm text-white bg-[#F47721] hover:bg-[#E76513] shadow-lg shadow-[#F47721]/30 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer min-h-[48px]"
-                  >
-                    <span>Đăng ký tư vấn 30 phút</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                ) : (
-                  <Link
-                    to="/contact"
-                    onClick={handleScrollTop}
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm text-white bg-[#F47721] hover:bg-[#E76513] shadow-lg shadow-[#F47721]/30 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer min-h-[48px]"
-                  >
-                    <span>Đăng ký tư vấn 30 phút</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                )}
-
-                {onOpenMvpDemo ? (
-                  <button
-                    type="button"
-                    onClick={onOpenMvpDemo}
-                    className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-sm text-white hover:text-slate-200 bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/35 transition-all cursor-pointer shadow-xs min-h-[48px]"
-                  >
-                    <Sparkles className="w-4 h-4 text-[#F47721]" />
-                    <span>Xem demo hệ thống →</span>
-                  </button>
-                ) : (
-                  <Link
-                    to="/demo"
-                    onClick={handleScrollTop}
-                    className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-sm text-white hover:text-slate-200 bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/35 transition-all cursor-pointer shadow-xs min-h-[48px]"
-                  >
-                    <Sparkles className="w-4 h-4 text-[#F47721]" />
-                    <span>Xem demo hệ thống →</span>
-                  </Link>
-                )}
+              {/* CTAs: 2 Connected Interfaces prominent buttons */}
+              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <Link
+                  to="/demo"
+                  onClick={handleScrollTop}
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-xs text-white bg-gradient-to-r from-[#F47721] to-[#E76513] hover:from-[#E76513] hover:to-[#D55302] shadow-lg shadow-[#F47721]/30 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer min-h-[48px]"
+                >
+                  <Car className="w-4 h-4 text-white" />
+                  <span>🚗 Giao diện 1: Đặt lịch</span>
+                </Link>
 
                 <Link
                   to="/crm"
                   onClick={handleScrollTop}
-                  className="inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl font-semibold text-xs text-white/90 hover:text-white bg-slate-900/60 hover:bg-slate-900/80 border border-white/20 transition-all cursor-pointer min-h-[44px]"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-xs text-white bg-[#142A43] hover:bg-[#07182D] border-2 border-emerald-400/50 shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer min-h-[48px]"
                 >
-                  <ShieldCheck className="w-4 h-4 text-[#75A94C]" />
-                  <span>Cổng CRM Đại lý</span>
+                  <Building2 className="w-4 h-4 text-emerald-400" />
+                  <span>🏢 Giao diện 2: CRM Đại lý</span>
                 </Link>
+
+                <Link
+                  to="/contact"
+                  onClick={handleScrollTop}
+                  className="inline-flex items-center justify-center gap-1.5 px-4 py-3.5 rounded-xl font-semibold text-xs text-slate-200 hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 transition-all cursor-pointer min-h-[48px]"
+                >
+                  <span>Tư vấn B2B</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#F47721]" />
+                </Link>
+              </div>
+
+              {/* Visual Synchronized Connection Badge */}
+              <div className="p-2.5 rounded-xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-between text-[11px] text-emerald-300">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span>Hai giao diện tự động đồng bộ thời gian thực qua CSDL chung (0.05s)</span>
+                </div>
+                <span className="text-[10px] font-mono font-bold text-white bg-emerald-600/40 px-2 py-0.5 rounded">
+                  Live Synced
+                </span>
               </div>
 
               {/* Offer Highlight */}

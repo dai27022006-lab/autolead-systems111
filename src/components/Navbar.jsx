@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ArrowRight, Sparkles, Database, ShieldCheck, Menu, X } from 'lucide-react';
+import { ArrowRight, Sparkles, Database, ShieldCheck, Menu, X, Car, Building2 } from 'lucide-react';
 import { PixelCarOrange } from './public/PixelIcons';
 
 export default function Navbar({
@@ -116,36 +116,36 @@ export default function Navbar({
             })}
           </nav>
 
-          {/* Desktop Action Buttons (Điều hướng sang các trang độc lập) */}
-          <div className="hidden lg:flex items-center gap-2.5">
-            {/* Switch to Buyer Demo Page */}
+          {/* Desktop Action Buttons: 2 Connected Interfaces */}
+          <div className="hidden lg:flex items-center gap-2">
+            {/* Giao diện 1: Khách hàng */}
             <Link
               to="/demo"
               onClick={handleScrollTop}
               className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs ${
                 isScrolled
-                  ? 'bg-white hover:bg-[#F8F9F5] text-[#142A43] border border-[#DCE3EC]'
+                  ? 'bg-white hover:bg-orange-50 text-[#142A43] border border-[#DCE3EC]'
                   : 'bg-white/20 hover:bg-white/30 text-white backdrop-blur-md border border-white/40 drop-shadow-sm'
               }`}
-              title="Trải nghiệm luồng đặt lịch lái thử của khách hàng mua xe (Buyer Portal - Bạn Đại)"
+              title="Giao diện 1: Trải nghiệm luồng đặt lịch lái thử của khách hàng (Buyer Portal)"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#F47721]" />
-              <span>Xem demo hệ thống →</span>
+              <Car className="w-3.5 h-3.5 text-[#F47721]" />
+              <span>🚗 Giao diện 1: Đặt lịch</span>
             </Link>
 
-            {/* Switch to CRM Page */}
+            {/* Giao diện 2: Doanh nghiệp (CRM) */}
             <Link
               to="/crm"
               onClick={handleScrollTop}
               className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs ${
                 isScrolled
-                  ? 'bg-[#142A43] hover:bg-[#07182D] text-white border border-[#142A43]'
-                  : 'bg-[#142A43]/80 hover:bg-[#142A43] text-white backdrop-blur-md border border-white/30'
+                  ? 'bg-[#142A43] hover:bg-[#07182D] text-white border border-[#142A43] ring-1 ring-emerald-400/40'
+                  : 'bg-[#142A43]/90 hover:bg-[#142A43] text-white backdrop-blur-md border border-white/30 ring-1 ring-emerald-400/40'
               }`}
-              title="Truy cập hệ thống CRM quản trị vận hành showroom"
+              title="Giao diện 2: Hệ thống CRM quản trị và tiếp nhận lead đại lý showroom"
             >
-              <ShieldCheck className="w-3.5 h-3.5 text-[#75A94C]" />
-              <span>Cổng CRM</span>
+              <Building2 className="w-3.5 h-3.5 text-emerald-400" />
+              <span>🏢 Giao diện 2: CRM Đại lý</span>
             </Link>
 
             {/* Open Leads Manager Modal */}
@@ -225,19 +225,25 @@ export default function Navbar({
               <button
                 type="button"
                 onClick={() => handleNavClick('/demo')}
-                className="w-full min-h-[44px] flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-bold text-[#142A43] bg-[#F8F9F5] border border-[#DCE3EC] cursor-pointer"
+                className="w-full min-h-[44px] flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-[#142A43] bg-orange-50 border border-orange-200 cursor-pointer"
               >
-                <Sparkles className="w-4 h-4 text-[#F47721]" />
-                <span>Xem demo hệ thống (Buyer Portal) →</span>
+                <div className="flex items-center gap-2">
+                  <Car className="w-4 h-4 text-[#F47721]" />
+                  <span>🚗 Giao diện 1: Đặt lịch lái thử</span>
+                </div>
+                <ArrowRight className="w-3.5 h-3.5 text-[#F47721]" />
               </button>
 
               <button
                 type="button"
                 onClick={() => handleNavClick('/crm')}
-                className="w-full min-h-[44px] flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-bold text-white bg-[#142A43] cursor-pointer"
+                className="w-full min-h-[44px] flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-white bg-[#142A43] border border-emerald-500/30 cursor-pointer"
               >
-                <ShieldCheck className="w-4 h-4 text-[#75A94C]" />
-                <span>Cổng điều hành CRM Showroom</span>
+                <div className="flex items-center gap-2">
+                  <Building2 className="w-4 h-4 text-emerald-400" />
+                  <span>🏢 Giao diện 2: Doanh nghiệp (CRM)</span>
+                </div>
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500 text-white">Live</span>
               </button>
 
               {onOpenLeadViewer && (

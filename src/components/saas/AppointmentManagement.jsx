@@ -11,7 +11,8 @@ import {
   Check,
   ShieldCheck,
   Filter,
-  Car
+  Car,
+  Building2
 } from 'lucide-react';
 import { VEHICLE_OPTIONS, SALESPERSON_LIST } from '../../data/mockData.js';
 
@@ -200,6 +201,12 @@ export default function AppointmentManagement({
                       <Car className="w-3.5 h-3.5 text-[#F47721] shrink-0" />
                       <span className="font-semibold text-[#142A43]">{apt.vehicleModel}</span>
                     </div>
+                    {apt.showroom && (
+                      <div className="flex items-center gap-2">
+                        <Building2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                        <span className="text-[#64748B]">Showroom: <strong className="text-[#142A43]">{apt.showroom}</strong></span>
+                      </div>
+                    )}
                     <div className="flex items-center gap-2">
                       <CalendarIcon className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                       <span className="text-[#64748B]">{apt.appointmentDate} • {apt.appointmentTime}</span>

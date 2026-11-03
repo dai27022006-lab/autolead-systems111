@@ -12,10 +12,25 @@ import {
   ShieldCheck,
   ArrowRight,
   ChevronRight,
-  Bot
+  Bot,
+  Building2
 } from 'lucide-react';
 import { api } from '../../services/api';
 import CarDetailModal from './CarDetailModal';
+
+export const SHOWROOM_OPTIONS = [
+  { id: 'haxaco-dbp', name: 'Mercedes-Benz Haxaco Điện Biên Phủ (Bình Thạnh, TP.HCM)', city: 'TP.HCM' },
+  { id: 'haxaco-langha', name: 'Mercedes-Benz Haxaco Láng Hạ (Ba Đình, Hà Nội)', city: 'Hà Nội' },
+  { id: 'porsche-saigon', name: 'Porsche Centre Sài Gòn (Quận 7, TP.HCM)', city: 'TP.HCM' },
+  { id: 'auto568-mydinh', name: 'Auto 568 Luxury Showroom (Mỹ Đình, Hà Nội)', city: 'Hà Nội' },
+  { id: 'mercedes-danang', name: 'Mercedes-Benz An Du (Cẩm Lệ, Đà Nẵng)', city: 'Đà Nẵng' }
+];
+
+export const PREFERRED_CONTACT_OPTIONS = [
+  { id: 'Zalo OA', label: 'Zalo OA', desc: 'Nhận báo giá lăn bánh, E-Brochure & bảng tính trả góp' },
+  { id: 'Gọi điện thoại', label: 'Gọi điện thoại', desc: 'Chuyên viên gọi điện xác nhận trong 5 phút' },
+  { id: 'Tin nhắn SMS', label: 'Tin nhắn SMS', desc: 'Nhận mã QR Check-in lái thử tại Showroom' }
+];
 
 export default function BuyerDemo({ onNavigateToCRM }) {
   const [cars, setCars] = useState([]);
@@ -27,6 +42,8 @@ export default function BuyerDemo({ onNavigateToCRM }) {
   const [customerName, setCustomerName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
+  const [selectedShowroom, setSelectedShowroom] = useState('Mercedes-Benz Haxaco Điện Biên Phủ (Bình Thạnh, TP.HCM)');
+  const [preferredContact, setPreferredContact] = useState('Zalo OA');
   const [createdLead, setCreatedLead] = useState(null);
 
   // AI Questionnaire
@@ -120,7 +137,9 @@ export default function BuyerDemo({ onNavigateToCRM }) {
         phone: phone.trim(),
         email: email.trim(),
         interestedVehicle: selectedCar?.name || 'Mercedes-Benz C200 Avantgarde 2024',
-        vehicleSegment: selectedCar?.segment || 'Luxury Sedan'
+        vehicleSegment: selectedCar?.segment || 'Luxury Sedan',
+        showroom: selectedShowroom,
+        preferredContact: preferredContact
       });
       setCreatedLead(lead);
       setCurrentStep(3); // Go to AI qualification questions
@@ -171,7 +190,9 @@ export default function BuyerDemo({ onNavigateToCRM }) {
         vehicleModel: selectedCar.name,
         appointmentDate,
         appointmentTime: selectedSlot,
-        notes: `Mục đích: ${purchasePurpose}. Dự kiến mua: ${expectedPurchasingTime}.`
+        showroom: selectedShowroom,
+        preferredContact: preferredContact,
+        notes: `Showroom đón: ${selectedShowroom}. Kênh ưu tiên: ${preferredContact}. Mục đích: ${purchasePurpose}. Dự kiến mua: ${expectedPurchasingTime}.`
       });
       setConfirmedAppointment(apt);
       setCurrentStep(5); // Success confirmation
@@ -480,6 +501,59 @@ export default function BuyerDemo({ onNavigateToCRM }) {
               </div>
             </div>
 
+            {/* Showroom Selector (Phân luồng chi nhánh) */}
+            <div>
+              <label className="block text-[#142A43] font-bold mb-1 flex items-center justify-between">
+                <span>Chọn Showroom / Đại lý đón tiếp <span className="text-[#F47721]">*</span></span>
+                <span className="text-[10px] text-emerald-600 font-semibold">Tự động đẩy về CRM chi nhánh</span>
+              </label>
+              <div className="relative">
+                <Building2 className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <select
+                  value={selectedShowroom}
+                  onChange={(e) => setSelectedShowroom(e.target.value)}
+                  className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] font-semibold outline-none focus:border-[#F47721] focus:bg-white focus:ring-1 focus:ring-[#F47721] transition-all cursor-pointer"
+                >
+                  {SHOWROOM_OPTIONS.map((sr) => (
+                    <option key={sr.id} value={sr.name}>
+                      [{sr.city}] {sr.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <p className="text-[10px] text-[#64748B] mt-1">
+                Chứng minh khả năng phân quyền & multi-tenant: Mỗi đại lý chỉ nhận lead gửi về chi nhánh của mình.
+              </p>
+            </div>
+
+            {/* Preferred Contact Method (Theo chuẩn BMW Dealership) */}
+            <div>
+              <label className="block text-[#142A43] font-bold mb-1.5 flex items-center justify-between">
+                <span>Phương thức liên hệ ưu tiên <span className="text-[#F47721]">*</span></span>
+                <span className="text-[10px] text-[#F47721] font-semibold">Chuẩn S44 X BMW</span>
+              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                {PREFERRED_CONTACT_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    onClick={() => setPreferredContact(opt.id)}
+                    className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer min-h-[44px] flex flex-col justify-center ${
+                      preferredContact === opt.id
+                        ? 'bg-orange-50 border-2 border-[#F47721] text-[#142A43] font-bold shadow-xs'
+                        : 'bg-[#F8F9F5] border border-[#DCE3EC] text-[#64748B] hover:border-slate-300'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold">{opt.label}</span>
+                      {preferredContact === opt.id && <span className="w-2 h-2 rounded-full bg-[#F47721]"></span>}
+                    </div>
+                    <span className="text-[10px] text-[#64748B] mt-0.5 line-clamp-1">{opt.desc}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="pt-4 flex items-center justify-between gap-3">
               <button
                 type="button"
@@ -760,58 +834,139 @@ export default function BuyerDemo({ onNavigateToCRM }) {
 
       {/* STEP 5: SUCCESS CONFIRMATION & SEAMLESS TRANSITION TO CRM */}
       {currentStep === 5 && confirmedAppointment && (
-        <div className="max-w-2xl mx-auto rounded-2xl sm:rounded-3xl bg-white border border-[#DCE3EC] p-5 sm:p-10 shadow-lg text-center space-y-6">
-          <div className="w-16 h-16 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-600 flex items-center justify-center mx-auto">
+        <div className="max-w-3xl mx-auto rounded-2xl sm:rounded-3xl bg-white border-2 border-emerald-500/40 p-5 sm:p-8 shadow-xl text-center space-y-6">
+          <div className="w-16 h-16 rounded-full bg-emerald-100 border-2 border-emerald-400 text-emerald-600 flex items-center justify-center mx-auto shadow-sm">
             <CheckCircle2 className="w-9 h-9" />
           </div>
 
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 block mb-1">
-              Đặt Lịch Lái Thử Hoàn Tất
-            </span>
-            <h3 className="text-xl sm:text-2xl font-black text-[#142A43]">Xác Nhận Cuộc Hẹn Đủ Điều Kiện Thành Công!</h3>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              Dữ Liệu Đã Được Đồng Bộ Tức Thì Sang CRM Đại Lý
+            </div>
+            <h3 className="text-xl sm:text-2xl font-black text-[#142A43]">
+              Lịch Hẹn Lái Thử Đã Được Tiếp Nhận Thành Công!
+            </h3>
             <p className="text-xs text-[#64748B] mt-1">
-              Mã lịch hẹn hệ thống: <strong className="text-[#F47721] font-mono text-sm">{confirmedAppointment.id}</strong>
+              Mã hồ sơ định danh: <strong className="text-[#F47721] font-mono text-sm">{confirmedAppointment.id}</strong> • Mã Lead: <strong className="text-[#142A43] font-mono">{confirmedAppointment.leadId || createdLead?.id}</strong>
             </p>
           </div>
 
-          <div className="p-5 rounded-2xl bg-[#F8F9F5] border border-[#DCE3EC] text-left text-xs space-y-2.5 text-[#142A43]">
-            <div className="flex justify-between">
-              <span className="text-[#64748B]">Khách hàng:</span>
-              <strong className="text-[#142A43]">{confirmedAppointment.customerName}</strong>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-[#64748B]">Số điện thoại:</span>
-              <span className="font-mono text-[#142A43]">{confirmedAppointment.customerPhone}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-[#64748B]">Xe lái thử:</span>
-              <strong className="text-[#F47721]">{confirmedAppointment.vehicleModel}</strong>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-[#64748B]">Thời gian hẹn:</span>
-              <span className="font-semibold text-[#142A43]">{confirmedAppointment.appointmentDate} • {confirmedAppointment.appointmentTime}</span>
-            </div>
-            <div className="flex justify-between pt-2 border-t border-[#E2E8F0]">
-              <span className="text-[#64748B]">Phí nghiệm thu đối tác:</span>
-              <span className="text-emerald-700 font-black">+300.000 VNĐ (Qualified CPA)</span>
+          {/* DUAL-INTERFACE ARCHITECTURE VISUALIZATION (MATCHING LEADER'S DIAGRAM) */}
+          <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-orange-50 via-slate-50 to-emerald-50 border border-[#DCE3EC] text-left">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+              {/* Interface 1 side */}
+              <div className="p-3 rounded-xl bg-white border border-orange-200 shadow-2xs flex-1 w-full">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#F47721] mb-1 justify-center sm:justify-start">
+                  <Car className="w-4 h-4" />
+                  <span>GIAO DIỆN 1: KHÁCH HÀNG</span>
+                </div>
+                <p className="text-[11px] text-[#142A43] font-semibold">Khách vừa hoàn tất gửi yêu cầu</p>
+                <p className="text-[10px] text-[#64748B] mt-0.5">Xe: {confirmedAppointment.vehicleModel}</p>
+              </div>
+
+              {/* Sync Arrow with CSDL Chung */}
+              <div className="flex flex-col items-center shrink-0 py-1">
+                <div className="px-2.5 py-1 rounded-full bg-emerald-600 text-white text-[10px] font-black uppercase tracking-wider shadow-xs animate-pulse">
+                  ⇄ CSDL DÙNG CHUNG
+                </div>
+                <span className="text-[10px] text-emerald-700 font-bold mt-1">Đồng bộ 0.05s</span>
+              </div>
+
+              {/* Interface 2 side */}
+              <div className="p-3 rounded-xl bg-[#07182D] text-white border border-emerald-400 shadow-2xs flex-1 w-full">
+                <div className="flex items-center gap-2 text-xs font-bold text-emerald-400 mb-1 justify-center sm:justify-start">
+                  <Building2 className="w-4 h-4" />
+                  <span>GIAO DIỆN 2: DOANH NGHIỆP</span>
+                </div>
+                <p className="text-[11px] text-white font-semibold">CRM Showroom đã nhận hồ sơ</p>
+                <p className="text-[10px] text-slate-300 mt-0.5">Trạng thái: Đã xếp lịch lái thử</p>
+              </div>
             </div>
           </div>
 
-          {/* CALL TO ACTION: OPEN DEALER CRM TO VERIFY */}
-          <div className="p-5 rounded-2xl bg-orange-50/50 border border-orange-200 text-left space-y-3">
-            <div className="flex items-center gap-2 text-xs font-bold text-[#142A43]">
-              <ShieldCheck className="w-4 h-4 text-[#F47721]" />
-              <span>Dữ liệu đã được đồng bộ tức thì vào CRM Đại lý!</span>
+          {/* STRUCTURED DATA TABLE (MATCHING LEADER'S EXACT TABLE FORMAT) */}
+          <div className="overflow-hidden rounded-2xl border border-[#DCE3EC] text-left">
+            <div className="bg-[#142A43] text-white px-4 py-2.5 flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-wider">
+                Bảng Dữ Liệu Đồng Bộ Trên Giao Diện Doanh Nghiệp (CRM)
+              </span>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/20 text-white font-bold">
+                Auto-Synced
+              </span>
             </div>
-            <p className="text-xs text-[#475569] leading-relaxed">
-              Bây giờ, bạn có thể chuyển sang giao diện <strong>CRM Đại Lý</strong> để chứng kiến khách hàng <strong>{confirmedAppointment.customerName}</strong> và lịch hẹn <strong>{confirmedAppointment.id}</strong> đã tự động xuất hiện trên bảng Kanban và Calendar mà không bị mất dữ liệu khi F5.
+            <div className="divide-y divide-[#E2E8F0] text-xs bg-white">
+              <div className="grid grid-cols-3 p-3 bg-slate-50/50">
+                <span className="text-[#64748B] font-semibold">Họ tên:</span>
+                <span className="col-span-2 font-bold text-[#142A43]">{confirmedAppointment.customerName}</span>
+              </div>
+              <div className="grid grid-cols-3 p-3">
+                <span className="text-[#64748B] font-semibold">Số điện thoại:</span>
+                <span className="col-span-2 font-mono font-bold text-[#142A43]">{confirmedAppointment.customerPhone}</span>
+              </div>
+              <div className="grid grid-cols-3 p-3 bg-slate-50/50">
+                <span className="text-[#64748B] font-semibold">Dòng xe quan tâm:</span>
+                <span className="col-span-2 font-black text-[#F47721]">{confirmedAppointment.vehicleModel}</span>
+              </div>
+              <div className="grid grid-cols-3 p-3">
+                <span className="text-[#64748B] font-semibold">Nhu cầu mua xe:</span>
+                <span className="col-span-2 font-bold text-[#142A43]">{expectedPurchasingTime} (Mục đích: {purchasePurpose})</span>
+              </div>
+              <div className="grid grid-cols-3 p-3 bg-slate-50/50">
+                <span className="text-[#64748B] font-semibold">Showroom đón tiếp:</span>
+                <span className="col-span-2 font-bold text-[#142A43] flex items-center gap-1.5">
+                  <Building2 className="w-3.5 h-3.5 text-[#F47721]" />
+                  <span>{confirmedAppointment.showroom || selectedShowroom}</span>
+                </span>
+              </div>
+              <div className="grid grid-cols-3 p-3">
+                <span className="text-[#64748B] font-semibold">Kênh liên hệ ưu tiên:</span>
+                <span className="col-span-2 font-bold text-[#142A43]">{confirmedAppointment.preferredContact || preferredContact}</span>
+              </div>
+              <div className="grid grid-cols-3 p-3 bg-slate-50/50">
+                <span className="text-[#64748B] font-semibold">Trạng thái CRM:</span>
+                <span className="col-span-2 font-bold text-emerald-700 flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Đã xác nhận lịch hẹn (Qualified Lead • 7 Tiêu chí)</span>
+                </span>
+              </div>
+              <div className="grid grid-cols-3 p-3">
+                <span className="text-[#64748B] font-semibold">Lịch hẹn lái thử:</span>
+                <span className="col-span-2 font-black text-[#142A43] font-mono">
+                  {confirmedAppointment.appointmentDate} • {confirmedAppointment.appointmentTime}
+                </span>
+              </div>
+              <div className="grid grid-cols-3 p-3 bg-orange-50/40">
+                <span className="text-[#64748B] font-semibold">Phí nghiệm thu đối tác:</span>
+                <span className="col-span-2 font-black text-[#F47721] text-sm">
+                  +300.000 VNĐ (Thanh toán trên lịch hẹn đủ điều kiện CPA)
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* GIANT ACTION BUTTON: OPEN INTERFACE 2 (CRM) TO VERIFY */}
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#07182D] text-white text-left space-y-3.5 shadow-xl border-2 border-[#F47721]">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-xs font-bold text-[#F47721] uppercase tracking-wider">
+                <ShieldCheck className="w-4 h-4" />
+                <span>CHUYỂN SANG GIAO DIỆN 2 ĐỂ KIỂM TRA</span>
+              </div>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500 text-white">
+                Live Synchronization
+              </span>
+            </div>
+
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Bạn hãy bấm nút bên dưới để chuyển trực tiếp sang <strong>Giao diện 2 (CRM Doanh Nghiệp)</strong>. Hệ thống sẽ tự động hiển thị khách hàng <strong>{confirmedAppointment.customerName}</strong> trong bảng Kanban và lịch hẹn <strong>{confirmedAppointment.id}</strong> trên hệ thống CRM!
             </p>
+
             <button
               onClick={onNavigateToCRM}
-              className="w-full py-3.5 rounded-xl bg-[#F47721] hover:bg-[#E76513] text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all cursor-pointer"
+              className="w-full py-4 rounded-xl bg-gradient-to-r from-[#F47721] to-[#E76513] hover:from-[#E76513] hover:to-[#D55302] text-white font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-lg hover:shadow-xl transition-all cursor-pointer transform hover:-translate-y-0.5"
             >
-              <span>Mở CRM Đại Lý Để Kiểm Tra Ngay →</span>
+              <Building2 className="w-5 h-5 text-white" />
+              <span>MỞ GIAO DIỆN 2 (CRM DOANH NGHIỆP) ĐỂ KIỂM TRA NGAY →</span>
             </button>
           </div>
 

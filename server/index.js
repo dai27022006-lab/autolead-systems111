@@ -85,7 +85,7 @@ app.post('/api/auth/login', (req, res) => {
 
 // 3. Buyer Journey Step 1: Create Lead (Domain B)
 app.post('/api/buyer/lead', (req, res) => {
-  const { customerName, phone, email, interestedVehicle, vehicleSegment } = req.body;
+  const { customerName, phone, email, interestedVehicle, vehicleSegment, showroom, preferredContact } = req.body;
   if (!customerName || !phone) {
     return res.status(400).json({ success: false, message: 'Vui lòng cung cấp họ tên và số điện thoại.' });
   }
@@ -105,6 +105,8 @@ app.post('/api/buyer/lead', (req, res) => {
     email: email || '',
     interestedVehicle: interestedVehicle || 'Mercedes-Benz C200 Avantgarde 2024',
     vehicleSegment: vehicleSegment || 'Luxury Sedan',
+    showroom: showroom || 'Mercedes-Benz Haxaco Sài Gòn (Q. Bình Thạnh)',
+    preferredContact: preferredContact || 'Zalo OA (Nhận E-Brochure & Bảng tính chi phí)',
     leadSource: 'Buyer Demo Portal'
   });
 
@@ -190,7 +192,7 @@ app.get('/api/buyer/slots', (req, res) => {
 
 // 6. Buyer Journey Step 4: Book Test Drive Appointment (Bug 5 Fix - HTTP 409 Conflict)
 app.post('/api/buyer/appointment', (req, res) => {
-  const { leadId, customerName, customerPhone, vehicleModel, appointmentDate, appointmentTime, notes } = req.body;
+  const { leadId, customerName, customerPhone, vehicleModel, appointmentDate, appointmentTime, showroom, preferredContact, notes } = req.body;
   if (!customerName || !customerPhone || !vehicleModel || !appointmentDate || !appointmentTime) {
     return res.status(400).json({ success: false, message: 'Vui lòng điền đầy đủ thông tin đặt lịch.' });
   }
@@ -212,6 +214,8 @@ app.post('/api/buyer/appointment', (req, res) => {
     vehicleModel,
     appointmentDate,
     appointmentTime,
+    showroom: showroom || 'Mercedes-Benz Haxaco Sài Gòn (Q. Bình Thạnh)',
+    preferredContact: preferredContact || 'Zalo OA',
     notes
   });
 
