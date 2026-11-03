@@ -56,7 +56,7 @@ export default function SaasLayout({
   return (
     <div className="min-h-screen bg-[#F8F9F5] text-[#142A43] flex flex-col lg:flex-row">
       {/* Mobile Top Brand & Menu Bar (Hidden on Desktop) */}
-      <div className="lg:hidden bg-white border-b border-[#DCE3EC] p-3.5 flex items-center justify-between sticky top-0 z-40 shadow-xs">
+      <div className="lg:hidden bg-white border-b border-[#DCE3EC] p-3 sm:p-3.5 flex items-center justify-between relative z-20 shadow-xs">
         <div className="flex items-center gap-2.5 min-w-0">
           <div className="w-8 h-8 rounded-lg bg-[#F47721] flex items-center justify-center shrink-0 shadow-xs">
             <span className="text-white font-extrabold text-sm">AL</span>
@@ -224,9 +224,9 @@ export default function SaasLayout({
       </aside>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+      <div className="flex-1 flex flex-col min-w-0">
         {/* Top Header */}
-        <header className="h-14 lg:h-16 px-4 sm:px-6 bg-white/90 backdrop-blur-md border-b border-[#DCE3EC] flex items-center justify-between shrink-0 sticky top-0 z-30 shadow-2xs">
+        <header className="h-14 lg:h-16 px-4 sm:px-6 bg-white border-b border-[#DCE3EC] flex items-center justify-between shrink-0 shadow-2xs">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <span className="text-xs font-bold text-[#142A43] capitalize truncate">
               {navItems.find(i => i.id === activeTab)?.label}
