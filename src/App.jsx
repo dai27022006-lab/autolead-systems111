@@ -46,6 +46,7 @@ import { api } from './services/api';
 import { storageService } from './services/storage';
 import DualInterfaceHeader from './components/common/DualInterfaceHeader';
 import { ArrowLeft, Sparkles, ShieldCheck } from 'lucide-react';
+import { initScrollEngine, destroyScrollEngine } from './utils/scrollEngine';
 
 function PublicLayout({ children, onOpenContact, onOpenLeadViewer }) {
   return (
@@ -185,6 +186,19 @@ function AppContent() {
       navigate('/crm');
     }
   }, []);
+
+  // Initialize Lenis Smooth Scroll & GSAP ScrollTrigger for Public routes
+  useEffect(() => {
+    const isPublic = !location.pathname.startsWith('/demo') && !location.pathname.startsWith('/crm');
+    if (isPublic) {
+      initScrollEngine();
+      return () => {
+        destroyScrollEngine();
+      };
+    } else {
+      destroyScrollEngine();
+    }
+  }, [location.pathname]);
 
   // Load data on mount & route change
   useEffect(() => {

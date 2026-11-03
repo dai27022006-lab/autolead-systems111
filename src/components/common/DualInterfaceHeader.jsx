@@ -1,8 +1,13 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Car, Building2, ArrowLeft, RefreshCw } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
+import { buttonMotion } from '../../utils/motion';
+
+const MotionLink = motion.create(Link);
 
 export default function DualInterfaceHeader({ leadsCount = 0, onResetData, currentUser, onLogout }) {
+  const shouldReduceMotion = useReducedMotion();
   const location = useLocation();
   const isDemo = location.pathname.startsWith('/demo') || location.pathname.startsWith('/buyer');
   const isCrm = location.pathname.startsWith('/crm');
@@ -62,9 +67,11 @@ export default function DualInterfaceHeader({ leadsCount = 0, onResetData, curre
           {/* Center Section: THE TWO PROMINENT INTERFACE SWITCHER TABS */}
           <div className="flex items-center p-1 rounded-2xl bg-[#0D2137] border-2 border-[#F47721]/50 shadow-inner w-full md:w-auto justify-center max-w-full">
             {/* GIAO DIỆN 1: KHÁCH HÀNG */}
-            <Link
+            <MotionLink
               to="/demo"
               onClick={handleScrollTop}
+              whileHover={shouldReduceMotion ? {} : buttonMotion.whileHover}
+              whileTap={shouldReduceMotion ? {} : buttonMotion.whileTap}
               className={`flex-1 md:flex-initial flex items-center justify-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl transition-all cursor-pointer select-none ${
                 isDemo
                   ? 'bg-gradient-to-r from-[#F47721] to-[#E76513] text-white shadow-lg font-black ring-2 ring-white/40'
@@ -82,7 +89,7 @@ export default function DualInterfaceHeader({ leadsCount = 0, onResetData, curre
                   <span className="sm:hidden">{isDemo ? '● Đang xem' : 'Mở đặt lịch'}</span>
                 </span>
               </div>
-            </Link>
+            </MotionLink>
 
             {/* Connection Divider Icon */}
             <div className="px-1.5 sm:px-2 text-[#F47721] font-black text-xs sm:text-sm animate-pulse shrink-0">
@@ -90,9 +97,11 @@ export default function DualInterfaceHeader({ leadsCount = 0, onResetData, curre
             </div>
 
             {/* GIAO DIỆN 2: DOANH NGHIỆP (CRM) */}
-            <Link
+            <MotionLink
               to="/crm"
               onClick={handleScrollTop}
+              whileHover={shouldReduceMotion ? {} : buttonMotion.whileHover}
+              whileTap={shouldReduceMotion ? {} : buttonMotion.whileTap}
               className={`flex-1 md:flex-initial flex items-center justify-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl transition-all cursor-pointer select-none ${
                 isCrm
                   ? 'bg-gradient-to-r from-[#1E5B99] to-[#142A43] text-white shadow-lg font-black ring-2 ring-emerald-400'
@@ -117,7 +126,7 @@ export default function DualInterfaceHeader({ leadsCount = 0, onResetData, curre
                   <span className="sm:hidden">{isCrm ? '● Đang xem' : '👉 Mở CRM'}</span>
                 </span>
               </div>
-            </Link>
+            </MotionLink>
           </div>
 
           {/* Right Section: Desktop Actions */}

@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { HelpCircle, ChevronDown, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { PixelShield } from './PixelIcons';
+import { defaultViewport, EASINGS } from '../../utils/motion';
 
 export default function CommitmentsAndFaq() {
   const [openFaq, setOpenFaq] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
 
   const faqs = [
     {
@@ -25,10 +28,16 @@ export default function CommitmentsAndFaq() {
   ];
 
   return (
-    <section id="faq" className="scroll-mt-24 sm:scroll-mt-28 py-20 md:py-24 bg-white relative border-b border-[#DCE3EC]">
+    <section id="faq" className="scroll-mt-24 sm:scroll-mt-28 py-16 sm:py-20 md:py-24 bg-white relative border-b border-[#DCE3EC] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="max-w-3xl mx-auto text-center space-y-3 mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={defaultViewport}
+          transition={{ duration: 0.5, ease: EASINGS.gentleOut }}
+          className="max-w-3xl mx-auto text-center space-y-3 mb-12 sm:mb-16"
+        >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F8F9F5] border border-[#DCE3EC] text-xs font-bold text-[#F47721] font-mono shadow-xs">
             <HelpCircle className="w-3.5 h-3.5" />
             <span>CAM KẾT & CÂU HỎI THƯỜNG GẶP</span>
@@ -36,14 +45,20 @@ export default function CommitmentsAndFaq() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#142A43] tracking-tight">
             Cam Kết Dịch Vụ & Giải Đáp Thắc Mắc
           </h2>
-          <p className="text-sm sm:text-base text-[#64748B] leading-relaxed max-w-2xl mx-auto">
+          <p className="text-xs sm:text-base text-[#64748B] leading-relaxed max-w-2xl mx-auto">
             Minh bạch điều kiện triển khai, tiêu chuẩn nghiệm thu và nguyên tắc hợp tác lâu dài cùng các đại lý ô tô.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-5xl mx-auto">
           {/* Left Column: 3 Service Commitments */}
-          <div className="lg:col-span-5 p-5 sm:p-7 rounded-2xl sm:rounded-3xl bg-[#F8F9F5] border border-[#DCE3EC] space-y-5 shadow-sm">
+          <motion.div
+            initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={defaultViewport}
+            transition={{ duration: 0.55, ease: EASINGS.gentleOut }}
+            className="lg:col-span-5 p-5 sm:p-7 rounded-2xl sm:rounded-3xl bg-[#F8F9F5] border border-[#DCE3EC] space-y-5 shadow-sm text-left"
+          >
             <div className="flex items-center gap-2.5 text-[#142A43] font-bold text-base pb-3 border-b border-[#DCE3EC]">
               <PixelShield size={24} />
               <h3>Cam Kết Dịch Vụ Của AutoLead</h3>
@@ -83,7 +98,7 @@ export default function CommitmentsAndFaq() {
               {/* Warning/Limitation Box */}
               <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200/80 text-amber-900 text-xs space-y-1">
                 <div className="flex items-center gap-1.5 font-bold text-amber-800">
-                  <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
+                  <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
                   <span>Giới hạn cam kết minh bạch:</span>
                 </div>
                 <p className="text-[11px] leading-relaxed">
@@ -91,10 +106,16 @@ export default function CommitmentsAndFaq() {
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: 4 FAQ Accordion */}
-          <div className="lg:col-span-7 space-y-3">
+          <motion.div
+            initial={{ opacity: 0, x: shouldReduceMotion ? 0 : 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={defaultViewport}
+            transition={{ duration: 0.55, ease: EASINGS.gentleOut }}
+            className="lg:col-span-7 space-y-3 text-left"
+          >
             <div className="flex items-center gap-2 text-[#142A43] font-bold text-base mb-4">
               <HelpCircle className="w-5 h-5 text-[#F47721]" />
               <h3>Câu Hỏi Thường Gặp (FAQ)</h3>
@@ -119,15 +140,26 @@ export default function CommitmentsAndFaq() {
                       }`}
                     />
                   </button>
-                  {isOpen && (
-                    <div className="px-4 pb-4 pt-2 text-xs sm:text-sm text-[#64748B] leading-relaxed border-t border-[#DCE3EC] bg-[#F8F9F5]">
-                      {item.a}
-                    </div>
-                  )}
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        key="content"
+                        initial={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                        animate={shouldReduceMotion ? { opacity: 1 } : { height: 'auto', opacity: 1 }}
+                        exit={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                        transition={{ duration: shouldReduceMotion ? 0.01 : 0.24, ease: EASINGS.gentleOut }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-4 pb-4 pt-2 text-xs sm:text-sm text-[#64748B] leading-relaxed border-t border-[#DCE3EC] bg-[#F8F9F5]">
+                          {item.a}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

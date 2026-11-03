@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layers, CheckCircle2, Info } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
 import {
   PixelCarOrange,
   PixelClock,
@@ -8,8 +9,11 @@ import {
   PixelShowroom,
   PixelChart
 } from './PixelIcons';
+import { defaultViewport, cardHoverMotion, EASINGS } from '../../utils/motion';
 
 export default function Solutions() {
+  const shouldReduceMotion = useReducedMotion();
+
   const solutions = [
     {
       icon: PixelCarOrange,
@@ -91,11 +95,39 @@ export default function Solutions() {
     }
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: shouldReduceMotion ? 0 : 0.08
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: shouldReduceMotion ? 0.01 : 0.5,
+        ease: EASINGS.gentleOut
+      }
+    }
+  };
+
   return (
-    <section id="solutions" className="scroll-mt-24 sm:scroll-mt-28 py-20 md:py-24 bg-white relative border-b border-[#DCE3EC]">
+    <section id="solutions" className="scroll-mt-24 sm:scroll-mt-28 py-16 sm:py-20 md:py-24 bg-white relative border-b border-[#DCE3EC] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="max-w-3xl mx-auto text-center space-y-3 mb-10">
+        <motion.div
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={defaultViewport}
+          transition={{ duration: 0.5, ease: EASINGS.gentleOut }}
+          className="max-w-3xl mx-auto text-center space-y-3 mb-10"
+        >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F8F9F5] border border-[#DCE3EC] text-xs font-bold text-[#F47721] font-mono shadow-xs">
             <Layers className="w-3.5 h-3.5" />
             <span>GIẢI PHÁP & PHẠM VI DỊCH VỤ</span>
@@ -103,13 +135,19 @@ export default function Solutions() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#142A43] tracking-tight">
             Bộ Giải Pháp Toàn Diện Cho Đại Lý Ô Tô
           </h2>
-          <p className="text-sm sm:text-base text-[#64748B] leading-relaxed max-w-2xl mx-auto">
+          <p className="text-xs sm:text-base text-[#64748B] leading-relaxed max-w-2xl mx-auto">
             Hệ thống 6 mô-đun chức năng khép kín từ khâu thu hút trực tuyến đến khi khách hàng bước chân vào showroom trải nghiệm lái thử.
           </p>
-        </div>
+        </motion.div>
 
         {/* Core Value Proposition Banner */}
-        <div className="mb-12 p-5 sm:p-6 rounded-2xl bg-[#F8F9F5] border-2 border-[#F47721]/30 max-w-4xl mx-auto shadow-sm flex flex-col sm:flex-row items-start gap-4 text-left">
+        <motion.div
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={defaultViewport}
+          transition={{ duration: 0.5, ease: EASINGS.gentleOut }}
+          className="mb-12 p-5 sm:p-6 rounded-2xl bg-[#F8F9F5] border-2 border-[#F47721]/30 max-w-4xl mx-auto shadow-sm flex flex-col sm:flex-row items-start gap-4 text-left"
+        >
           <div className="w-11 h-11 rounded-xl bg-orange-100 border border-orange-200 flex items-center justify-center shrink-0 text-[#F47721] shadow-2xs">
             <PixelShield size={26} />
           </div>
@@ -129,18 +167,26 @@ export default function Solutions() {
               Các form đăng ký lái thử hiện nay chủ yếu hỗ trợ khách hàng chủ động cung cấp thông tin và gửi yêu cầu đến đại lý. <strong>AutoLead Systems không thay thế những form này</strong> mà <strong>bổ sung một hệ thống tự động hóa phía sau</strong>, giúp đại lý tiếp tục chăm sóc, sàng lọc, theo dõi và chuyển đổi khách hàng tiềm năng thành những lịch hẹn lái thử đủ điều kiện. Qua đó, đại lý không chỉ thu thập được thông tin khách hàng mà còn khai thác hiệu quả hơn nguồn khách hàng đã có.
             </p>
           </div>
-        </div>
+        </motion.div>
 
         {/* 6 Modules Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={defaultViewport}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-12"
+        >
           {solutions.map((item) => {
             const Icon = item.icon;
             return (
-              <div
+              <motion.div
                 key={item.num}
-                className={`p-6 rounded-2xl bg-[#F8F9F5] border border-[#DCE3EC] ${item.accent} hover:bg-white pixel-card-hover transition-all flex flex-col justify-between`}
+                variants={cardVariants}
+                whileHover={shouldReduceMotion ? {} : cardHoverMotion.whileHover}
+                className={`p-5 sm:p-6 rounded-2xl bg-[#F8F9F5] border border-[#DCE3EC] ${item.accent} hover:bg-white hover:border-[#F47721]/40 transition-colors flex flex-col justify-between shadow-xs`}
               >
-                <div className="space-y-4">
+                <div className="space-y-4 text-left">
                   <div className="flex items-center justify-between pb-3 border-b border-[#DCE3EC]">
                     <div className="w-12 h-12 rounded-xl bg-white border border-[#DCE3EC] flex items-center justify-center shadow-xs">
                       <Icon size={26} />
@@ -168,18 +214,24 @@ export default function Solutions() {
                     ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* Scope Disclaimer */}
-        <div className="p-4 rounded-2xl bg-[#F8F9F5] border border-[#DCE3EC] max-w-4xl mx-auto flex items-start gap-3 text-xs text-[#64748B]">
+        <motion.div
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={defaultViewport}
+          transition={{ duration: 0.5 }}
+          className="p-4 rounded-2xl bg-[#F8F9F5] border border-[#DCE3EC] max-w-4xl mx-auto flex items-start gap-3 text-xs text-[#64748B] text-left"
+        >
           <Info className="w-4 h-4 text-[#F47721] shrink-0 mt-0.5" />
           <p className="leading-relaxed">
             <strong className="text-[#142A43]">Lưu ý phạm vi dịch vụ:</strong> Sáu nhóm chức năng trên là phạm vi dịch vụ thương mại tiêu chuẩn được đề xuất trong bản Offer chính thức của AutoLead Systems, được tùy biến theo quy mô và thỏa thuận riêng với từng đại lý ô tô.
           </p>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

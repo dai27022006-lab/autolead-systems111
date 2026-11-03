@@ -230,3 +230,23 @@ export const PixelShield = ({ className = '', size = 26 }) => (
     <rect x="9" y="10" width="6" height="2" fill="#FFE875" />
   </svg>
 );
+
+// 11. Pixel Cloud (Subtle 16-bit Parallax Sky Element)
+export const PixelCloud = ({ className = '', size = 48, opacity = 0.75 }) => (
+  <svg
+    width={size}
+    height={Math.round((size * 20) / 48)}
+    viewBox="0 0 48 20"
+    shapeRendering="crispEdges"
+    className={`inline-block ${className}`}
+    style={{ opacity }}
+  >
+    <rect x="14" y="2" width="16" height="4" fill="#FFFFFF" />
+    <rect x="10" y="6" width="24" height="4" fill="#FFFFFF" />
+    <rect x="4" y="10" width="36" height="4" fill="#FFFFFF" />
+    <rect x="2" y="14" width="44" height="4" fill="#FFFFFF" />
+    <rect x="6" y="18" width="38" height="2" fill="#E2F0FD" />
+    <rect x="12" y="6" width="4" height="2" fill="#F8FAFC" />
+  </svg>
+);
+

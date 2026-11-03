@@ -1,10 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { CheckCircle2, Sliders, ShieldCheck, ArrowRight, Zap, Info } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
 import { PixelMoney, PixelWrench } from './PixelIcons';
 import automotiveDetailBg from '../../assets/automotive-detail.jpg';
+import { defaultViewport, cardHoverMotion, buttonMotion, EASINGS } from '../../utils/motion';
+import { gsap } from '../../utils/scrollEngine';
 
 export default function Pricing({ onOpenContact }) {
   const [appointmentCount, setAppointmentCount] = useState(20);
+  const shouldReduceMotion = useReducedMotion();
+  const pricingRef = useRef(null);
+  const cardsContainerRef = useRef(null);
+
+  // GSAP ScrollTrigger subtle entrance for pricing cards
+  useEffect(() => {
+    if (shouldReduceMotion || typeof window === 'undefined') return;
+
+    const ctx = gsap.context(() => {
+      if (cardsContainerRef.current) {
+        gsap.fromTo(
+          cardsContainerRef.current.children,
+          { opacity: 0, y: 22 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.65,
+            stagger: 0.15,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: cardsContainerRef.current,
+              start: 'top 82%',
+              toggleActions: 'play none none none',
+            }
+          }
+        );
+      }
+    }, pricingRef);
+
+    return () => ctx.revert();
+  }, [shouldReduceMotion]);
 
   const setupFee = 15000000; // 15,000,000 VND
   const perAppointmentFee = 300000; // 300,000 VND
@@ -25,10 +59,16 @@ export default function Pricing({ onOpenContact }) {
   ];
 
   return (
-    <section id="pricing" className="scroll-mt-24 sm:scroll-mt-28 py-20 md:py-24 bg-white relative border-b border-[#DCE3EC]">
+    <section id="pricing" ref={pricingRef} className="scroll-mt-24 sm:scroll-mt-28 py-16 sm:py-20 md:py-24 bg-white relative border-b border-[#DCE3EC] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="max-w-3xl mx-auto text-center space-y-3 mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={defaultViewport}
+          transition={{ duration: 0.5, ease: EASINGS.gentleOut }}
+          className="max-w-3xl mx-auto text-center space-y-3 mb-12 sm:mb-16"
+        >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F8F9F5] border border-[#DCE3EC] text-xs font-bold text-[#F47721] font-mono shadow-xs">
             <CheckCircle2 className="w-3.5 h-3.5" />
             <span>BẢNG GIÁ & ĐIỀU KIỆN DỊCH VỤ</span>
@@ -36,15 +76,22 @@ export default function Pricing({ onOpenContact }) {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#142A43] tracking-tight">
             Chi Phí Dịch Vụ Minh Bạch
           </h2>
-          <p className="text-sm sm:text-base text-[#64748B] leading-relaxed max-w-2xl mx-auto">
+          <p className="text-xs sm:text-base text-[#64748B] leading-relaxed max-w-2xl mx-auto">
             Mô hình kết hợp giữa phí thiết lập một lần trong 30 ngày và phí theo từng lịch hẹn lái thử thực tế đạt chuẩn nghiệm thu.
           </p>
-        </div>
+        </motion.div>
 
         {/* 2 Core Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
+        <div ref={cardsContainerRef} className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto mb-12">
           {/* Card 1: Fixed Setup Fee */}
-          <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-[#F8F9F5] border border-[#DCE3EC] flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
+          <motion.div
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={defaultViewport}
+            transition={{ duration: 0.5, ease: EASINGS.gentleOut }}
+            whileHover={shouldReduceMotion ? {} : cardHoverMotion.whileHover}
+            className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-[#F8F9F5] border border-[#DCE3EC] flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow text-left"
+          >
             <div>
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-mono font-bold text-[#64748B] uppercase tracking-wider block">
@@ -86,18 +133,27 @@ export default function Pricing({ onOpenContact }) {
             </div>
 
             <div className="mt-8 pt-4 border-t border-[#DCE3EC]">
-              <button
+              <motion.button
                 type="button"
                 onClick={onOpenContact}
+                whileHover={shouldReduceMotion ? {} : buttonMotion.whileHover}
+                whileTap={shouldReduceMotion ? {} : buttonMotion.whileTap}
                 className="w-full py-3.5 rounded-xl font-bold text-xs text-[#142A43] bg-white hover:bg-slate-100 border border-[#DCE3EC] transition-colors cursor-pointer shadow-xs min-h-[44px]"
               >
                 Khảo sát triển khai đại lý
-              </button>
+              </motion.button>
             </div>
-          </div>
+          </motion.div>
 
           {/* Card 2: Performance Fee */}
-          <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border-2 border-[#F47721] flex flex-col justify-between shadow-lg relative">
+          <motion.div
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={defaultViewport}
+            transition={{ duration: 0.5, delay: 0.1, ease: EASINGS.gentleOut }}
+            whileHover={shouldReduceMotion ? {} : cardHoverMotion.whileHover}
+            className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border-2 border-[#F47721] flex flex-col justify-between shadow-lg relative text-left"
+          >
             <div>
               <div className="flex flex-wrap items-center justify-between gap-2 mb-2 pb-2">
                 <span className="text-[11px] font-mono font-bold text-[#F47721] uppercase tracking-wider">
@@ -145,19 +201,27 @@ export default function Pricing({ onOpenContact }) {
             </div>
 
             <div className="mt-8 pt-4 border-t border-[#DCE3EC]">
-              <button
+              <motion.button
                 type="button"
                 onClick={onOpenContact}
-                className="w-full py-3.5 rounded-xl font-bold text-xs text-white bg-[#F47721] hover:bg-[#E76513] shadow-md shadow-[#F47721]/30 transition-all cursor-pointer"
+                whileHover={shouldReduceMotion ? {} : buttonMotion.whileHover}
+                whileTap={shouldReduceMotion ? {} : buttonMotion.whileTap}
+                className="w-full py-3.5 rounded-xl font-bold text-xs text-white bg-[#F47721] hover:bg-[#E76513] shadow-md shadow-[#F47721]/30 transition-all cursor-pointer min-h-[44px]"
               >
                 Đăng ký nhận tư vấn triển khai
-              </button>
+              </motion.button>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Dynamic Calculator Box */}
-        <div className="max-w-4xl mx-auto rounded-2xl sm:rounded-3xl bg-[#07182D] text-white p-4 sm:p-8 border border-white/20 shadow-2xl mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={defaultViewport}
+          transition={{ duration: 0.55, ease: EASINGS.gentleOut }}
+          className="max-w-4xl mx-auto rounded-2xl sm:rounded-3xl bg-[#07182D] text-white p-5 sm:p-8 border border-white/20 shadow-2xl mb-12 text-left"
+        >
           <div className="flex items-center gap-2 text-[#FFE875] font-mono text-xs font-bold uppercase mb-4">
             <Sliders className="w-4 h-4 shrink-0" />
             <span>Công cụ tính ngân sách dự kiến</span>
@@ -232,10 +296,16 @@ export default function Pricing({ onOpenContact }) {
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* 7 TQM Acceptance Criteria */}
-        <div className="max-w-4xl mx-auto rounded-2xl sm:rounded-3xl bg-[#F8F9F5] border border-[#DCE3EC] p-5 sm:p-8 space-y-4 mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={defaultViewport}
+          transition={{ duration: 0.55, ease: EASINGS.gentleOut }}
+          className="max-w-4xl mx-auto rounded-2xl sm:rounded-3xl bg-[#F8F9F5] border border-[#DCE3EC] p-5 sm:p-8 space-y-4 mb-12 text-left"
+        >
           <div className="flex items-center gap-2 text-xs font-mono text-[#75A94C] font-bold uppercase">
             <ShieldCheck className="w-4 h-4" />
             <span>Tiêu chuẩn nghiệm thu 7 tiêu chí TQM</span>
@@ -254,16 +324,22 @@ export default function Pricing({ onOpenContact }) {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Showcase Banner Box */}
-        <div className="rounded-3xl overflow-hidden border border-[#DCE3EC] bg-white shadow-sm max-w-5xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={defaultViewport}
+          transition={{ duration: 0.6, ease: EASINGS.gentleOut }}
+          className="rounded-3xl overflow-hidden border border-[#DCE3EC] bg-white shadow-sm max-w-5xl mx-auto"
+        >
           <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
-            <div className="lg:col-span-5 h-56 sm:h-64 lg:h-full relative overflow-hidden">
+            <div className="lg:col-span-5 h-56 sm:h-64 lg:h-full relative overflow-hidden bg-slate-900">
               <img
                 src={automotiveDetailBg}
                 alt="Chi tiết hoàn thiện ngoại thất ô tô cao cấp"
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-cover object-center select-none"
                 loading="lazy"
               />
             </div>
@@ -279,7 +355,7 @@ export default function Pricing({ onOpenContact }) {
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

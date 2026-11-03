@@ -21,9 +21,12 @@ import {
   Award,
   Fuel
 } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
 import { getCarDetails } from '../../data/carDetailsData.js';
+import { buttonMotion, EASINGS } from '../../utils/motion';
 
 export default function CarDetailModal({ car, isOpen, onClose, onSelectAndProceed }) {
+  const shouldReduceMotion = useReducedMotion();
   if (!isOpen || !car) return null;
 
   const details = getCarDetails(car);
@@ -37,8 +40,14 @@ export default function CarDetailModal({ car, isOpen, onClose, onSelectAndProcee
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-black/80 backdrop-blur-sm animate-fade-in overflow-y-auto">
-      <div className="relative w-full max-w-4xl bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-[#DCE3EC] overflow-hidden my-4 sm:my-8 text-[#142A43] max-h-[92vh] flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
+      <motion.div
+        initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 12 }}
+        animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+        exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 12 }}
+        transition={{ duration: shouldReduceMotion ? 0.01 : 0.25, ease: EASINGS.gentleOut }}
+        className="relative w-full max-w-4xl bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-[#DCE3EC] overflow-hidden my-4 sm:my-8 text-[#142A43] max-h-[92vh] flex flex-col"
+      >
         {/* Modal Header */}
         <div className="p-4 sm:p-5 bg-[#07182D] text-white flex items-center justify-between border-b border-white/10 shrink-0">
           <div className="flex items-center gap-3 min-w-0">
@@ -488,25 +497,29 @@ export default function CarDetailModal({ car, isOpen, onClose, onSelectAndProcee
           </div>
 
           <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">
-            <button
+            <motion.button
               type="button"
               onClick={onClose}
+              whileHover={shouldReduceMotion ? {} : buttonMotion.whileHover}
+              whileTap={shouldReduceMotion ? {} : buttonMotion.whileTap}
               className="px-4 py-2.5 min-h-[44px] rounded-xl bg-slate-100 hover:bg-slate-200 text-[#142A43] font-semibold text-xs transition-colors cursor-pointer text-center"
             >
               Đóng & Xem xe khác
-            </button>
+            </motion.button>
 
-            <button
+            <motion.button
               type="button"
               onClick={handleSelectCar}
+              whileHover={shouldReduceMotion ? {} : buttonMotion.whileHover}
+              whileTap={shouldReduceMotion ? {} : buttonMotion.whileTap}
               className="px-6 py-2.5 min-h-[44px] rounded-xl bg-[#F47721] hover:bg-[#E76513] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all cursor-pointer text-center"
             >
               <span>Chọn Mẫu Xe Này & Đặt Lịch Lái Thử →</span>
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </motion.button>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
