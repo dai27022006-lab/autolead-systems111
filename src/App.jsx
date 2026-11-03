@@ -26,9 +26,9 @@ import FaqPage from './pages/FaqPage';
 import ContactPage from './pages/ContactPage';
 import AllInOnePage from './pages/AllInOnePage';
 
-// Buyer Portal Demo & Live Bavaria Showroom Hub (Đại)
+// Showroom Page with embedded AI Widget
+import ShowroomPage from './components/buyer/ShowroomPage';
 import BuyerDemo from './components/buyer/BuyerDemo';
-import BavariaShowroomHub from './components/buyer/BavariaShowroomHub';
 
 // Dealer SaaS CRM & Operations Platform (Đại)
 import SaasLayout from './components/saas/SaasLayout';
@@ -469,32 +469,8 @@ function AppContent() {
           }
         />
 
-        {/* Experience B: Showroom Giả Lập có nhúng AI Widget (Bavaria Motor House & Mercedes) */}
-        <Route
-          path="/demo"
-          element={
-            <div className="flex-1 flex flex-col bg-[#F8F9F5] text-[#142A43] min-h-screen">
-              <DualInterfaceHeader
-                leadsCount={crmLeads.length}
-                onResetData={() => {
-                  storageService.resetToSeedData();
-                  loadData();
-                }}
-              />
-
-              <main className="flex-1 flex flex-col">
-                <BavariaShowroomHub
-                  leadsCount={crmLeads.length}
-                  onNavigateToCRM={() => {
-                    navigate('/crm');
-                    handleScrollTop();
-                    loadData();
-                  }}
-                />
-              </main>
-            </div>
-          }
-        />
+        {/* Experience B: Showroom Trực tiếp có nhúng AI Widget */}
+        <Route path="/demo" element={<ShowroomPage />} />
         <Route path="/buyer" element={<Navigate to="/demo" replace />} />
 
         {/* Experience C: Dealer SaaS CRM & Operations Platform (Đại) */}
