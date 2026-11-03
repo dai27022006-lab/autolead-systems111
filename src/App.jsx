@@ -1,24 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from './components/Navbar';
+import {
+  HashRouter,
+  Routes,
+  Route,
+  Navigate,
+  Link,
+  useLocation,
+  useNavigate
+} from 'react-router-dom';
 
-// Part A: Public B2B Website components (16-Bit Pixel Art - Thắng)
-import Hero from './components/public/Hero';
-import Highlights from './components/public/Highlights';
-import Problems from './components/public/Problems';
-import Solutions from './components/public/Solutions';
-import HowItWorks from './components/public/HowItWorks';
-import Pricing from './components/public/Pricing';
-import Roadmap from './components/public/Roadmap';
-import CommitmentsAndFaq from './components/public/CommitmentsAndFaq';
-import ConsultationForm from './components/public/ConsultationForm';
+// Public Shared Components
+import Navbar from './components/Navbar';
+import Footer from './components/public/Footer';
 import ConsultationModal from './components/public/ConsultationModal';
 import B2BInquiriesModal from './components/public/B2BInquiriesModal';
-import Footer from './components/public/Footer';
 
-// Part B: Buyer Portal Demo (5-Step Customer Journey - Đại)
+// Dedicated Subpages (Multi-page Architecture)
+import HomePage from './pages/HomePage';
+import SolutionsPage from './pages/SolutionsPage';
+import WorkflowPage from './pages/WorkflowPage';
+import PricingPage from './pages/PricingPage';
+import RoadmapPage from './pages/RoadmapPage';
+import FaqPage from './pages/FaqPage';
+import ContactPage from './pages/ContactPage';
+import AllInOnePage from './pages/AllInOnePage';
+
+// Buyer Portal Demo (Đại)
 import BuyerDemo from './components/buyer/BuyerDemo';
 
-// Part C: Dealer SaaS CRM & Operations Platform (Đại)
+// Dealer SaaS CRM & Operations Platform (Đại)
 import SaasLayout from './components/saas/SaasLayout';
 import DashboardOverview from './components/saas/DashboardOverview';
 import LeadManagement from './components/saas/LeadManagement';
@@ -33,62 +43,54 @@ import DealerLogin from './components/saas/DealerLogin';
 
 import { api } from './services/api';
 import { storageService } from './services/storage';
-import { ArrowLeft, Sparkles, ShieldCheck, Database, LayoutDashboard } from 'lucide-react';
+import { ArrowLeft, Sparkles, ShieldCheck } from 'lucide-react';
 
-export default function App() {
-  // Determine initial view from URL hash or query params
-  const getInitialView = () => {
-    const hash = window.location.hash;
-    const params = new URLSearchParams(window.location.search);
-    const viewParam = params.get('view');
+function PublicLayout({ children, onOpenContact, onOpenLeadViewer }) {
+  return (
+    <div className="min-h-screen bg-[#F8F9F5] text-[#142A43] flex flex-col font-sans">
+      <Navbar
+        onOpenContact={onOpenContact}
+        onOpenLeadViewer={onOpenLeadViewer}
+      />
+      <main className="flex-1">{children}</main>
+      <Footer onOpenLeadViewer={onOpenLeadViewer} />
+    </div>
+  );
+}
 
-    if (hash === '#demo' || viewParam === 'buyer' || viewParam === 'demo') {
-      return 'buyer';
-    }
-    if (hash === '#crm' || viewParam === 'saas' || viewParam === 'crm') {
-      return 'saas';
-    }
-    return 'public'; // Default entry experience: Public B2B Sales Page
-  };
+function AppContent() {
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const [currentView, setCurrentView] = useState(getInitialView);
+  // SaaS Tab & User authentication
   const [activeSaasTab, setActiveSaasTab] = useState('overview');
   const [currentUser, setCurrentUser] = useState(() => api.getCurrentUser());
 
-  // Modal dialog states for Public B2B Sale Page
+  // Modal dialog states
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isLeadViewerOpen, setIsLeadViewerOpen] = useState(false);
 
-  // Live CRM State (Domain B: Buyer Leads & Appointments)
+  // Live CRM State (Buyer Leads & Appointments)
   const [crmLeads, setCrmLeads] = useState([]);
   const [appointments, setAppointments] = useState([]);
   const [campaigns, setCampaigns] = useState([]);
   const [b2bInquiries, setB2bInquiries] = useState([]);
 
-  // Listen to browser hash changes for seamless navigation
+  // Check legacy query params or hash on initial load for backwards compatibility
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash;
-      if (hash === '#demo') {
-        setCurrentView('buyer');
-      } else if (hash === '#crm') {
-        setCurrentView('saas');
-      } else if (hash === '#hero' || hash === '' || hash.startsWith('#problems') || hash.startsWith('#pricing')) {
-        // Stay on public or switch to public
-        if (currentView !== 'public' && !hash.includes('demo') && !hash.includes('crm')) {
-          setCurrentView('public');
-        }
-      }
-    };
+    const params = new URLSearchParams(window.location.search);
+    const viewParam = params.get('view');
+    if (viewParam === 'buyer' || viewParam === 'demo') {
+      navigate('/demo');
+    } else if (viewParam === 'saas' || viewParam === 'crm') {
+      navigate('/crm');
+    }
+  }, []);
 
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, [currentView]);
-
-  // Load data on mount & view change
+  // Load data on mount & route change
   useEffect(() => {
     loadData();
-  }, [currentView]);
+  }, [location.pathname]);
 
   const loadData = async () => {
     const leads = await api.getDealerLeads();
@@ -100,19 +102,6 @@ export default function App() {
     setAppointments(apts || []);
     setB2bInquiries(inqs || []);
     setCampaigns(camps || []);
-  };
-
-  // Switch View Helpers with Hash Updates
-  const navigateToView = (viewName) => {
-    setCurrentView(viewName);
-    if (viewName === 'buyer') {
-      window.location.hash = '#demo';
-    } else if (viewName === 'saas') {
-      window.location.hash = '#crm';
-    } else {
-      window.location.hash = '#hero';
-    }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Handlers for CRM operations
@@ -164,258 +153,308 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F9F5] text-[#142A43] flex flex-col font-sans">
-      {/* =========================================================================
-          EXPERIENCE A: PUBLIC B2B SALES WEBSITE (THẮNG - 16-BIT PIXEL ART)
-      ========================================================================= */}
-      {currentView === 'public' && (
-        <div className="flex-1 flex flex-col">
-          {/* Public Navbar */}
-          <Navbar
-            currentView={currentView}
-            onOpenContact={() => setIsContactModalOpen(true)}
-            onOpenMvpDemo={() => navigateToView('buyer')}
-            onOpenLeadViewer={() => setIsLeadViewerOpen(true)}
-            onOpenSaas={() => navigateToView('saas')}
-          />
-
-          <main className="flex-1">
-            {/* 1. Hero Section */}
-            <Hero
+    <>
+      <Routes>
+        {/* Dedicated Public Subpages (Mỗi mục là một trang riêng) */}
+        <Route
+          path="/"
+          element={
+            <PublicLayout
               onOpenContact={() => setIsContactModalOpen(true)}
-              onOpenMvpDemo={() => navigateToView('buyer')}
-              onOpenSaas={() => navigateToView('saas')}
-            />
+              onOpenLeadViewer={() => setIsLeadViewerOpen(true)}
+            >
+              <HomePage onOpenContact={() => setIsContactModalOpen(true)} />
+            </PublicLayout>
+          }
+        />
+        <Route
+          path="/solutions"
+          element={
+            <PublicLayout
+              onOpenContact={() => setIsContactModalOpen(true)}
+              onOpenLeadViewer={() => setIsLeadViewerOpen(true)}
+            >
+              <SolutionsPage />
+            </PublicLayout>
+          }
+        />
+        <Route
+          path="/workflow"
+          element={
+            <PublicLayout
+              onOpenContact={() => setIsContactModalOpen(true)}
+              onOpenLeadViewer={() => setIsLeadViewerOpen(true)}
+            >
+              <WorkflowPage />
+            </PublicLayout>
+          }
+        />
+        <Route
+          path="/pricing"
+          element={
+            <PublicLayout
+              onOpenContact={() => setIsContactModalOpen(true)}
+              onOpenLeadViewer={() => setIsLeadViewerOpen(true)}
+            >
+              <PricingPage onOpenContact={() => setIsContactModalOpen(true)} />
+            </PublicLayout>
+          }
+        />
+        <Route
+          path="/roadmap"
+          element={
+            <PublicLayout
+              onOpenContact={() => setIsContactModalOpen(true)}
+              onOpenLeadViewer={() => setIsLeadViewerOpen(true)}
+            >
+              <RoadmapPage />
+            </PublicLayout>
+          }
+        />
+        <Route
+          path="/faq"
+          element={
+            <PublicLayout
+              onOpenContact={() => setIsContactModalOpen(true)}
+              onOpenLeadViewer={() => setIsLeadViewerOpen(true)}
+            >
+              <FaqPage />
+            </PublicLayout>
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <PublicLayout
+              onOpenContact={() => setIsContactModalOpen(true)}
+              onOpenLeadViewer={() => setIsLeadViewerOpen(true)}
+            >
+              <ContactPage />
+            </PublicLayout>
+          }
+        />
+        <Route
+          path="/all"
+          element={
+            <PublicLayout
+              onOpenContact={() => setIsContactModalOpen(true)}
+              onOpenLeadViewer={() => setIsLeadViewerOpen(true)}
+            >
+              <AllInOnePage onOpenContact={() => setIsContactModalOpen(true)} />
+            </PublicLayout>
+          }
+        />
 
-            {/* 2. Operational Highlights */}
-            <Highlights />
+        {/* Experience B: Buyer Portal Demo (Đại) */}
+        <Route
+          path="/demo"
+          element={
+            <div className="flex-1 flex flex-col bg-[#F8F9F5] text-[#142A43] min-h-screen">
+              <header className="sticky top-0 z-40 bg-[#142A43] border-b border-white/10 px-2.5 sm:px-4 py-2 sm:py-3 shadow-md">
+                <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                    <Link
+                      to="/"
+                      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                      className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer shrink-0"
+                    >
+                      <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F47721]" />
+                      <span className="sm:hidden">← Về B2B</span>
+                      <span className="hidden sm:inline">← Về Trang B2B Sales (Pixel World)</span>
+                    </Link>
+                    <span className="hidden md:inline text-xs text-slate-400 font-mono">|</span>
+                    <span className="hidden md:inline text-xs font-semibold text-slate-300 truncate">
+                      Cổng Mô Phỏng Khách Mua Xe (Buyer Portal)
+                    </span>
+                  </div>
 
-            {/* 3. Problems Faced by Showrooms */}
-            <Problems />
+                  <div className="flex items-center gap-2 shrink-0">
+                    <Link
+                      to="/crm"
+                      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                      className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#F47721] hover:bg-[#E76513] text-xs font-bold text-white transition-all cursor-pointer shadow-xs"
+                    >
+                      <ShieldCheck className="w-3.5 h-3.5" />
+                      <span className="sm:hidden">Xem CRM →</span>
+                      <span className="hidden sm:inline">Xem Kết Quả Trên CRM →</span>
+                    </Link>
+                  </div>
+                </div>
+              </header>
 
-            {/* 4. 6 Core Solutions */}
-            <Solutions />
-
-            {/* 5. 5-Step Operational Workflow (Racetrack) */}
-            <HowItWorks />
-
-            {/* 6. Pricing & Dynamic ROI Calculator */}
-            <Pricing onOpenContact={() => setIsContactModalOpen(true)} />
-
-            {/* 7. 30-Day Implementation Roadmap */}
-            <Roadmap />
-
-            {/* 8. Service Commitments & FAQ */}
-            <CommitmentsAndFaq />
-
-            {/* 9. In-Page Consultation Registration Section */}
-            <ConsultationForm />
-          </main>
-
-          {/* 10. Pixel Art Footer */}
-          <Footer
-            onOpenMvpDemo={() => navigateToView('buyer')}
-            onOpenLeadViewer={() => setIsLeadViewerOpen(true)}
-            onOpenSaas={() => navigateToView('saas')}
-          />
-
-          {/* Pop-up Consultation Modal */}
-          <ConsultationModal
-            isOpen={isContactModalOpen}
-            onClose={() => setIsContactModalOpen(false)}
-          />
-
-          {/* Pop-up B2B Inquiries Manager Modal */}
-          <B2BInquiriesModal
-            isOpen={isLeadViewerOpen}
-            onClose={() => setIsLeadViewerOpen(false)}
-          />
-        </div>
-      )}
-
-      {/* =========================================================================
-          EXPERIENCE B: BUYER PORTAL DEMO (ĐẠI - 5-STEP TEST DRIVE JOURNEY)
-      ========================================================================= */}
-      {currentView === 'buyer' && (
-        <div className="flex-1 flex flex-col bg-[#F8F9F5] text-[#142A43] min-h-screen">
-          {/* Seamless Experience Switcher Top Banner */}
-          <header className="sticky top-0 z-40 bg-[#142A43] border-b border-white/10 px-2.5 sm:px-4 py-2 sm:py-3 shadow-md">
-            <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-                <button
-                  type="button"
-                  onClick={() => navigateToView('public')}
-                  className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer shrink-0"
-                >
-                  <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F47721]" />
-                  <span className="sm:hidden">← B2B Sales</span>
-                  <span className="hidden sm:inline">← Về Trang B2B Sales (Pixel World)</span>
-                </button>
-                <span className="hidden md:inline text-xs text-slate-400 font-mono">|</span>
-                <span className="hidden md:inline text-xs font-semibold text-slate-300 truncate">
-                  Cổng Mô Phỏng Khách Mua Xe (Buyer Portal)
-                </span>
-              </div>
-
-              <div className="flex items-center gap-2 shrink-0">
-                <button
-                  type="button"
-                  onClick={() => navigateToView('saas')}
-                  className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#F47721] hover:bg-[#E76513] text-xs font-bold text-white transition-all cursor-pointer shadow-xs"
-                >
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  <span className="sm:hidden">Xem CRM →</span>
-                  <span className="hidden sm:inline">Xem Kết Quả Trên CRM →</span>
-                </button>
-              </div>
+              <main className="flex-1">
+                <BuyerDemo
+                  onNavigateToCRM={() => {
+                    navigate('/crm');
+                    loadData();
+                  }}
+                />
+              </main>
             </div>
-          </header>
+          }
+        />
+        <Route path="/buyer" element={<Navigate to="/demo" replace />} />
 
-          <main className="flex-1">
-            <BuyerDemo
-              onNavigateToCRM={() => {
-                navigateToView('saas');
-                loadData();
-              }}
-            />
-          </main>
-        </div>
-      )}
+        {/* Experience C: Dealer SaaS CRM & Operations Platform (Đại) */}
+        <Route
+          path="/crm"
+          element={
+            <div className="flex-1 flex flex-col bg-[#F8F9F5] text-[#142A43] min-h-screen">
+              <header className="sticky top-0 z-40 bg-[#142A43] border-b border-white/10 px-2.5 sm:px-4 py-2 sm:py-2.5 shadow-md">
+                <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                    <Link
+                      to="/"
+                      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                      className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer shrink-0"
+                    >
+                      <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F47721]" />
+                      <span className="sm:hidden">← Về B2B</span>
+                      <span className="hidden sm:inline">← Về Trang B2B Sales (Pixel World)</span>
+                    </Link>
+                    <span className="hidden md:inline text-xs text-slate-400 font-mono">|</span>
+                    <span className="hidden md:inline text-xs font-semibold text-slate-300 truncate">
+                      Hệ Thống CRM Điều Hành Showroom Ô Tô
+                    </span>
+                  </div>
 
-      {/* =========================================================================
-          EXPERIENCE C: DEALER SAAS CRM & OPERATIONS PLATFORM (ĐẠI)
-      ========================================================================= */}
-      {currentView === 'saas' && (
-        <div className="flex-1 flex flex-col bg-[#F8F9F5] text-[#142A43] min-h-screen">
-          {/* Seamless Experience Switcher Top Banner */}
-          <header className="sticky top-0 z-40 bg-[#142A43] border-b border-white/10 px-2.5 sm:px-4 py-2 sm:py-2.5 shadow-md">
-            <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-                <button
-                  type="button"
-                  onClick={() => navigateToView('public')}
-                  className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer shrink-0"
-                >
-                  <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F47721]" />
-                  <span className="sm:hidden">← B2B Sales</span>
-                  <span className="hidden sm:inline">← Về Trang B2B Sales (Pixel World)</span>
-                </button>
-                <span className="hidden md:inline text-xs text-slate-400 font-mono">|</span>
-                <span className="hidden md:inline text-xs font-semibold text-slate-300 truncate">
-                  Hệ Thống CRM Điều Hành Showroom Ô Tô
-                </span>
-              </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <Link
+                      to="/demo"
+                      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                      className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#F47721] hover:bg-[#E76513] text-xs font-bold text-white transition-all cursor-pointer shadow-xs"
+                    >
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span className="sm:hidden">Buyer Demo</span>
+                      <span className="hidden sm:inline">Chạy Thử Buyer Demo</span>
+                    </Link>
 
-              <div className="flex items-center gap-2 shrink-0">
-                <button
-                  type="button"
-                  onClick={() => navigateToView('buyer')}
-                  className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#F47721] hover:bg-[#E76513] text-xs font-bold text-white transition-all cursor-pointer shadow-xs"
-                >
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span className="sm:hidden">Buyer Demo</span>
-                  <span className="hidden sm:inline">Chạy Thử Buyer Demo</span>
-                </button>
+                    {currentUser && (
+                      <button
+                        type="button"
+                        onClick={handleLogout}
+                        className="px-2.5 py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 text-xs font-medium transition-colors cursor-pointer"
+                      >
+                        Đăng xuất
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </header>
 
-                {currentUser && (
-                  <button
-                    type="button"
-                    onClick={handleLogout}
-                    className="px-2.5 py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 text-xs font-medium transition-colors cursor-pointer"
-                  >
-                    Đăng xuất
-                  </button>
-                )}
-              </div>
-            </div>
-          </header>
-
-          <main className="flex-1">
-            {!currentUser ? (
-              <DealerLogin
-                onLoginSuccess={(user) => {
-                  setCurrentUser(user);
-                  loadData();
-                }}
-                onBackToBuyer={() => navigateToView('public')}
-              />
-            ) : (
-              <SaasLayout
-                activeTab={activeSaasTab}
-                setActiveTab={setActiveSaasTab}
-                onBackToPublic={() => navigateToView('public')}
-                onResetData={handleResetData}
-                leadsCount={crmLeads.length}
-                b2bCount={b2bInquiries.length}
-              >
-                {activeSaasTab === 'overview' && (
-                  <DashboardOverview
-                    leads={crmLeads}
-                    appointments={appointments}
-                    campaigns={campaigns}
-                    onNavigateToTab={(tabId) => setActiveSaasTab(tabId)}
-                  />
-                )}
-
-                {activeSaasTab === 'leads' && (
-                  <LeadManagement
-                    leads={crmLeads}
-                    onUpdateLeadStatus={handleUpdateLeadStatus}
-                    onAddLead={handleAddLead}
-                    onUpdateLead={handleUpdateLead}
-                  />
-                )}
-
-                {activeSaasTab === 'qualification' && (
-                  <LeadQualification
-                    leads={crmLeads}
-                    onUpdateLead={handleUpdateLead}
-                    onOpenCreateAppointment={() => {
-                      setActiveSaasTab('appointments');
+              <main className="flex-1">
+                {!currentUser ? (
+                  <DealerLogin
+                    onLoginSuccess={(user) => {
+                      setCurrentUser(user);
+                      loadData();
                     }}
+                    onBackToBuyer={() => navigate('/')}
                   />
-                )}
+                ) : (
+                  <SaasLayout
+                    activeTab={activeSaasTab}
+                    setActiveTab={setActiveSaasTab}
+                    onBackToPublic={() => navigate('/')}
+                    onResetData={handleResetData}
+                    leadsCount={crmLeads.length}
+                    b2bCount={b2bInquiries.length}
+                  >
+                    {activeSaasTab === 'overview' && (
+                      <DashboardOverview
+                        leads={crmLeads}
+                        appointments={appointments}
+                        campaigns={campaigns}
+                        onNavigateToTab={(tabId) => setActiveSaasTab(tabId)}
+                      />
+                    )}
 
-                {activeSaasTab === 'appointments' && (
-                  <AppointmentManagement
-                    appointments={appointments}
-                    leads={crmLeads}
-                    onAddAppointment={handleAddAppointment}
-                    onUpdateAppointmentStatus={handleUpdateAppointmentStatus}
-                  />
-                )}
+                    {activeSaasTab === 'leads' && (
+                      <LeadManagement
+                        leads={crmLeads}
+                        onUpdateLeadStatus={handleUpdateLeadStatus}
+                        onAddLead={handleAddLead}
+                        onUpdateLead={handleUpdateLead}
+                      />
+                    )}
 
-                {activeSaasTab === 'campaigns' && (
-                  <CampaignManagement
-                    campaigns={campaigns}
-                    onAddCampaign={handleAddCampaign}
-                  />
-                )}
+                    {activeSaasTab === 'qualification' && (
+                      <LeadQualification
+                        leads={crmLeads}
+                        onUpdateLead={handleUpdateLead}
+                        onOpenCreateAppointment={() => {
+                          setActiveSaasTab('appointments');
+                        }}
+                      />
+                    )}
 
-                {activeSaasTab === 'ai-assistant' && (
-                  <AiAssistant leads={crmLeads} />
-                )}
+                    {activeSaasTab === 'appointments' && (
+                      <AppointmentManagement
+                        appointments={appointments}
+                        leads={crmLeads}
+                        onAddAppointment={handleAddAppointment}
+                        onUpdateAppointmentStatus={handleUpdateAppointmentStatus}
+                      />
+                    )}
 
-                {activeSaasTab === 'analytics' && (
-                  <AnalyticsReporting
-                    leads={crmLeads}
-                    appointments={appointments}
-                    campaigns={campaigns}
-                  />
-                )}
+                    {activeSaasTab === 'campaigns' && (
+                      <CampaignManagement
+                        campaigns={campaigns}
+                        onAddCampaign={handleAddCampaign}
+                      />
+                    )}
 
-                {activeSaasTab === 'b2b-leads' && (
-                  <B2BInquiriesViewer inquiries={b2bInquiries} />
-                )}
+                    {activeSaasTab === 'ai-assistant' && (
+                      <AiAssistant leads={crmLeads} />
+                    )}
 
-                {activeSaasTab === 'settings' && (
-                  <DealershipSettings onResetData={handleResetData} />
+                    {activeSaasTab === 'analytics' && (
+                      <AnalyticsReporting
+                        leads={crmLeads}
+                        appointments={appointments}
+                        campaigns={campaigns}
+                      />
+                    )}
+
+                    {activeSaasTab === 'b2b-leads' && (
+                      <B2BInquiriesViewer inquiries={b2bInquiries} />
+                    )}
+
+                    {activeSaasTab === 'settings' && (
+                      <DealershipSettings onResetData={handleResetData} />
+                    )}
+                  </SaasLayout>
                 )}
-              </SaasLayout>
-            )}
-          </main>
-        </div>
-      )}
-    </div>
+              </main>
+            </div>
+          }
+        />
+        <Route path="/dealer" element={<Navigate to="/crm" replace />} />
+        <Route path="/saas" element={<Navigate to="/crm" replace />} />
+
+        {/* Fallback to Home */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+
+      {/* Pop-up Consultation Modal */}
+      <ConsultationModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+      />
+
+      {/* Pop-up B2B Inquiries Manager Modal */}
+      <B2BInquiriesModal
+        isOpen={isLeadViewerOpen}
+        onClose={() => setIsLeadViewerOpen(false)}
+      />
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <HashRouter>
+      <AppContent />
+    </HashRouter>
   );
 }

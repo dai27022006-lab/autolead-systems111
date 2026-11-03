@@ -1,5 +1,6 @@
 import React from 'react';
-import { ArrowRight, Sparkles, CheckCircle2, ShieldCheck, CalendarCheck, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, Sparkles, CheckCircle2, ShieldCheck, Zap } from 'lucide-react';
 import { PixelCarOrange } from './PixelIcons';
 import PixelFringe from './PixelFringe';
 import heroBg from '../../assets/hero-pixel-automotive-world.jpg';
@@ -49,33 +50,51 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
 
               {/* CTAs */}
               <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
-                <button
-                  type="button"
-                  onClick={onOpenContact}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm text-white bg-[#F47721] hover:bg-[#E76513] shadow-lg shadow-[#F47721]/30 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer min-h-[48px]"
-                >
-                  <span>Đăng ký tư vấn 30 phút</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={onOpenMvpDemo}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-sm text-white hover:text-slate-200 bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/35 transition-all cursor-pointer shadow-xs min-h-[48px]"
-                >
-                  <Sparkles className="w-4 h-4 text-[#F47721]" />
-                  <span>Xem demo hệ thống →</span>
-                </button>
-
-                {onOpenSaas && (
+                {onOpenContact ? (
                   <button
                     type="button"
-                    onClick={onOpenSaas}
-                    className="inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl font-semibold text-xs text-white/90 hover:text-white bg-slate-900/60 hover:bg-slate-900/80 border border-white/20 transition-all cursor-pointer min-h-[44px]"
+                    onClick={onOpenContact}
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm text-white bg-[#F47721] hover:bg-[#E76513] shadow-lg shadow-[#F47721]/30 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer min-h-[48px]"
                   >
-                    <span>Cổng CRM Đại lý</span>
+                    <span>Đăng ký tư vấn 30 phút</span>
+                    <ArrowRight className="w-4 h-4" />
                   </button>
+                ) : (
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm text-white bg-[#F47721] hover:bg-[#E76513] shadow-lg shadow-[#F47721]/30 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer min-h-[48px]"
+                  >
+                    <span>Đăng ký tư vấn 30 phút</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
                 )}
+
+                {onOpenMvpDemo ? (
+                  <button
+                    type="button"
+                    onClick={onOpenMvpDemo}
+                    className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-sm text-white hover:text-slate-200 bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/35 transition-all cursor-pointer shadow-xs min-h-[48px]"
+                  >
+                    <Sparkles className="w-4 h-4 text-[#F47721]" />
+                    <span>Xem demo hệ thống →</span>
+                  </button>
+                ) : (
+                  <Link
+                    to="/demo"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-sm text-white hover:text-slate-200 bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/35 transition-all cursor-pointer shadow-xs min-h-[48px]"
+                  >
+                    <Sparkles className="w-4 h-4 text-[#F47721]" />
+                    <span>Xem demo hệ thống →</span>
+                  </Link>
+                )}
+
+                <Link
+                  to="/crm"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl font-semibold text-xs text-white/90 hover:text-white bg-slate-900/60 hover:bg-slate-900/80 border border-white/20 transition-all cursor-pointer min-h-[44px]"
+                >
+                  <ShieldCheck className="w-4 h-4 text-[#75A94C]" />
+                  <span>Cổng CRM Đại lý</span>
+                </Link>
               </div>
 
               {/* Offer Highlight */}
@@ -118,29 +137,22 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
 
             {/* Card 3 */}
             <div className="px-4 py-2.5 rounded-2xl bg-[#0E2034]/90 backdrop-blur-md border border-[#F47721]/60 text-xs text-white shadow-2xl flex items-center gap-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#F47721] animate-ping shrink-0" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#F47721] shrink-0" />
               <div>
                 <span className="text-[10px] font-mono text-[#F47721] font-bold block uppercase">
-                  Chốt lịch hẹn thành công
+                  Đã tự động xác nhận lịch hẹn
                 </span>
-                <span className="font-bold text-white">Thứ 7 • 09:30 tại Showroom</span>
+                <span className="font-semibold">Showroom Haxaco • 10:00 Thứ Bảy</span>
               </div>
-              <CalendarCheck className="w-4 h-4 text-[#F47721] shrink-0 ml-1" />
-            </div>
-
-            {/* Simulator Badge */}
-            <div className="pt-4 text-right">
-              <span className="inline-block px-3 py-1 rounded-lg bg-black/40 backdrop-blur-sm text-[11px] font-mono text-white/80 border border-white/10">
-                AutoLead Dealership Simulator • 16-Bit Engine
-              </span>
+              <PixelCarOrange size={24} />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Pixel Fringe Transition from Sky/Grass to Section Background */}
-      <div className="relative z-20 w-full mt-12 sm:mt-16">
-        <PixelFringe color="#FFFFFF" topColor="#75A94C" />
+      {/* Bottom Transition Fringe */}
+      <div className="w-full relative z-10">
+        <PixelFringe color="#F8F9F5" topColor="transparent" />
       </div>
     </section>
   );

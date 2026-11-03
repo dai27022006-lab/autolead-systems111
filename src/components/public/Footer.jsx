@@ -1,17 +1,19 @@
 import React from 'react';
-import { ArrowRight, Sparkles, Database, ShieldCheck, Heart } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Sparkles, Database, ShieldCheck } from 'lucide-react';
 import { PixelCarOrange } from './PixelIcons';
 import PixelFringe from './PixelFringe';
 
-export default function Footer({ onOpenMvpDemo, onOpenLeadViewer, onOpenSaas }) {
+export default function Footer({ onOpenLeadViewer }) {
   const navLinks = [
-    { href: '#hero', label: 'Trang chủ' },
-    { href: '#problems', label: 'Thách thức' },
-    { href: '#solutions', label: 'Giải pháp 6 mô-đun' },
-    { href: '#workflow', label: 'Đường đua tác nghiệp' },
-    { href: '#pricing', label: 'Bảng giá & Tính chi phí' },
-    { href: '#roadmap', label: 'Lộ trình 30 ngày' },
-    { href: '#faq', label: 'Cam kết & FAQ' }
+    { to: '/', label: 'Trang chủ' },
+    { to: '/solutions', label: 'Thách thức & 6 Giải pháp' },
+    { to: '/workflow', label: 'Quy trình 5 bước Lean' },
+    { to: '/pricing', label: 'Bảng giá & Dự toán ROI' },
+    { to: '/roadmap', label: 'Lộ trình 30 ngày' },
+    { to: '/faq', label: 'Cam kết & FAQ' },
+    { to: '/contact', label: 'Đăng ký tư vấn B2B' },
+    { to: '/all', label: 'Xem toàn bộ 1 trang (All-in-one)' }
   ];
 
   return (
@@ -49,27 +51,23 @@ export default function Footer({ onOpenMvpDemo, onOpenLeadViewer, onOpenSaas }) 
             </p>
 
             <div className="flex flex-col sm:flex-row flex-wrap gap-2 pt-2">
-              {onOpenMvpDemo && (
-                <button
-                  type="button"
-                  onClick={onOpenMvpDemo}
-                  className="inline-flex items-center justify-center sm:justify-start gap-1.5 px-3.5 py-2.5 sm:py-1.5 min-h-[44px] sm:min-h-[36px] rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer"
-                >
-                  <Sparkles className="w-3.5 h-3.5 text-[#F47721]" />
-                  <span>Trải nghiệm Buyer Demo</span>
-                </button>
-              )}
+              <Link
+                to="/demo"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="inline-flex items-center justify-center sm:justify-start gap-1.5 px-3.5 py-2.5 sm:py-1.5 min-h-[44px] sm:min-h-[36px] rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-[#F47721]" />
+                <span>Trải nghiệm Buyer Demo</span>
+              </Link>
 
-              {onOpenSaas && (
-                <button
-                  type="button"
-                  onClick={onOpenSaas}
-                  className="inline-flex items-center justify-center sm:justify-start gap-1.5 px-3.5 py-2.5 sm:py-1.5 min-h-[44px] sm:min-h-[36px] rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer"
-                >
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#75A94C]" />
-                  <span>Cổng CRM Đại lý</span>
-                </button>
-              )}
+              <Link
+                to="/crm"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="inline-flex items-center justify-center sm:justify-start gap-1.5 px-3.5 py-2.5 sm:py-1.5 min-h-[44px] sm:min-h-[36px] rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-[#75A94C]" />
+                <span>Cổng CRM Đại lý</span>
+              </Link>
 
               {onOpenLeadViewer && (
                 <button
@@ -87,17 +85,18 @@ export default function Footer({ onOpenMvpDemo, onOpenLeadViewer, onOpenSaas }) 
           {/* Col 2: Navigation Links (3 cols) */}
           <div className="lg:col-span-3 space-y-3">
             <h4 className="text-xs font-bold text-white uppercase tracking-wider">
-              Khám Phá Nhanh
+              Khám Phá Các Trang
             </h4>
             <ul className="grid grid-cols-2 sm:grid-cols-1 gap-2 text-xs">
               {navLinks.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                     className="text-slate-400 hover:text-[#F47721] transition-colors py-1 inline-block"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -121,7 +120,7 @@ export default function Footer({ onOpenMvpDemo, onOpenLeadViewer, onOpenSaas }) 
                 </p>
               </div>
               <p className="text-slate-400 pt-1 border-t border-white/10 text-[10px]">
-                Phiên bản hợp nhất Master Integration • Đầy đủ 3 trải nghiệm người dùng
+                Phiên bản hợp nhất Master Integration • Đầy đủ điều hướng đa trang React Router
               </p>
             </div>
           </div>
@@ -131,7 +130,7 @@ export default function Footer({ onOpenMvpDemo, onOpenLeadViewer, onOpenSaas }) 
         <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
           <p>© 2026 AutoLead Systems. Tác nghiệp thương mại điện tử ô tô thông minh.</p>
           <p className="flex items-center gap-1">
-            <span>Thiết kế theo chuẩn 16-bit Pixel Art & Tác nghiệp TQM</span>
+            <span>Thiết kế theo chuẩn Multi-page SPA Routing & Tác nghiệp TQM</span>
           </p>
         </div>
       </div>
