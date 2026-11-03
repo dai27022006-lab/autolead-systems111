@@ -15,12 +15,13 @@ import {
 import { QUALIFICATION_CRITERIA_LIST } from '../../data/mockData.js';
 
 export default function LeadQualification({
-  leads,
+  leads = [],
   onUpdateLead,
   onOpenCreateAppointment
 }) {
-  const [selectedLeadId, setSelectedLeadId] = useState(leads[0]?.id || null);
-  const activeLead = leads.find(l => l.id === selectedLeadId) || leads[0];
+  const safeLeads = Array.isArray(leads) ? leads : [];
+  const [selectedLeadId, setSelectedLeadId] = useState(safeLeads[0]?.id || null);
+  const activeLead = safeLeads.find(l => l?.id === selectedLeadId) || safeLeads[0] || null;
 
   const handleToggleCriterion = (criterionField) => {
     if (!activeLead) return;

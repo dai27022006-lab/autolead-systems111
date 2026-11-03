@@ -22,7 +22,7 @@ import {
 import { VEHICLE_OPTIONS, SALESPERSON_LIST } from '../../data/mockData.js';
 
 export default function LeadManagement({
-  leads,
+  leads = [],
   onUpdateLeadStatus,
   onAddLead,
   onUpdateLead
@@ -57,12 +57,17 @@ export default function LeadManagement({
     { id: 'Sales Opportunity', label: '6. Opportunity', color: 'bg-purple-50 text-purple-800 border-purple-200' }
   ];
 
+  const safeLeads = Array.isArray(leads) ? leads : [];
+
   // Filtering leads
-  const filteredLeads = leads.filter(l => {
-    const matchSearch =
-      l.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      l.phone.includes(searchQuery) ||
-      (l.interestedVehicle && l.interestedVehicle.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filteredLeads = safeLeads.filter(l => {
+    if (!l) return false;
+    const name = String(l.customerName || '').toLowerCase();
+    const phone = String(l.phone || '');
+    const vehicle = String(l.interestedVehicle || '').toLowerCase();
+    const q = (searchQuery || '').toLowerCase();
+
+    const matchSearch = name.includes(q) || phone.includes(q) || vehicle.includes(q);
     const matchSegment = selectedSegment === 'ALL' || l.vehicleSegment === selectedSegment;
     return matchSearch && matchSegment;
   });
@@ -225,7 +230,7 @@ export default function LeadManagement({
 
                       {/* Quick Next Step Transition */}
                       <div className="mt-2.5 pt-2 border-t border-[#E2E8F0] flex items-center justify-between">
-                        <span className="text-[10px] text-[#94A3B8]">Gán: {lead.assignedSalesperson.split(' ')[0]}</span>
+                        <span className="text-[10px] text-[#94A3B8]">Gán: {(lead.assignedSalesperson || 'Tư vấn viên').split(' ')[0]}</span>
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
@@ -280,7 +285,7 @@ export default function LeadManagement({
                     <td className="py-3 px-4 text-[#142A43] font-bold">{ld.customerName}</td>
                     <td className="py-3 px-4 text-[#64748B]">{ld.phone}</td>
                     <td className="py-3 px-4 text-[#142A43]">{ld.interestedVehicle}</td>
-                    <td className="py-3 px-4 text-[#64748B]">{ld.leadSource}</td>
+                    <td className="py-3 px-4 text-[#64748B]">{ld.leadSource || 'Khách đăng ký Web'}</td>
                     <td className="py-3 px-4">
                       <span className="font-bold text-[#F47721] font-mono">
                         {ld.qualificationDetails?.aiScore || 50}%
@@ -288,10 +293,10 @@ export default function LeadManagement({
                     </td>
                     <td className="py-3 px-4">
                       <span className="inline-block px-2.5 py-1 rounded text-[10px] font-bold bg-[#F8F9F5] text-[#142A43] border border-[#DCE3EC]">
-                        {ld.status}
+                        {ld.status || 'New Lead'}
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-[#64748B]">{ld.assignedSalesperson}</td>
+                    <td className="py-3 px-4 text-[#64748B]">{ld.assignedSalesperson || 'Chưa phân công'}</td>
                     <td className="py-3 px-4 text-right">
                       <button
                         onClick={(e) => {
@@ -346,30 +351,30 @@ export default function LeadManagement({
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#64748B]">Nguồn chiến dịch:</span>
-                  <span className="text-sky-600 font-semibold">{selectedLead.leadSource}</span>
+                  <span className="text-sky-600 font-semibold">{selectedLead.leadSource || 'Khách đăng ký Web'}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#64748B]">Tư vấn viên phụ trách:</span>
-                  <span className="text-[#142A43] font-medium">{selectedLead.assignedSalesperson}</span>
+                  <span className="text-[#142A43] font-medium">{selectedLead.assignedSalesperson || 'Chưa phân công'}</span>
                 </div>
               </div>
 
               <div className="p-3.5 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] space-y-2">
                 <div className="flex justify-between">
                   <span className="text-[#64748B]">Mẫu xe quan tâm:</span>
-                  <span className="font-bold text-[#F47721]">{selectedLead.interestedVehicle}</span>
+                  <span className="font-bold text-[#F47721]">{selectedLead.interestedVehicle || 'Chưa chọn mẫu xe'}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#64748B]">Phân khúc:</span>
-                  <span>{selectedLead.vehicleSegment}</span>
+                  <span>{selectedLead.vehicleSegment || 'Tiêu chuẩn'}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#64748B]">Ngân sách dự kiến:</span>
-                  <span className="text-[#142A43] font-semibold">{selectedLead.expectedBudget}</span>
+                  <span className="text-[#142A43] font-semibold">{selectedLead.expectedBudget || 'Thỏa thuận'}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#64748B]">Thời điểm mua:</span>
-                  <span>{selectedLead.expectedPurchasingTime}</span>
+                  <span>{selectedLead.expectedPurchasingTime || 'Trong tháng này'}</span>
                 </div>
               </div>
             </div>

@@ -14,8 +14,9 @@ import {
 } from 'lucide-react';
 import { VEHICLE_OPTIONS } from '../../data/mockData.js';
 
-export default function AiAssistant({ leads }) {
-  const [selectedLead, setSelectedLead] = useState(leads[0] || null);
+export default function AiAssistant({ leads = [] }) {
+  const safeLeads = Array.isArray(leads) ? leads : [];
+  const [selectedLead, setSelectedLead] = useState(safeLeads[0] || null);
   const [selectedScenario, setSelectedScenario] = useState('zalo_greeting');
   const [copied, setCopied] = useState(false);
 

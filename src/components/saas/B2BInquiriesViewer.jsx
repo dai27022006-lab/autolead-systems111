@@ -1,7 +1,9 @@
 import React from 'react';
 import { Building2, ShieldCheck, Mail, Phone, MapPin, Calendar, Clock, Layers } from 'lucide-react';
 
-export default function B2BInquiriesViewer({ inquiries }) {
+export default function B2BInquiriesViewer({ inquiries = [] }) {
+  const safeInquiries = Array.isArray(inquiries) ? inquiries : [];
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -36,13 +38,13 @@ export default function B2BInquiriesViewer({ inquiries }) {
         </div>
 
         <span className="px-3 py-1.5 rounded-lg bg-sky-50 text-sky-700 border border-sky-200 text-xs font-mono font-bold shrink-0">
-          Tổng: {inquiries.length} đại lý đăng ký
+          Tổng: {safeInquiries.length} đại lý đăng ký
         </span>
       </div>
 
       {/* Inquiries Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {inquiries.map((inq) => (
+        {safeInquiries.map((inq) => (
           <div
             key={inq.id}
             className="rounded-2xl bg-white border border-[#DCE3EC] p-6 shadow-xs flex flex-col justify-between hover:border-sky-400 transition-all"

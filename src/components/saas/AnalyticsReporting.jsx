@@ -12,29 +12,38 @@ import {
   FileCheck
 } from 'lucide-react';
 
-export default function AnalyticsReporting({ leads, appointments, campaigns }) {
-  const totalLeads = leads.length;
-  const qualifiedLeads = leads.filter(l => l.status === 'Qualified Lead' || l.status === 'Appointment Booked' || l.status === 'Showroom Visit' || l.status === 'Sales Opportunity').length;
-  const bookedAppointments = leads.filter(l => l.status === 'Appointment Booked' || l.status === 'Showroom Visit' || l.status === 'Sales Opportunity').length;
-  const showroomVisits = leads.filter(l => l.status === 'Showroom Visit' || l.status === 'Sales Opportunity').length;
-  const salesOpportunities = leads.filter(l => l.status === 'Sales Opportunity').length;
+export default function AnalyticsReporting({ leads = [], appointments = [], campaigns = [] }) {
+  const safeLeads = Array.isArray(leads) ? leads : [];
+  const safeAppointments = Array.isArray(appointments) ? appointments : [];
+
+  const totalLeads = safeLeads.length;
+  const qualifiedLeads = safeLeads.filter(l => l?.status === 'Qualified Lead' || l?.status === 'Appointment Booked' || l?.status === 'Showroom Visit' || l?.status === 'Sales Opportunity').length;
+  const bookedAppointments = safeLeads.filter(l => l?.status === 'Appointment Booked' || l?.status === 'Showroom Visit' || l?.status === 'Sales Opportunity').length;
+  const showroomVisits = safeLeads.filter(l => l?.status === 'Showroom Visit' || l?.status === 'Sales Opportunity').length;
+  const salesOpportunities = safeLeads.filter(l => l?.status === 'Sales Opportunity').length;
 
   const qualificationRate = totalLeads ? Math.round((qualifiedLeads / totalLeads) * 100) : 0;
   const appointmentRate = totalLeads ? Math.round((bookedAppointments / totalLeads) * 100) : 0;
   const showroomVisitRate = bookedAppointments ? Math.round((showroomVisits / bookedAppointments) * 100) : 0;
 
   // Billable Qualified Appointments (300,000 VND rate)
-  const billableCount = appointments.filter(a => a.isQualifiedAppointment && (a.status === 'Confirmed' || a.status === 'Completed')).length;
+  const billableCount = safeAppointments.filter(a => a?.isQualifiedAppointment && (a?.status === 'Confirmed' || a?.status === 'Completed')).length;
   const billableAmount = billableCount * 300000;
 
   const formatVND = (num) => new Intl.NumberFormat('vi-VN').format(num) + ' VNĐ';
 
+  const getSourceCount = (keyword) =>
+    safeLeads.filter(l => String(l?.leadSource || '').toLowerCase().includes(keyword.toLowerCase())).length;
+
   // Lead sources breakdown
   const sources = [
-    { name: 'Meta Ads (Facebook/Instagram)', count: leads.filter(l => l.leadSource.includes('Meta')).length, share: '45%' },
-    { name: 'Google Search Ads', count: leads.filter(l => l.leadSource.includes('Google')).length, share: '25%' },
-    { name: 'TikTok Ads', count: leads.filter(l => l.leadSource.includes('TikTok')).length, share: '18%' },
-    { name: 'Zalo OA & Website', count: leads.filter(l => l.leadSource.includes('Zalo') || l.leadSource.includes('Website')).length, share: '12%' }
+    { name: 'Meta Ads (Facebook/Instagram)', count: getSourceCount('Meta'), share: '45%' },
+    { name: 'Google Search Ads', count: getSourceCount('Google'), share: '25%' },
+    { name: 'TikTok Ads', count: getSourceCount('TikTok'), share: '18%' },
+    { name: 'Zalo OA & Website', count: safeLeads.filter(l => {
+      const src = String(l?.leadSource || '').toLowerCase();
+      return src.includes('zalo') || src.includes('website') || src.includes('web') || src.includes('portal');
+    }).length, share: '12%' }
   ];
 
   return (

@@ -16,8 +16,8 @@ import {
 import { VEHICLE_OPTIONS, SALESPERSON_LIST } from '../../data/mockData.js';
 
 export default function AppointmentManagement({
-  appointments,
-  leads,
+  appointments = [],
+  leads = [],
   onAddAppointment,
   onUpdateAppointmentStatus
 }) {
@@ -44,7 +44,10 @@ export default function AppointmentManagement({
     { id: 'No-show', label: 'Khách không đến', color: 'bg-rose-100 text-rose-800 border-rose-300' }
   ];
 
-  const filteredAppointments = appointments.filter(a => {
+  const safeAppointments = Array.isArray(appointments) ? appointments : [];
+
+  const filteredAppointments = safeAppointments.filter(a => {
+    if (!a) return false;
     if (selectedStatusFilter === 'ALL') return true;
     return a.status === selectedStatusFilter;
   });

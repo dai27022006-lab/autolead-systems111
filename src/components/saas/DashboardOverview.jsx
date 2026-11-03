@@ -15,22 +15,25 @@ import {
 } from 'lucide-react';
 
 export default function DashboardOverview({
-  leads,
-  appointments,
-  campaigns,
+  leads = [],
+  appointments = [],
+  campaigns = [],
   onNavigateToTab
 }) {
+  const safeLeads = Array.isArray(leads) ? leads : [];
+  const safeAppointments = Array.isArray(appointments) ? appointments : [];
+
   // Calculate operational stats
-  const totalLeads = leads.length;
-  const newLeads = leads.filter(l => l.status === 'New Lead').length;
-  const contactedLeads = leads.filter(l => l.status === 'Contacted').length;
-  const qualifiedLeads = leads.filter(l => l.status === 'Qualified Lead').length;
-  const bookedAppointments = leads.filter(l => l.status === 'Appointment Booked').length;
-  const showroomVisits = leads.filter(l => l.status === 'Showroom Visit').length;
-  const salesOpportunities = leads.filter(l => l.status === 'Sales Opportunity').length;
+  const totalLeads = safeLeads.length;
+  const newLeads = safeLeads.filter(l => l?.status === 'New Lead').length;
+  const contactedLeads = safeLeads.filter(l => l?.status === 'Contacted').length;
+  const qualifiedLeads = safeLeads.filter(l => l?.status === 'Qualified Lead').length;
+  const bookedAppointments = safeLeads.filter(l => l?.status === 'Appointment Booked').length;
+  const showroomVisits = safeLeads.filter(l => l?.status === 'Showroom Visit').length;
+  const salesOpportunities = safeLeads.filter(l => l?.status === 'Sales Opportunity').length;
 
   // Billable Qualified Appointments (300,000 VND / appointment)
-  const billableAppointments = appointments.filter(a => a.isQualifiedAppointment && (a.status === 'Confirmed' || a.status === 'Completed'));
+  const billableAppointments = safeAppointments.filter(a => a?.isQualifiedAppointment && (a?.status === 'Confirmed' || a?.status === 'Completed'));
   const totalBillableFee = billableAppointments.length * 300000;
 
   // Operational Funnel stages

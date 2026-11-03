@@ -44,15 +44,39 @@ export const storageService = {
 
   getCRMLeads: () => {
     const raw = localStorage.getItem(KEYS.CRM_LEADS);
-    if (!raw) {
-      localStorage.setItem(KEYS.CRM_LEADS, JSON.stringify(INITIAL_CRM_LEADS));
-      return INITIAL_CRM_LEADS;
+    let leads = INITIAL_CRM_LEADS;
+    if (raw) {
+      try {
+        leads = JSON.parse(raw);
+      } catch {
+        leads = INITIAL_CRM_LEADS;
+      }
     }
-    try {
-      return JSON.parse(raw);
-    } catch {
-      return INITIAL_CRM_LEADS;
-    }
+    if (!Array.isArray(leads)) leads = INITIAL_CRM_LEADS;
+
+    // Sanitize leads to ensure all required fields are present
+    return leads.map((l, index) => ({
+      ...l,
+      id: l.id || `LEAD-2024-${String(index + 1).padStart(3, '0')}`,
+      customerName: l.customerName || 'Khách hàng',
+      phone: l.phone || '0900000000',
+      leadSource: l.leadSource || 'Website Portal (Buyer Demo)',
+      vehicleSegment: l.vehicleSegment || 'Luxury Sedan',
+      interestedVehicle: l.interestedVehicle || 'Mercedes-Benz C200 Avantgarde 2024',
+      assignedSalesperson: l.assignedSalesperson || 'Trần Tuấn Anh (Sales)',
+      status: l.status || 'New Lead',
+      qualificationDetails: l.qualificationDetails || {
+        hasValidContact: true,
+        hasClearDemand: true,
+        hasSpecificModel: true,
+        meetsTargetCriteria: true,
+        agreesToVisitShowroom: false,
+        hasSpecificDateTime: false,
+        confirmedInSystem: false,
+        aiScore: 85,
+        aiExplanation: 'Lead tiếp nhận từ hệ thống AutoLead.'
+      }
+    }));
   },
 
   addCRMLead: (lead) => {
@@ -62,6 +86,9 @@ export const storageService = {
       id: `LEAD-2024-${String(leads.length + 1).padStart(3, '0')}`,
       createdAt: new Date().toLocaleString('vi-VN', { hour12: false }),
       status: lead.status || 'New Lead',
+      leadSource: lead.leadSource || 'Website Portal (Buyer Demo)',
+      vehicleSegment: lead.vehicleSegment || 'Luxury Sedan',
+      assignedSalesperson: lead.assignedSalesperson || 'Trần Tuấn Anh (Sales)',
       qualificationDetails: lead.qualificationDetails || {
         hasValidContact: true,
         hasClearDemand: true,
@@ -81,7 +108,7 @@ export const storageService = {
       }],
       interactionHistory: [{
         type: 'form',
-        channel: lead.leadSource || 'Meta Ads',
+        channel: lead.leadSource || 'Website Portal',
         time: new Date().toLocaleString('vi-VN', { hour12: false }),
         detail: `Tiếp nhận khách quan tâm ${lead.interestedVehicle || 'xe sang'}`
       }]
