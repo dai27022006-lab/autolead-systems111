@@ -127,26 +127,9 @@ export default function Navbar({
             })}
           </nav>
 
-          {/* Desktop Action Buttons: 2 Connected Interfaces with Spring Physics */}
+          {/* Desktop Action Buttons: Clean B2B Navigation */}
           <div className="hidden lg:flex items-center gap-2 shrink-0">
-            {/* Giao diện 1: Khách hàng */}
-            <MotionLink
-              to="/demo"
-              onClick={handleScrollTop}
-              whileHover={shouldReduceMotion ? {} : buttonMotion.whileHover}
-              whileTap={shouldReduceMotion ? {} : buttonMotion.whileTap}
-              className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs whitespace-nowrap ${
-                isScrolled
-                  ? 'bg-white hover:bg-orange-50 text-[#142A43] border border-[#DCE3EC]'
-                  : 'bg-white/20 hover:bg-white/30 text-white backdrop-blur-md border border-white/40 drop-shadow-sm'
-              }`}
-              title="Giao diện 1: Trải nghiệm luồng đặt lịch lái thử của khách hàng (Buyer Portal)"
-            >
-              <Car className="w-3.5 h-3.5 text-[#F47721]" />
-              <span>🚗 Giao diện 1: Đặt lịch</span>
-            </MotionLink>
-
-            {/* Giao diện 2: Doanh nghiệp (CRM) */}
+            {/* Cổng CRM Đại lý */}
             <MotionLink
               to="/crm"
               onClick={handleScrollTop}
@@ -154,13 +137,13 @@ export default function Navbar({
               whileTap={shouldReduceMotion ? {} : buttonMotion.whileTap}
               className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs whitespace-nowrap ${
                 isScrolled
-                  ? 'bg-[#142A43] hover:bg-[#07182D] text-white border border-[#142A43] ring-1 ring-emerald-400/40'
-                  : 'bg-[#142A43]/90 hover:bg-[#142A43] text-white backdrop-blur-md border border-white/30 ring-1 ring-emerald-400/40'
+                  ? 'bg-[#142A43] hover:bg-[#07182D] text-white border border-[#142A43]'
+                  : 'bg-white/15 hover:bg-white/25 text-white backdrop-blur-md border border-white/30 drop-shadow-sm'
               }`}
-              title="Giao diện 2: Hệ thống CRM quản trị và tiếp nhận lead đại lý showroom"
+              title="Cổng hệ thống CRM quản trị và tiếp nhận lead đại lý showroom"
             >
               <Building2 className="w-3.5 h-3.5 text-emerald-400" />
-              <span>🏢 Giao diện 2: CRM Đại lý</span>
+              <span>🏢 Cổng CRM Đại lý</span>
             </MotionLink>
 
             {/* Open Leads Manager Modal */}
@@ -236,23 +219,23 @@ export default function Navbar({
             transition={{ duration: 0.25, ease: 'easeOut' }}
             className="lg:hidden bg-[#0E2034] border-b border-white/20 px-4 pt-3 pb-6 space-y-3 shadow-2xl overflow-hidden"
           >
-            {/* Primary Action Buttons for Mobile */}
+            {/* Quick Demo & CRM Links in Mobile Drawer */}
             <div className="grid grid-cols-2 gap-2 pb-2 border-b border-white/10">
               <button
                 type="button"
                 onClick={() => handleNavClick('/demo')}
-                className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-gradient-to-r from-[#F47721] to-[#E76513] text-white text-xs font-bold shadow-md cursor-pointer"
+                className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold shadow-xs cursor-pointer"
               >
-                <Car className="w-3.5 h-3.5" />
-                <span>🚗 Giao diện 1</span>
+                <Car className="w-3.5 h-3.5 text-[#F47721]" />
+                <span>🚗 Showroom Giả Lập</span>
               </button>
               <button
                 type="button"
                 onClick={() => handleNavClick('/crm')}
-                className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-[#142A43] border border-emerald-400/50 text-white text-xs font-bold shadow-md cursor-pointer"
+                className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-[#142A43] border border-emerald-400/40 text-emerald-300 text-xs font-bold shadow-xs cursor-pointer"
               >
                 <Building2 className="w-3.5 h-3.5 text-emerald-400" />
-                <span>🏢 Giao diện 2 (CRM)</span>
+                <span>🏢 Cổng CRM Đại lý</span>
               </button>
             </div>
 

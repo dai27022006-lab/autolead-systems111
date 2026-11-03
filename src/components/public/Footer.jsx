@@ -71,7 +71,7 @@ export default function Footer({ onOpenLeadViewer }) {
                 className="inline-flex items-center justify-center sm:justify-start gap-1.5 px-3.5 py-2 sm:py-1.5 min-h-[40px] sm:min-h-[34px] rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer text-xs"
               >
                 <Sparkles className="w-3.5 h-3.5 text-[#F47721]" />
-                <span>Buyer Demo (Giao diện 1)</span>
+                <span>Showroom Giả Lập (AI Widget)</span>
               </MotionLink>
 
               <MotionLink
@@ -82,7 +82,7 @@ export default function Footer({ onOpenLeadViewer }) {
                 className="inline-flex items-center justify-center sm:justify-start gap-1.5 px-3.5 py-2 sm:py-1.5 min-h-[40px] sm:min-h-[34px] rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer text-xs"
               >
                 <ShieldCheck className="w-3.5 h-3.5 text-[#75A94C]" />
-                <span>Cổng CRM Đại lý (Giao diện 2)</span>
+                <span>Cổng CRM Đại lý</span>
               </MotionLink>
 
               {onOpenLeadViewer && (

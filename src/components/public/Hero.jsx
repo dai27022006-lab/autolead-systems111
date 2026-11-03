@@ -169,7 +169,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
                 <PixelCarOrange size={20} />
                 <span className="text-[#F47721]">AUTOLEAD</span>
                 <span className="text-white/60">•</span>
-                <span>HỆ THỐNG 2 GIAO DIỆN TÍCH HỢP</span>
+                <span>AI LEAD QUALIFICATION CHO SHOWROOM Ô TÔ</span>
               </motion.div>
 
               {/* Main Headline */}
@@ -177,7 +177,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
                 variants={itemVariants}
                 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-[1.18] drop-shadow-md"
               >
-                Chuyển đổi khách hàng tiềm năng thành{' '}
+                Chuyển đổi khách truy cập website showroom thành{' '}
                 <span className="text-[#F47721] underline decoration-[#F47721]/60 underline-offset-4">
                   lịch hẹn lái thử
                 </span>{' '}
@@ -189,10 +189,10 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
                 variants={itemVariants}
                 className="text-xs sm:text-base text-slate-200 font-normal leading-relaxed"
               >
-                AutoLead Systems xây dựng mô hình web thống nhất gồm <strong>2 giao diện kết nối qua CSDL chung</strong>: Cổng khách hàng đặt lịch & Hệ thống CRM tiếp nhận, phân luồng và quản lý lead cho đại lý.
+                <strong>AutoLead cung cấp AI Widget nhúng vào website showroom, giúp tăng 300% tỷ lệ chuyển đổi khách lái thử mà không cần đổi website hiện có.</strong> Khách hàng vẫn lướt xem xe như bình thường; AI Widget tự động đối thoại, khai thác 7 tiêu chí TQM và đồng bộ dữ liệu lead nóng sang CRM đại lý tức thì.
               </motion.p>
 
-              {/* CTAs: 2 Connected Interfaces with Spring Physics */}
+              {/* CTAs: Showroom Simulator & CRM Portal */}
               <motion.div variants={itemVariants} className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                 <MotionLink
                   to="/demo"
@@ -202,7 +202,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
                   className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-[#F47721] to-[#E76513] hover:from-[#E76513] hover:to-[#D55302] shadow-lg shadow-[#F47721]/30 transition-all cursor-pointer min-h-[48px]"
                 >
                   <Car className="w-4 h-4 text-white" />
-                  <span>🚗 Giao diện 1: Đặt lịch</span>
+                  <span>🚗 Trải nghiệm Showroom giả lập (Có nhúng AI Widget)</span>
                 </MotionLink>
 
                 <MotionLink
@@ -213,7 +213,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
                   className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-[#142A43] hover:bg-[#07182D] border-2 border-emerald-400/50 shadow-md transition-all cursor-pointer min-h-[48px]"
                 >
                   <Building2 className="w-4 h-4 text-emerald-400" />
-                  <span>🏢 Giao diện 2: CRM Đại lý</span>
+                  <span>🏢 Cổng CRM Đại lý</span>
                 </MotionLink>
 
                 <MotionLink
@@ -223,7 +223,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
                   whileTap={shouldReduceMotion ? {} : buttonMotion.whileTap}
                   className="inline-flex items-center justify-center gap-1.5 px-4 py-3.5 rounded-xl font-semibold text-xs text-slate-200 hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 transition-all cursor-pointer min-h-[48px]"
                 >
-                  <span>Tư vấn B2B</span>
+                  <span>Đăng ký tư vấn B2B</span>
                   <ArrowRight className="w-3.5 h-3.5 text-[#F47721]" />
                 </MotionLink>
               </motion.div>
@@ -232,7 +232,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
               <motion.div variants={itemVariants} className="p-2.5 rounded-xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-between text-[11px] text-emerald-300">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span>Hai giao diện tự động đồng bộ thời gian thực qua CSDL chung (0.05s)</span>
+                  <span>AI Widget nhúng trực tiếp website showroom • Đẩy lead đủ tiêu chuẩn vào CRM trong 0.05s</span>
                 </div>
                 <span className="text-[10px] font-mono font-bold text-white bg-emerald-600/40 px-2 py-0.5 rounded">
                   Live Synced
@@ -243,7 +243,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
               <motion.div variants={itemVariants} className="pt-3 border-t border-white/15 flex items-start gap-2 text-xs text-slate-300">
                 <CheckCircle2 className="w-4 h-4 text-[#75A94C] shrink-0 mt-0.5" />
                 <span>
-                  Offer chính thức:{' '}
+                  Offer chính thức cho Showroom:{' '}
                   <strong className="text-white">15.000.000 VNĐ</strong> setup 30 ngày +{' '}
                   <strong className="text-[#F47721]">300.000 VNĐ</strong> / lịch hẹn đủ điều kiện.
                 </span>
@@ -279,9 +279,9 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
               <span className="w-2.5 h-2.5 rounded-full bg-[#159B68] shrink-0" />
               <div className="text-left">
                 <span className="text-[10px] font-mono text-[#75A94C] font-bold block uppercase">
-                  Tiếp nhận tức thì &lt;60s
+                  AI Widget Nhúng Website Showroom
                 </span>
-                <span className="font-semibold">Khách quan tâm SUV hạng sang GLC 300</span>
+                <span className="font-semibold">Chủ động tư vấn khách đang xem SUV GLC 300</span>
               </div>
               <Zap className="w-4 h-4 text-[#159B68] shrink-0 ml-1" />
             </motion.div>
@@ -315,7 +315,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
                 <span className="text-[10px] font-mono text-[#75A94C] font-bold block uppercase">
                   Sàng lọc 7 tiêu chí TQM đạt chuẩn
                 </span>
-                <span className="font-semibold">Xác thực SĐT & ngân sách mua xe &gt;1.5 tỷ</span>
+                <span className="font-semibold">Nhu cầu mua trong 1-2 tháng & ngân sách &gt;1.5 tỷ</span>
               </div>
               <ShieldCheck className="w-4 h-4 text-[#159B68] shrink-0 ml-1" />
             </motion.div>
@@ -347,9 +347,9 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
               <span className="w-2.5 h-2.5 rounded-full bg-[#F47721] animate-ping shrink-0" />
               <div className="text-left">
                 <span className="text-[10px] font-mono text-[#F47721] font-bold block uppercase">
-                  Chốt lịch hẹn thành công
+                  Đồng bộ CRM Đại lý tức thì (0.05s)
                 </span>
-                <span className="font-bold text-white">Thứ 7 • 09:30 tại Showroom</span>
+                <span className="font-bold text-white">Chốt lịch lái thử: Thứ 7 • 09:30</span>
               </div>
               <CalendarCheck className="w-4 h-4 text-[#F47721] shrink-0 ml-1" />
             </motion.div>

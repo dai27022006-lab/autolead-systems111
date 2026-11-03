@@ -146,26 +146,52 @@ export default function Solutions() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={defaultViewport}
           transition={{ duration: 0.5, ease: EASINGS.gentleOut }}
-          className="mb-12 p-5 sm:p-6 rounded-2xl bg-[#F8F9F5] border-2 border-[#F47721]/30 max-w-4xl mx-auto shadow-sm flex flex-col sm:flex-row items-start gap-4 text-left"
+          className="mb-12 p-6 sm:p-7 rounded-2xl bg-[#F8F9F5] border-2 border-[#F47721]/40 max-w-4xl mx-auto shadow-md text-left space-y-4"
         >
-          <div className="w-11 h-11 rounded-xl bg-orange-100 border border-orange-200 flex items-center justify-center shrink-0 text-[#F47721] shadow-2xs">
-            <PixelShield size={26} />
-          </div>
-          <div className="space-y-2">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[11px] font-bold text-[#F47721] uppercase tracking-wider font-mono">
-                ĐỊNH VỊ GIÁ TRỊ CỐT LÕI
-              </span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-white border border-[#DCE3EC] font-semibold text-[#142A43]">
-                Hệ thống tự động hóa bổ trợ phía sau
-              </span>
+          <div className="flex flex-col sm:flex-row items-start gap-4">
+            <div className="w-12 h-12 rounded-xl bg-orange-100 border border-orange-200 flex items-center justify-center shrink-0 text-[#F47721] shadow-2xs">
+              <PixelShield size={28} />
             </div>
-            <h3 className="text-sm sm:text-base font-bold text-[#142A43]">
-              AutoLead Systems không thay thế các Form đăng ký lái thử mà bổ sung hệ thống tự động hóa phía sau
-            </h3>
-            <p className="text-xs sm:text-sm text-[#475569] leading-relaxed">
-              Các form đăng ký lái thử hiện nay chủ yếu hỗ trợ khách hàng chủ động cung cấp thông tin và gửi yêu cầu đến đại lý. <strong>AutoLead Systems không thay thế những form này</strong> mà <strong>bổ sung một hệ thống tự động hóa phía sau</strong>, giúp đại lý tiếp tục chăm sóc, sàng lọc, theo dõi và chuyển đổi khách hàng tiềm năng thành những lịch hẹn lái thử đủ điều kiện. Qua đó, đại lý không chỉ thu thập được thông tin khách hàng mà còn khai thác hiệu quả hơn nguồn khách hàng đã có.
-            </p>
+            <div className="space-y-2 flex-1">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-[11px] font-bold text-[#F47721] uppercase tracking-wider font-mono">
+                  GIẢI PHÁP ĐỘT PHÁ CHO ĐẠI LÝ Ô TÔ
+                </span>
+                <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold">
+                  Không cần thay đổi Website & CRM hiện có
+                </span>
+              </div>
+              <h3 className="text-base sm:text-lg font-black text-[#142A43] leading-snug">
+                AutoLead cung cấp AI Widget nhúng vào website showroom, giúp tăng 300% tỷ lệ chuyển đổi khách lái thử mà không cần đổi website hiện có
+              </h3>
+              <p className="text-xs sm:text-sm text-[#475569] leading-relaxed">
+                Thay vì bắt khách hàng truy cập website mới hay bắt showroom đầu tư xây dựng lại hạ tầng kỹ thuật, <strong>AutoLead AI Widget nhúng trực tiếp vào website showroom sẵn có</strong>. AI chủ động tư vấn, đối thoại làm rõ mẫu xe, ngân sách, thời gian dự kiến mua theo tiêu chuẩn 7 tiêu chí TQM, sàng lọc lead chất lượng cao và chuyển giao tức thì vào hệ thống CRM của đại lý.
+              </p>
+            </div>
+          </div>
+
+          {/* 4-Step Architecture Flow */}
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 pt-2 border-t border-[#DCE3EC]">
+            <div className="p-2.5 rounded-xl bg-white border border-[#DCE3EC] text-left">
+              <span className="text-[10px] font-mono font-bold text-[#64748B] block">BƯỚC 1</span>
+              <span className="text-xs font-bold text-[#142A43] block">Website Showroom</span>
+              <span className="text-[11px] text-[#64748B]">Khách xem xe như bình thường</span>
+            </div>
+            <div className="p-2.5 rounded-xl bg-orange-50/70 border border-orange-200 text-left">
+              <span className="text-[10px] font-mono font-bold text-[#F47721] block">BƯỚC 2</span>
+              <span className="text-xs font-bold text-[#142A43] block">AutoLead AI Widget</span>
+              <span className="text-[11px] text-[#64748B]">Tư vấn & khai thác nhu cầu TQM</span>
+            </div>
+            <div className="p-2.5 rounded-xl bg-sky-50/70 border border-sky-200 text-left">
+              <span className="text-[10px] font-mono font-bold text-[#4A98E8] block">BƯỚC 3</span>
+              <span className="text-xs font-bold text-[#142A43] block">AutoLead Backend</span>
+              <span className="text-[11px] text-[#64748B]">Sàng lọc & tính điểm lead</span>
+            </div>
+            <div className="p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-200 text-left">
+              <span className="text-[10px] font-mono font-bold text-emerald-600 block">BƯỚC 4</span>
+              <span className="text-xs font-bold text-[#142A43] block">CRM Showroom</span>
+              <span className="text-[11px] text-[#64748B]">Sales tiếp nhận chốt lái thử</span>
+            </div>
           </div>
         </motion.div>
 

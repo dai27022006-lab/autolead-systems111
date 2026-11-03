@@ -117,7 +117,7 @@ export default function DealerLogin({ onLoginSuccess, onBackToBuyer }) {
               onClick={onBackToBuyer}
               className="text-xs text-[#64748B] hover:text-[#142A43] underline cursor-pointer"
             >
-              ← Quay lại trang Buyer Demo (Đặt lịch thử xe)
+              ← Quay lại Trang chủ B2B AutoLead
             </button>
           </div>
         )}

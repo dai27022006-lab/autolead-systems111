@@ -65,8 +65,9 @@ export default function DualInterfaceHeader({ leadsCount = 0, onResetData, curre
           </div>
 
           {/* Center Section: THE TWO PROMINENT INTERFACE SWITCHER TABS */}
+          {/* Center Section: THE TWO PROMINENT INTERFACE SWITCHER TABS */}
           <div className="flex items-center p-1 rounded-2xl bg-[#0D2137] border-2 border-[#F47721]/50 shadow-inner w-full md:w-auto justify-center max-w-full">
-            {/* GIAO DIỆN 1: KHÁCH HÀNG */}
+            {/* GIAO DIỆN 1: SHOWROOM GIẢ LẬP (AI WIDGET) */}
             <MotionLink
               to="/demo"
               onClick={handleScrollTop}
@@ -81,12 +82,12 @@ export default function DualInterfaceHeader({ leadsCount = 0, onResetData, curre
               <Car className={`w-4 h-4 shrink-0 ${isDemo ? 'text-white' : 'text-[#F47721]'}`} />
               <div className="text-left flex flex-col justify-center">
                 <span className="text-xs sm:text-[13px] font-black tracking-wide whitespace-nowrap leading-tight">
-                  <span className="hidden sm:inline">Giao diện 1: Khách hàng</span>
-                  <span className="sm:hidden">GD 1: Khách hàng</span>
+                  <span className="hidden sm:inline">Showroom Giả Lập (AI Widget)</span>
+                  <span className="sm:hidden">GD 1: Showroom AI</span>
                 </span>
                 <span className={`text-[9.5px] sm:text-[10px] font-medium leading-tight mt-0.5 whitespace-nowrap ${isDemo ? 'text-white/95' : 'text-slate-400'}`}>
-                  <span className="hidden sm:inline">{isDemo ? '● Đang xem (Đặt lịch xe)' : 'Bấm mở Cổng đặt lịch'}</span>
-                  <span className="sm:hidden">{isDemo ? '● Đang xem' : 'Mở đặt lịch'}</span>
+                  <span className="hidden sm:inline">{isDemo ? '● Đang xem (Mô phỏng)' : 'Mở Showroom giả lập'}</span>
+                  <span className="sm:hidden">{isDemo ? '● Đang xem' : 'Mở Showroom'}</span>
                 </span>
               </div>
             </MotionLink>
@@ -112,8 +113,8 @@ export default function DualInterfaceHeader({ leadsCount = 0, onResetData, curre
               <div className="text-left flex flex-col justify-center">
                 <div className="flex items-center gap-1.5">
                   <span className="text-xs sm:text-[13px] font-black tracking-wide whitespace-nowrap leading-tight">
-                    <span className="hidden sm:inline">Giao diện 2: Doanh nghiệp</span>
-                    <span className="sm:hidden">GD 2: Doanh nghiệp</span>
+                    <span className="hidden sm:inline">Cổng CRM Đại lý</span>
+                    <span className="sm:hidden">GD 2: CRM</span>
                   </span>
                   {leadsCount > 0 && (
                     <span className="px-1.5 py-0.2 rounded-full bg-emerald-500 text-white text-[9px] font-black shrink-0 whitespace-nowrap animate-pulse">

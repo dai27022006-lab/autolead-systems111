@@ -215,23 +215,23 @@ export default function BuyerDemo({ onNavigateToCRM }) {
           <div>
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xs font-bold uppercase tracking-wider text-[#F47721]">
-                Cổng Người Mua Xe (Buyer Demo Portal)
+                Showroom Giả Lập (Có nhúng AI Widget AutoLead)
               </span>
               <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">
-                Quy Trình Tạo Lead Thật
+                Mô Phỏng Trải Nghiệm Khách Hàng
               </span>
             </div>
             <p className="text-xs text-[#64748B] mt-0.5 leading-relaxed">
-              Mô phỏng trải nghiệm người mua xe: Chọn xe → Điền thông tin → AI Sàng lọc → Khóa lịch trống → Dữ liệu tự động đẩy về CRM đại lý.
+              Mô phỏng website showroom ô tô có nhúng công cụ AI Widget: Khách xem xe → AI tư vấn & khai thác 7 tiêu chí TQM → Lên lịch hẹn → Tự động đẩy dữ liệu sang CRM Đại lý.
             </p>
           </div>
         </div>
 
         <button
           onClick={onNavigateToCRM}
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-[#142A43] border border-[#DCE3EC] shrink-0 cursor-pointer transition-colors shadow-xs"
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#142A43] hover:bg-[#07182D] text-xs font-bold text-white border border-[#142A43] shrink-0 cursor-pointer transition-colors shadow-xs"
         >
-          <span>Xem CRM Đại Lý</span>
+          <span>Xem Cổng CRM Đại Lý</span>
           <ArrowRight className="w-3.5 h-3.5 text-[#F47721]" />
         </button>
       </div>
@@ -243,13 +243,13 @@ export default function BuyerDemo({ onNavigateToCRM }) {
         </div>
         <div className="space-y-1">
           <p className="font-bold text-[#142A43] text-xs uppercase tracking-wide font-mono flex items-center gap-2">
-            <span>Nguyên lý vận hành AutoLead Systems</span>
+            <span>Định vị giải pháp AutoLead</span>
             <span className="text-[10px] px-1.5 py-0.5 rounded bg-white text-[#F47721] border border-orange-200 font-bold">
-              Bổ trợ Form
+              AI Widget Nhúng Trực Tiếp
             </span>
           </p>
           <p className="text-xs text-[#475569] leading-relaxed">
-            Các form đăng ký lái thử hiện nay chủ yếu hỗ trợ khách hàng chủ động cung cấp thông tin và gửi yêu cầu đến đại lý. <strong>AutoLead Systems không thay thế những form này</strong> mà <strong>bổ sung một hệ thống tự động hóa phía sau</strong>, giúp đại lý tiếp tục chăm sóc, sàng lọc, theo dõi và chuyển đổi khách hàng tiềm năng thành những lịch hẹn lái thử đủ điều kiện. Qua đó, đại lý không chỉ thu thập được thông tin khách hàng mà còn khai thác hiệu quả hơn nguồn khách hàng đã có.
+            <strong>AutoLead cung cấp AI Widget nhúng vào website showroom, giúp tăng 300% tỷ lệ chuyển đổi khách lái thử mà không cần đổi website hiện có.</strong> Khách hàng vẫn lướt xem xe như bình thường; AI Widget chủ động đối thoại, khai thác nhu cầu theo 7 tiêu chí TQM và đồng bộ dữ liệu vào CRM của đại lý tức thì.
           </p>
         </div>
       </div>

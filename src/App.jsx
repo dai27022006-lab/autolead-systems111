@@ -48,6 +48,7 @@ import DualInterfaceHeader from './components/common/DualInterfaceHeader';
 import { ArrowLeft, Sparkles, ShieldCheck } from 'lucide-react';
 import { initScrollEngine, destroyScrollEngine } from './utils/scrollEngine';
 import ErrorBoundary from './components/common/ErrorBoundary';
+import DemoCornerWidget from './components/common/DemoCornerWidget';
 
 function PublicLayout({ children, onOpenContact, onOpenLeadViewer }) {
   return (
@@ -58,6 +59,7 @@ function PublicLayout({ children, onOpenContact, onOpenLeadViewer }) {
       />
       <main className="flex-1">{children}</main>
       <Footer onOpenLeadViewer={onOpenLeadViewer} />
+      <DemoCornerWidget />
     </div>
   );
 }
