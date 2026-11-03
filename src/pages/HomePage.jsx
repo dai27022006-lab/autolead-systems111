@@ -75,6 +75,12 @@ export default function HomePage({ onOpenContact }) {
     }
   ];
 
+  const handleCardClick = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    if (document.documentElement) document.documentElement.scrollTop = 0;
+    if (document.body) document.body.scrollTop = 0;
+  };
+
   return (
     <div className="flex-1 flex flex-col">
       {/* 1. Hero Section */}
@@ -106,6 +112,7 @@ export default function HomePage({ onOpenContact }) {
                 <Link
                   key={card.to}
                   to={card.to}
+                  onClick={handleCardClick}
                   className={`group relative p-6 rounded-2xl bg-[#F8F9F5] border transition-all duration-200 hover:-translate-y-1 hover:shadow-lg flex flex-col justify-between text-left ${card.color}`}
                 >
                   <div className="space-y-3">
@@ -154,6 +161,7 @@ export default function HomePage({ onOpenContact }) {
             <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full md:w-auto">
               <Link
                 to="/demo"
+                onClick={handleCardClick}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-xs font-bold text-white bg-[#F47721] hover:bg-[#E76513] shadow-md transition-all"
               >
                 <Sparkles className="w-4 h-4" />
@@ -161,6 +169,7 @@ export default function HomePage({ onOpenContact }) {
               </Link>
               <Link
                 to="/crm"
+                onClick={handleCardClick}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-xs font-bold text-white bg-white/15 hover:bg-white/25 border border-white/20 transition-all"
               >
                 <ShieldCheck className="w-4 h-4 text-[#75A94C]" />
@@ -181,6 +190,7 @@ export default function HomePage({ onOpenContact }) {
         </p>
         <Link
           to="/all"
+          onClick={handleCardClick}
           className="inline-flex items-center gap-1.5 text-xs font-bold text-[#142A43] hover:text-[#F47721] underline decoration-[#F47721] underline-offset-4"
         >
           <span>Chuyển sang chế độ xem toàn bộ (All-in-one View) →</span>

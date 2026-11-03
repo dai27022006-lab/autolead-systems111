@@ -6,6 +6,12 @@ import PixelFringe from './PixelFringe';
 import heroBg from '../../assets/hero-pixel-automotive-world.jpg';
 
 export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
+  const handleScrollTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    if (document.documentElement) document.documentElement.scrollTop = 0;
+    if (document.body) document.body.scrollTop = 0;
+  };
+
   return (
     <section
       id="hero"
@@ -62,6 +68,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
                 ) : (
                   <Link
                     to="/contact"
+                    onClick={handleScrollTop}
                     className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm text-white bg-[#F47721] hover:bg-[#E76513] shadow-lg shadow-[#F47721]/30 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer min-h-[48px]"
                   >
                     <span>Đăng ký tư vấn 30 phút</span>
@@ -81,6 +88,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
                 ) : (
                   <Link
                     to="/demo"
+                    onClick={handleScrollTop}
                     className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-sm text-white hover:text-slate-200 bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/35 transition-all cursor-pointer shadow-xs min-h-[48px]"
                   >
                     <Sparkles className="w-4 h-4 text-[#F47721]" />
@@ -90,6 +98,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
 
                 <Link
                   to="/crm"
+                  onClick={handleScrollTop}
                   className="inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl font-semibold text-xs text-white/90 hover:text-white bg-slate-900/60 hover:bg-slate-900/80 border border-white/20 transition-all cursor-pointer min-h-[44px]"
                 >
                   <ShieldCheck className="w-4 h-4 text-[#75A94C]" />

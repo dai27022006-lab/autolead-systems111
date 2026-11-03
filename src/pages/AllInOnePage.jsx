@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Hero from '../components/public/Hero';
 import Highlights from '../components/public/Highlights';
 import Problems from '../components/public/Problems';
@@ -11,6 +11,12 @@ import ConsultationForm from '../components/public/ConsultationForm';
 import { Layers } from 'lucide-react';
 
 export default function AllInOnePage({ onOpenContact }) {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    if (document.documentElement) document.documentElement.scrollTop = 0;
+    if (document.body) document.body.scrollTop = 0;
+  }, []);
+
   return (
     <div className="flex-1 flex flex-col">
       {/* Informational Banner */}

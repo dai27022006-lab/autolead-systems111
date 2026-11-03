@@ -29,9 +29,15 @@ export default function Navbar({
     { to: '/faq', label: 'Cam kết & FAQ' }
   ];
 
+  const handleScrollTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    if (document.documentElement) document.documentElement.scrollTop = 0;
+    if (document.body) document.body.scrollTop = 0;
+  };
+
   const handleNavClick = (to) => {
     navigate(to);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    handleScrollTop();
     setMobileMenuOpen(false);
   };
 
@@ -48,7 +54,7 @@ export default function Navbar({
           {/* Logo Brand */}
           <Link
             to="/"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={handleScrollTop}
             className="flex items-center gap-2.5 group"
           >
             <div className="w-10 h-10 rounded-xl bg-[#142A43] flex items-center justify-center p-1 shadow-sm border border-white/20 group-hover:bg-[#07182D] transition-colors">
@@ -95,7 +101,7 @@ export default function Navbar({
                 <Link
                   key={item.to}
                   to={item.to}
-                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  onClick={handleScrollTop}
                   className={`text-xs font-semibold px-3 py-1 rounded-full transition-all ${
                     isActive
                       ? 'bg-[#F47721] text-white shadow-xs font-bold'
@@ -115,7 +121,7 @@ export default function Navbar({
             {/* Switch to Buyer Demo Page */}
             <Link
               to="/demo"
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              onClick={handleScrollTop}
               className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs ${
                 isScrolled
                   ? 'bg-white hover:bg-[#F8F9F5] text-[#142A43] border border-[#DCE3EC]'
@@ -130,7 +136,7 @@ export default function Navbar({
             {/* Switch to CRM Page */}
             <Link
               to="/crm"
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              onClick={handleScrollTop}
               className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs ${
                 isScrolled
                   ? 'bg-[#142A43] hover:bg-[#07182D] text-white border border-[#142A43]'
@@ -162,7 +168,7 @@ export default function Navbar({
             {/* CTA Consultation Navigation */}
             <Link
               to="/contact"
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              onClick={handleScrollTop}
               className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-[#F47721] hover:bg-[#E76513] shadow-md shadow-[#F47721]/30 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer"
             >
               <span>Đăng ký tư vấn 30 phút</span>

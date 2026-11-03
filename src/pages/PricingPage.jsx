@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PageHeader from '../components/public/PageHeader';
 import Pricing from '../components/public/Pricing';
 import { CalendarCheck, FileText } from 'lucide-react';
 
 export default function PricingPage({ onOpenContact }) {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    if (document.documentElement) document.documentElement.scrollTop = 0;
+    if (document.body) document.body.scrollTop = 0;
+  }, []);
+
   return (
     <div className="flex-1 flex flex-col bg-[#F8F9F5]">
       {/* Dedicated Page Header with Breadcrumbs */}

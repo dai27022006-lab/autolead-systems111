@@ -14,6 +14,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/public/Footer';
 import ConsultationModal from './components/public/ConsultationModal';
 import B2BInquiriesModal from './components/public/B2BInquiriesModal';
+import ScrollToTop from './components/ScrollToTop';
 
 // Dedicated Subpages (Multi-page Architecture)
 import HomePage from './pages/HomePage';
@@ -152,6 +153,12 @@ function AppContent() {
     setCurrentUser(null);
   };
 
+  const handleScrollTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    if (document.documentElement) document.documentElement.scrollTop = 0;
+    if (document.body) document.body.scrollTop = 0;
+  };
+
   return (
     <>
       <Routes>
@@ -255,7 +262,7 @@ function AppContent() {
                   <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                     <Link
                       to="/"
-                      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                      onClick={handleScrollTop}
                       className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer shrink-0"
                     >
                       <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F47721]" />
@@ -271,7 +278,7 @@ function AppContent() {
                   <div className="flex items-center gap-2 shrink-0">
                     <Link
                       to="/crm"
-                      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                      onClick={handleScrollTop}
                       className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#F47721] hover:bg-[#E76513] text-xs font-bold text-white transition-all cursor-pointer shadow-xs"
                     >
                       <ShieldCheck className="w-3.5 h-3.5" />
@@ -286,6 +293,7 @@ function AppContent() {
                 <BuyerDemo
                   onNavigateToCRM={() => {
                     navigate('/crm');
+                    handleScrollTop();
                     loadData();
                   }}
                 />
@@ -305,7 +313,7 @@ function AppContent() {
                   <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                     <Link
                       to="/"
-                      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                      onClick={handleScrollTop}
                       className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer shrink-0"
                     >
                       <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F47721]" />
@@ -321,7 +329,7 @@ function AppContent() {
                   <div className="flex items-center gap-2 shrink-0">
                     <Link
                       to="/demo"
-                      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                      onClick={handleScrollTop}
                       className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#F47721] hover:bg-[#E76513] text-xs font-bold text-white transition-all cursor-pointer shadow-xs"
                     >
                       <Sparkles className="w-3.5 h-3.5" />
@@ -454,6 +462,7 @@ function AppContent() {
 export default function App() {
   return (
     <HashRouter>
+      <ScrollToTop />
       <AppContent />
     </HashRouter>
   );

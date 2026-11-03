@@ -9,6 +9,12 @@ export default function PageHeader({
   breadcrumbCurrent,
   showDemoCta = true
 }) {
+  const handleScrollTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    if (document.documentElement) document.documentElement.scrollTop = 0;
+    if (document.body) document.body.scrollTop = 0;
+  };
+
   return (
     <div className="relative bg-[#142A43] text-white pt-28 pb-12 px-4 sm:px-6 lg:px-8 border-b border-[#DCE3EC]/20 overflow-hidden">
       {/* Decorative subtle background elements */}
@@ -21,6 +27,7 @@ export default function PageHeader({
           <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-slate-300 font-medium">
             <Link
               to="/"
+              onClick={handleScrollTop}
               className="inline-flex items-center gap-1 text-slate-300 hover:text-white transition-colors"
             >
               <Home className="w-3.5 h-3.5 text-[#F47721]" />
@@ -32,6 +39,7 @@ export default function PageHeader({
 
           <Link
             to="/"
+            onClick={handleScrollTop}
             className="inline-flex items-center gap-1 text-xs text-slate-300 hover:text-white bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded-lg transition-colors"
           >
             <ArrowLeft className="w-3 h-3 text-[#F47721]" />
@@ -59,6 +67,7 @@ export default function PageHeader({
             <div className="pt-2 flex flex-wrap items-center gap-2.5">
               <Link
                 to="/demo"
+                onClick={handleScrollTop}
                 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold text-white bg-[#F47721] hover:bg-[#E76513] shadow-sm transition-all"
               >
                 <Sparkles className="w-3.5 h-3.5" />
@@ -66,6 +75,7 @@ export default function PageHeader({
               </Link>
               <Link
                 to="/crm"
+                onClick={handleScrollTop}
                 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-200 bg-white/10 hover:bg-white/20 border border-white/20 transition-all"
               >
                 <ShieldCheck className="w-3.5 h-3.5 text-[#75A94C]" />
