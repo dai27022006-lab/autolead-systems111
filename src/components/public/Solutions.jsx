@@ -95,7 +95,7 @@ export default function Solutions() {
     <section id="solutions" className="scroll-mt-24 sm:scroll-mt-28 py-20 md:py-24 bg-white relative border-b border-[#DCE3EC]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="max-w-3xl mx-auto text-center space-y-3 mb-16">
+        <div className="max-w-3xl mx-auto text-center space-y-3 mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F8F9F5] border border-[#DCE3EC] text-xs font-bold text-[#F47721] font-mono shadow-xs">
             <Layers className="w-3.5 h-3.5" />
             <span>GIẢI PHÁP & PHẠM VI DỊCH VỤ</span>
@@ -106,6 +106,29 @@ export default function Solutions() {
           <p className="text-sm sm:text-base text-[#64748B] leading-relaxed max-w-2xl mx-auto">
             Hệ thống 6 mô-đun chức năng khép kín từ khâu thu hút trực tuyến đến khi khách hàng bước chân vào showroom trải nghiệm lái thử.
           </p>
+        </div>
+
+        {/* Core Value Proposition Banner */}
+        <div className="mb-12 p-5 sm:p-6 rounded-2xl bg-[#F8F9F5] border-2 border-[#F47721]/30 max-w-4xl mx-auto shadow-sm flex flex-col sm:flex-row items-start gap-4 text-left">
+          <div className="w-11 h-11 rounded-xl bg-orange-100 border border-orange-200 flex items-center justify-center shrink-0 text-[#F47721] shadow-2xs">
+            <PixelShield size={26} />
+          </div>
+          <div className="space-y-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-[11px] font-bold text-[#F47721] uppercase tracking-wider font-mono">
+                ĐỊNH VỊ GIÁ TRỊ CỐT LÕI
+              </span>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-white border border-[#DCE3EC] font-semibold text-[#142A43]">
+                Hệ thống tự động hóa bổ trợ phía sau
+              </span>
+            </div>
+            <h3 className="text-sm sm:text-base font-bold text-[#142A43]">
+              AutoLead Systems không thay thế các Form đăng ký lái thử mà bổ sung hệ thống tự động hóa phía sau
+            </h3>
+            <p className="text-xs sm:text-sm text-[#475569] leading-relaxed">
+              Các form đăng ký lái thử hiện nay chủ yếu hỗ trợ khách hàng chủ động cung cấp thông tin và gửi yêu cầu đến đại lý. <strong>AutoLead Systems không thay thế những form này</strong> mà <strong>bổ sung một hệ thống tự động hóa phía sau</strong>, giúp đại lý tiếp tục chăm sóc, sàng lọc, theo dõi và chuyển đổi khách hàng tiềm năng thành những lịch hẹn lái thử đủ điều kiện. Qua đó, đại lý không chỉ thu thập được thông tin khách hàng mà còn khai thác hiệu quả hơn nguồn khách hàng đã có.
+            </p>
+          </div>
         </div>
 
         {/* 6 Modules Grid */}

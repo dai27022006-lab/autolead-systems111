@@ -213,6 +213,24 @@ export default function BuyerDemo({ onNavigateToCRM }) {
         </button>
       </div>
 
+      {/* Core Positioning Note */}
+      <div className="mb-6 p-4 sm:p-5 rounded-2xl bg-amber-50/70 border border-amber-200/90 text-xs text-[#142A43] shadow-xs flex items-start gap-3.5 text-left">
+        <div className="w-8 h-8 rounded-xl bg-orange-100 flex items-center justify-center shrink-0 mt-0.5 text-[#F47721]">
+          <Sparkles className="w-4 h-4" />
+        </div>
+        <div className="space-y-1">
+          <p className="font-bold text-[#142A43] text-xs uppercase tracking-wide font-mono flex items-center gap-2">
+            <span>Nguyên lý vận hành AutoLead Systems</span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-white text-[#F47721] border border-orange-200 font-bold">
+              Bổ trợ Form
+            </span>
+          </p>
+          <p className="text-xs text-[#475569] leading-relaxed">
+            Các form đăng ký lái thử hiện nay chủ yếu hỗ trợ khách hàng chủ động cung cấp thông tin và gửi yêu cầu đến đại lý. <strong>AutoLead Systems không thay thế những form này</strong> mà <strong>bổ sung một hệ thống tự động hóa phía sau</strong>, giúp đại lý tiếp tục chăm sóc, sàng lọc, theo dõi và chuyển đổi khách hàng tiềm năng thành những lịch hẹn lái thử đủ điều kiện. Qua đó, đại lý không chỉ thu thập được thông tin khách hàng mà còn khai thác hiệu quả hơn nguồn khách hàng đã có.
+          </p>
+        </div>
+      </div>
+
       {/* 5-Step Visual Stepper */}
       <div className="mb-6 sm:mb-8">
         <div className="grid grid-cols-5 gap-1.5 sm:gap-2.5 text-center text-xs">
