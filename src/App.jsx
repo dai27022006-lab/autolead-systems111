@@ -26,8 +26,9 @@ import FaqPage from './pages/FaqPage';
 import ContactPage from './pages/ContactPage';
 import AllInOnePage from './pages/AllInOnePage';
 
-// Buyer Portal Demo (Đại)
+// Buyer Portal Demo & Live Bavaria Showroom Hub (Đại)
 import BuyerDemo from './components/buyer/BuyerDemo';
+import BavariaShowroomHub from './components/buyer/BavariaShowroomHub';
 
 // Dealer SaaS CRM & Operations Platform (Đại)
 import SaasLayout from './components/saas/SaasLayout';
@@ -81,6 +82,7 @@ function AppContent() {
   const [appointments, setAppointments] = useState([]);
   const [campaigns, setCampaigns] = useState([]);
   const [b2bInquiries, setB2bInquiries] = useState([]);
+  const [bavariaNotification, setBavariaNotification] = useState(null);
 
   // Multi-tenant CRM Vehicle and Showroom Filters
   const [selectedVehicle, setSelectedVehicle] = useState('ALL');
@@ -203,6 +205,65 @@ function AppContent() {
     }
   }, [location.pathname]);
 
+  // Real-time synchronization listener with Bavaria Showroom (Web 2)
+  useEffect(() => {
+    const handleSyncMessage = (event) => {
+      if (event.data?.type === 'AUTOLEAD_LEAD_SYNC') {
+        const lead = event.data.crmLead || event.data.record;
+        console.log('[AutoLead Systems] Real-time Lead from Bavaria Showroom:', lead);
+        if (event.data.crmLead) {
+          storageService.addCRMLead(event.data.crmLead);
+        }
+        loadData();
+        setBavariaNotification({
+          customerName: lead.customerName || lead.customer_name || 'Khách hàng',
+          vehicle: lead.interestedVehicle || lead.vehicle_model || 'Xe BMW',
+          time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
+        });
+        setTimeout(() => setBavariaNotification(null), 12000);
+      }
+    };
+
+    window.addEventListener('message', handleSyncMessage);
+
+    let bc = null;
+    if (typeof BroadcastChannel !== 'undefined') {
+      try {
+        bc = new BroadcastChannel('autolead_sync_channel');
+        bc.onmessage = (event) => {
+          if (event.data?.type === 'AUTOLEAD_LEAD_SYNC') {
+            const lead = event.data.crmLead || event.data.record;
+            if (event.data.crmLead) {
+              storageService.addCRMLead(event.data.crmLead);
+            }
+            loadData();
+            setBavariaNotification({
+              customerName: lead.customerName || lead.customer_name || 'Khách hàng',
+              vehicle: lead.interestedVehicle || lead.vehicle_model || 'Xe BMW',
+              time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
+            });
+            setTimeout(() => setBavariaNotification(null), 12000);
+          }
+        };
+      } catch (e) {
+        console.warn('BroadcastChannel error:', e);
+      }
+    }
+
+    const handleStorageChange = (e) => {
+      if (e.key === 'autolead_crm_leads_v1' || e.key === 'bavaria_showroom_leads_v1') {
+        loadData();
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('message', handleSyncMessage);
+      window.removeEventListener('storage', handleStorageChange);
+      if (bc) bc.close();
+    };
+  }, []);
+
   // Load data on mount & route change
   useEffect(() => {
     loadData();
@@ -276,6 +337,47 @@ function AppContent() {
 
   return (
     <>
+      {/* Real-time Bavaria Showroom Sync Toast */}
+      {bavariaNotification && (
+        <aside
+          aria-label="Thông báo đồng bộ Lead từ Showroom"
+          className="fixed top-18 right-5 z-50 p-4 rounded-2xl bg-[#0E2034]/95 backdrop-blur-xl border-2 border-emerald-400 shadow-2xl text-white max-w-sm animate-bounce"
+        >
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+              <span className="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider">
+                LEAD MỚI TỪ SHOWROOM BAVARIA!
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setBavariaNotification(null)}
+              className="text-slate-400 hover:text-white text-xs p-1 cursor-pointer"
+            >
+              ✕
+            </button>
+          </div>
+          <p className="text-xs font-bold text-white mt-1">
+            {bavariaNotification.customerName} quan tâm {bavariaNotification.vehicle}
+          </p>
+          <p className="text-[11px] text-slate-300 mt-0.5">
+            Đã đồng bộ vào CRM đại lý lúc {bavariaNotification.time} (0.05s)
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              setBavariaNotification(null);
+              navigate('/crm');
+              handleScrollTop();
+            }}
+            className="mt-2.5 w-full py-1.5 px-3 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs text-center transition-colors cursor-pointer"
+          >
+            Mở CRM xem chi tiết →
+          </button>
+        </aside>
+      )}
+
       <Routes>
         {/* Dedicated Public Subpages (Mỗi mục là một trang riêng) */}
         <Route
@@ -367,7 +469,7 @@ function AppContent() {
           }
         />
 
-        {/* Experience B: Buyer Portal Demo (Đại) */}
+        {/* Experience B: Showroom Giả Lập có nhúng AI Widget (Bavaria Motor House & Mercedes) */}
         <Route
           path="/demo"
           element={
@@ -380,8 +482,9 @@ function AppContent() {
                 }}
               />
 
-              <main className="flex-1">
-                <BuyerDemo
+              <main className="flex-1 flex flex-col">
+                <BavariaShowroomHub
+                  leadsCount={crmLeads.length}
                   onNavigateToCRM={() => {
                     navigate('/crm');
                     handleScrollTop();

@@ -62,9 +62,9 @@ export default function DemoCornerWidget() {
                 <div className="flex items-center gap-2">
                   <Car className="w-4 h-4 text-[#F47721] group-hover:text-white transition-colors" />
                   <div className="text-left">
-                    <span className="text-xs font-bold block">Showroom Giả Lập</span>
+                    <span className="text-xs font-bold block">Showroom BMW Bavaria</span>
                     <span className="text-[10px] text-slate-300 group-hover:text-white/90">
-                      Có nhúng AI Widget tư vấn
+                      Có nhúng AI Concierge Widget
                     </span>
                   </div>
                 </div>
@@ -96,6 +96,18 @@ export default function DemoCornerWidget() {
                   GD 2
                 </span>
               </MotionLink>
+            </div>
+
+            <div className="pt-1.5 flex items-center justify-between text-[11px]">
+              <a
+                href="https://dai27022006-lab.github.io/Webshowroomxe/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#F47721] hover:underline flex items-center gap-1 font-semibold"
+              >
+                <span>Mở Bavaria tab mới ↗</span>
+              </a>
+              <span className="text-slate-400 font-mono text-[10px]">GitHub Pages</span>
             </div>
 
             <div className="pt-1 border-t border-white/10 flex items-center justify-between text-[10px] text-emerald-400 font-mono">
