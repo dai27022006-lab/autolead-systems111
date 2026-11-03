@@ -318,8 +318,8 @@ export default function LeadManagement({
 
       {/* LEAD DETAIL MODAL / DRAWER */}
       {selectedLead && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
-          <div className="bg-white border border-[#DCE3EC] rounded-3xl p-6 sm:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative text-[#142A43]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-black/60 backdrop-blur-xs">
+          <div className="bg-white border border-[#DCE3EC] rounded-2xl sm:rounded-3xl p-4 sm:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative text-[#142A43]">
             <div className="flex items-center justify-between pb-4 border-b border-[#E2E8F0]">
               <div>
                 <span className="text-xs font-mono text-[#94A3B8]">{selectedLead.id}</span>
@@ -484,13 +484,13 @@ export default function LeadManagement({
 
       {/* ADD LEAD MODAL */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
-          <div className="bg-white border border-[#DCE3EC] rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl text-[#142A43]">
-            <h3 className="text-xl font-bold text-[#142A43] mb-1">Thêm Khách Hàng Tiềm Năng Mới</h3>
-            <p className="text-xs text-[#64748B] mb-6">Nhập thông tin người mua xe để bắt đầu quy trình chăm sóc AI (Domain B)</p>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-black/60 backdrop-blur-xs">
+          <div className="bg-white border border-[#DCE3EC] rounded-2xl sm:rounded-3xl p-4 sm:p-8 max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-2xl text-[#142A43]">
+            <h3 className="text-lg sm:text-xl font-bold text-[#142A43] mb-1">Thêm Khách Hàng Tiềm Năng Mới</h3>
+            <p className="text-xs text-[#64748B] mb-5">Nhập thông tin người mua xe để bắt đầu quy trình chăm sóc AI (Domain B)</p>
 
             <form onSubmit={handleCreateLead} className="space-y-4 text-xs">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
                   <label className="block text-[#142A43] font-bold mb-1">Tên khách hàng *</label>
                   <input

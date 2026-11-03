@@ -111,7 +111,7 @@ export default function AiAssistant({ leads = [] }) {
         {/* Left: AI Response Scripts for Sales */}
         <div className="p-5 sm:p-6 rounded-3xl bg-white border border-[#DCE3EC] shadow-xs flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between pb-4 border-b border-[#E2E8F0] mb-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#E2E8F0] mb-5">
               <h3 className="text-base font-bold text-[#142A43] flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-[#F47721]" />
                 Kịch Bản AI Gợi Ý Cho Nhân Viên Sales
@@ -119,7 +119,7 @@ export default function AiAssistant({ leads = [] }) {
               <select
                 value={selectedLead?.id}
                 onChange={(e) => setSelectedLead(leads.find(l => l.id === e.target.value))}
-                className="px-2.5 py-1 rounded-lg bg-[#F8F9F5] border border-[#DCE3EC] text-xs text-[#142A43] outline-none focus:border-[#F47721]"
+                className="w-full sm:w-auto px-2.5 py-1.5 rounded-lg bg-[#F8F9F5] border border-[#DCE3EC] text-xs text-[#142A43] outline-none focus:border-[#F47721]"
               >
                 {leads.map(l => (
                   <option key={l.id} value={l.id}>{l.customerName} ({l.interestedVehicle?.slice(0, 15)}...)</option>
@@ -128,7 +128,7 @@ export default function AiAssistant({ leads = [] }) {
             </div>
 
             {/* Scenario buttons */}
-            <div className="grid grid-cols-2 gap-2 mb-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
               {[
                 { id: 'zalo_greeting', label: '1. Chào Mừng & Gửi Brochure' },
                 { id: 'objection_price', label: '2. Xử Lý Giá Cao' },

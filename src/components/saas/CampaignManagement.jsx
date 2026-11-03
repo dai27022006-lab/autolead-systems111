@@ -37,6 +37,22 @@ export default function CampaignManagement({ campaigns, onAddCampaign }) {
     targetAudience: 'Doanh nhân trẻ 28-45 tuổi'
   });
 
+  const handleCreateCampaign = (e) => {
+    e.preventDefault();
+    if (!newCampaignForm.name.trim()) return;
+    if (onAddCampaign) {
+      onAddCampaign({
+        ...newCampaignForm,
+        leadsGenerated: 0,
+        qualifiedLeads: 0,
+        appointmentsBooked: 0,
+        status: 'Active',
+        cpa: 300000
+      });
+    }
+    setIsAddModalOpen(false);
+  };
+
   const handleGenerateCreative = () => {
     setIsGenerating(true);
     setTimeout(() => {
@@ -294,6 +310,84 @@ export default function CampaignManagement({ campaigns, onAddCampaign }) {
           </div>
         </div>
       </div>
+
+      {/* ADD CAMPAIGN MODAL */}
+      {isAddModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-black/60 backdrop-blur-xs">
+          <div className="bg-white border border-[#DCE3EC] rounded-2xl sm:rounded-3xl p-4 sm:p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl text-[#142A43]">
+            <h3 className="text-lg sm:text-xl font-bold text-[#142A43] mb-1">Tạo Chiến Dịch Quảng Cáo AI Mới</h3>
+            <p className="text-xs text-[#64748B] mb-5">Khởi tạo chiến dịch marketing để bắt đầu thu hút lead cho showroom</p>
+
+            <form onSubmit={handleCreateCampaign} className="space-y-4 text-xs">
+              <div>
+                <label className="block text-[#142A43] font-bold mb-1">Tên chiến dịch *</label>
+                <input
+                  type="text"
+                  required
+                  value={newCampaignForm.name}
+                  onChange={(e) => setNewCampaignForm({ ...newCampaignForm, name: e.target.value })}
+                  placeholder="VD: Mercedes GLC 300 - Ưu Đãi Tháng 11"
+                  className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] outline-none focus:border-[#F47721] focus:bg-white"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <div>
+                  <label className="block text-[#142A43] font-bold mb-1">Phân khúc xe</label>
+                  <select
+                    value={newCampaignForm.vehicleSegment}
+                    onChange={(e) => setNewCampaignForm({ ...newCampaignForm, vehicleSegment: e.target.value })}
+                    className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] outline-none focus:border-[#F47721] cursor-pointer"
+                  >
+                    <option value="Luxury SUV">Luxury SUV</option>
+                    <option value="Luxury Sedan">Luxury Sedan</option>
+                    <option value="Xe lướt hạng sang">Xe lướt hạng sang</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[#142A43] font-bold mb-1">Ngân sách (VNĐ)</label>
+                  <input
+                    type="number"
+                    min="1000000"
+                    step="1000000"
+                    value={newCampaignForm.budget}
+                    onChange={(e) => setNewCampaignForm({ ...newCampaignForm, budget: Number(e.target.value) })}
+                    className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] outline-none focus:border-[#F47721] focus:bg-white font-mono"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[#142A43] font-bold mb-1">Đối tượng mục tiêu (Target Audience)</label>
+                <input
+                  type="text"
+                  value={newCampaignForm.targetAudience}
+                  onChange={(e) => setNewCampaignForm({ ...newCampaignForm, targetAudience: e.target.value })}
+                  placeholder="VD: Doanh nhân 30-50 tuổi, quan tâm xe thể thao sang trọng"
+                  className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] outline-none focus:border-[#F47721] focus:bg-white"
+                />
+              </div>
+
+              <div className="pt-3 flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsAddModalOpen(false)}
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#142A43] font-semibold cursor-pointer transition-colors"
+                >
+                  Hủy
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-[#F47721] text-white font-bold hover:bg-[#E76513] cursor-pointer transition-colors shadow-xs"
+                >
+                  Khởi Tạo Chiến Dịch
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

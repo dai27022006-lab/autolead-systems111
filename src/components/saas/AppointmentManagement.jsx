@@ -339,9 +339,9 @@ export default function AppointmentManagement({
 
       {/* CREATE APPOINTMENT MODAL */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
-          <div className="bg-white border border-[#DCE3EC] rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl text-[#142A43]">
-            <h3 className="text-xl font-bold text-[#142A43] mb-1">Thiết Lập Lịch Hẹn Lái Thử Mới</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-black/60 backdrop-blur-xs">
+          <div className="bg-white border border-[#DCE3EC] rounded-2xl sm:rounded-3xl p-4 sm:p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl text-[#142A43]">
+            <h3 className="text-lg sm:text-xl font-bold text-[#142A43] mb-1">Thiết Lập Lịch Hẹn Lái Thử Mới</h3>
             <p className="text-xs text-[#64748B] mb-5">Đảm bảo khách hàng đã đồng ý ngày giờ cụ thể để đạt chuẩn 300.000 VNĐ</p>
 
             <form onSubmit={handleCreateAppointment} className="space-y-4 text-xs">
@@ -352,7 +352,7 @@ export default function AppointmentManagement({
                   required
                   value={newAptForm.customerName}
                   onChange={(e) => setNewAptForm({ ...newAptForm, customerName: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-[#142A43] outline-none focus:border-[#F47721] focus:bg-white"
+                  className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] outline-none focus:border-[#F47721] focus:bg-white"
                 />
               </div>
 
@@ -363,11 +363,11 @@ export default function AppointmentManagement({
                   required
                   value={newAptForm.customerPhone}
                   onChange={(e) => setNewAptForm({ ...newAptForm, customerPhone: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-[#142A43] outline-none focus:border-[#F47721] focus:bg-white"
+                  className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] outline-none focus:border-[#F47721] focus:bg-white"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-[#142A43] font-bold mb-1">Ngày lái thử *</label>
                   <input
@@ -375,7 +375,7 @@ export default function AppointmentManagement({
                     required
                     value={newAptForm.appointmentDate}
                     onChange={(e) => setNewAptForm({ ...newAptForm, appointmentDate: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-[#142A43] outline-none focus:border-[#F47721] focus:bg-white"
+                    className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] outline-none focus:border-[#F47721] focus:bg-white"
                   />
                 </div>
                 <div>
@@ -383,7 +383,7 @@ export default function AppointmentManagement({
                   <select
                     value={newAptForm.appointmentTime}
                     onChange={(e) => setNewAptForm({ ...newAptForm, appointmentTime: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-[#142A43] outline-none focus:border-[#F47721] cursor-pointer"
+                    className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] outline-none focus:border-[#F47721] cursor-pointer"
                   >
                     <option value="09:00 - 10:30">09:00 - 10:30 (Sáng)</option>
                     <option value="10:30 - 12:00">10:30 - 12:00 (Sáng)</option>
@@ -398,7 +398,7 @@ export default function AppointmentManagement({
                 <select
                   value={newAptForm.vehicleModel}
                   onChange={(e) => setNewAptForm({ ...newAptForm, vehicleModel: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-[#142A43] outline-none focus:border-[#F47721] cursor-pointer"
+                  className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] outline-none focus:border-[#F47721] cursor-pointer"
                 >
                   {VEHICLE_OPTIONS.map(v => <option key={v} value={v}>{v}</option>)}
                 </select>
@@ -409,7 +409,7 @@ export default function AppointmentManagement({
                 <select
                   value={newAptForm.salesperson}
                   onChange={(e) => setNewAptForm({ ...newAptForm, salesperson: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-[#142A43] outline-none focus:border-[#F47721] cursor-pointer"
+                  className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] outline-none focus:border-[#F47721] cursor-pointer"
                 >
                   {SALESPERSON_LIST.map(s => <option key={s} value={s}>{s}</option>)}
                 </select>
@@ -421,21 +421,21 @@ export default function AppointmentManagement({
                   rows="2"
                   value={newAptForm.notes}
                   onChange={(e) => setNewAptForm({ ...newAptForm, notes: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-[#142A43] outline-none focus:border-[#F47721] focus:bg-white"
+                  className="w-full px-3 py-2.5 sm:py-2 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] outline-none focus:border-[#F47721] focus:bg-white"
                 ></textarea>
               </div>
 
-              <div className="pt-3 flex justify-end gap-3">
+              <div className="pt-3 flex flex-col-reverse sm:flex-row justify-end gap-2.5 sm:gap-3">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#142A43] font-semibold cursor-pointer transition-colors"
+                  className="px-4 py-2.5 min-h-[44px] rounded-xl bg-slate-100 hover:bg-slate-200 text-[#142A43] font-semibold cursor-pointer transition-colors text-center"
                 >
                   Hủy
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-[#F47721] text-white font-bold hover:bg-[#E76513] cursor-pointer transition-colors shadow-xs"
+                  className="px-5 py-2.5 min-h-[44px] rounded-xl bg-[#F47721] text-white font-bold hover:bg-[#E76513] cursor-pointer transition-colors shadow-xs text-center"
                 >
                   Xác Nhận & Lưu Lịch Hẹn
                 </button>
