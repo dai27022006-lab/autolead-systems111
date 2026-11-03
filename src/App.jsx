@@ -45,7 +45,6 @@ import DealerLogin from './components/saas/DealerLogin';
 
 import { api } from './services/api';
 import { storageService } from './services/storage';
-import DualInterfaceHeader from './components/common/DualInterfaceHeader';
 import { ArrowLeft, Sparkles, ShieldCheck } from 'lucide-react';
 import { initScrollEngine, destroyScrollEngine } from './utils/scrollEngine';
 import ErrorBoundary from './components/common/ErrorBoundary';
@@ -478,16 +477,6 @@ function AppContent() {
           path="/crm"
           element={
             <div className="flex-1 flex flex-col bg-[#F8F9F5] text-[#142A43] min-h-screen">
-              <DualInterfaceHeader
-                leadsCount={crmLeads.length}
-                currentUser={currentUser}
-                onLogout={handleLogout}
-                onResetData={() => {
-                  storageService.resetToSeedData();
-                  loadData();
-                }}
-              />
-
               <main className="flex-1">
                 {!currentUser ? (
                   <DealerLogin
@@ -503,6 +492,8 @@ function AppContent() {
                     setActiveTab={setActiveSaasTab}
                     onBackToPublic={() => navigate('/')}
                     onResetData={handleResetData}
+                    currentUser={currentUser}
+                    onLogout={handleLogout}
                     leadsCount={filteredCrmLeads.length}
                     totalLeadsCount={crmLeads.length}
                     b2bCount={b2bInquiries.length}

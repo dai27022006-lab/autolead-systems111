@@ -19,7 +19,8 @@ import {
   X,
   Car,
   RotateCcw,
-  Filter
+  Filter,
+  LogOut
 } from 'lucide-react';
 
 export default function SaasLayout({
@@ -37,7 +38,9 @@ export default function SaasLayout({
   setSelectedShowroom,
   availableVehicles = [],
   filteredLeadsCount,
-  filteredAptsCount
+  filteredAptsCount,
+  currentUser,
+  onLogout
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -58,6 +61,16 @@ export default function SaasLayout({
       {/* Mobile Top Brand & Menu Bar (Hidden on Desktop) */}
       <div className="lg:hidden bg-white border-b border-[#DCE3EC] p-3 sm:p-3.5 flex items-center justify-between relative z-20 shadow-xs">
         <div className="flex items-center gap-2.5 min-w-0">
+          {onBackToPublic && (
+            <button
+              type="button"
+              onClick={onBackToPublic}
+              className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 border border-[#DCE3EC] flex items-center justify-center text-[#142A43] cursor-pointer shrink-0"
+              title="Quay lại Trang Chủ AutoLead"
+            >
+              <ArrowLeft className="w-4 h-4 text-[#F47721]" />
+            </button>
+          )}
           <div className="w-8 h-8 rounded-lg bg-[#F47721] flex items-center justify-center shrink-0 shadow-xs">
             <span className="text-white font-extrabold text-sm">AL</span>
           </div>
@@ -226,12 +239,23 @@ export default function SaasLayout({
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top Header */}
-        <header className="h-14 lg:h-16 px-4 sm:px-6 bg-white border-b border-[#DCE3EC] flex items-center justify-between shrink-0 shadow-2xs">
+        <header className="h-14 lg:h-16 px-4 sm:px-6 bg-white border-b border-[#DCE3EC] flex items-center justify-between shrink-0 shadow-2xs gap-3">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            {onBackToPublic && (
+              <button
+                type="button"
+                onClick={onBackToPublic}
+                className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-[#142A43] border border-[#DCE3EC] text-xs font-semibold transition-colors cursor-pointer shrink-0"
+                title="Quay lại Trang Chủ AutoLead B2B"
+              >
+                <ArrowLeft className="w-3.5 h-3.5 text-[#F47721]" />
+                <span>Về Trang Chủ</span>
+              </button>
+            )}
             <span className="text-xs font-bold text-[#142A43] capitalize truncate">
               {navItems.find(i => i.id === activeTab)?.label}
             </span>
-            <span className="hidden sm:inline-flex items-center gap-1.5 ml-2 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-700 text-[11px] font-medium shrink-0">
+            <span className="hidden xl:inline-flex items-center gap-1.5 ml-2 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-700 text-[11px] font-medium shrink-0">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
               AI Agent Online (60s SLA)
             </span>
@@ -244,10 +268,28 @@ export default function SaasLayout({
               className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-[#142A43] border border-[#DCE3EC] text-xs transition-colors cursor-pointer font-medium"
             >
               <RefreshCw className="w-3.5 h-3.5 text-[#F47721]" />
-              <span className="hidden sm:inline">Reset Seed Data</span>
+              <span className="hidden md:inline">Reset Seed Data</span>
             </button>
-            <div className="w-8 h-8 rounded-full bg-orange-50 border border-orange-200 flex items-center justify-center text-[#F47721] font-bold text-xs shrink-0 shadow-2xs">
-              AD
+            
+            <div className="flex items-center gap-2 pl-2 border-l border-[#DCE3EC]">
+              <div className="w-8 h-8 rounded-full bg-orange-50 border border-orange-200 flex items-center justify-center text-[#F47721] font-bold text-xs shrink-0 shadow-2xs">
+                {currentUser?.name ? currentUser.name.slice(0, 2).toUpperCase() : 'AD'}
+              </div>
+              <div className="hidden lg:block text-left">
+                <p className="text-xs font-bold text-[#142A43] leading-none">{currentUser?.name || 'Admin Showroom'}</p>
+                <p className="text-[10px] text-[#64748B] mt-0.5">{currentUser?.dealership || 'Haxaco Mercedes-Benz'}</p>
+              </div>
+              {onLogout && (
+                <button
+                  type="button"
+                  onClick={onLogout}
+                  title="Đăng xuất khỏi hệ thống CRM"
+                  className="p-1.5 rounded-lg hover:bg-rose-50 text-slate-400 hover:text-rose-600 transition-colors cursor-pointer ml-1"
+                  aria-label="Đăng xuất"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              )}
             </div>
           </div>
         </header>
