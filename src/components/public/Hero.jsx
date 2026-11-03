@@ -202,7 +202,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
                   className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-[#F47721] to-[#E76513] hover:from-[#E76513] hover:to-[#D55302] shadow-lg shadow-[#F47721]/30 transition-all cursor-pointer min-h-[48px]"
                 >
                   <Car className="w-4 h-4 text-white" />
-                  <span>🚗 Trải nghiệm Showroom giả lập (Có nhúng AI Widget)</span>
+                  <span>🚗 Trải nghiệm showroom</span>
                 </MotionLink>
 
                 <MotionLink

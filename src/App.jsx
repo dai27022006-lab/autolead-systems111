@@ -68,9 +68,23 @@ function AppContent() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // SaaS Tab & User authentication
+  // SaaS Tab & User authentication (Auto-authenticates demo user into Dashboard)
   const [activeSaasTab, setActiveSaasTab] = useState('overview');
-  const [currentUser, setCurrentUser] = useState(() => api.getCurrentUser());
+  const [currentUser, setCurrentUser] = useState(() => {
+    const existing = api.getCurrentUser();
+    if (existing) return existing;
+    const demoUser = {
+      id: 'usr-01',
+      email: 'dealer@haxaco.vn',
+      name: 'Trần Đăng Thắng',
+      dealership: 'Haxaco Mercedes-Benz Võ Văn Kiệt',
+      role: 'Dealership General Manager'
+    };
+    try {
+      localStorage.setItem('autolead_dealer_user', JSON.stringify(demoUser));
+    } catch (e) {}
+    return demoUser;
+  });
 
   // Modal dialog states
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);

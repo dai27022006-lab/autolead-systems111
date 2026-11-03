@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ArrowRight, Sparkles, Database, ShieldCheck, Menu, X, Car, Building2 } from 'lucide-react';
+import { ArrowRight, Sparkles, Database, ShieldCheck, Menu, X, Car, Building2, User, LogIn } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { PixelCarOrange } from './public/PixelIcons';
 import { buttonMotion } from '../utils/motion';
+import { api } from '../services/api';
 
 const MotionLink = motion.create(Link);
 
@@ -98,6 +99,15 @@ export default function Navbar({
     }
   };
 
+  const handleLoginToDashboard = async () => {
+    setMobileMenuOpen(false);
+    if (!api.getCurrentUser()) {
+      await api.login('dealer@haxaco.vn', 'demo123');
+    }
+    navigate('/crm');
+    handleScrollTop();
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
@@ -108,7 +118,7 @@ export default function Navbar({
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-3">
-          {/* Logo Brand */}
+          {/* Logo Brand: Chỉ Logo xe và chữ AutoLead */}
           <MotionLink
             to="/"
             onClick={() => handleNavClick(navLinks[0])}
@@ -120,27 +130,13 @@ export default function Navbar({
             <div className="w-10 h-10 rounded-xl bg-[#142A43] flex items-center justify-center p-1 shadow-sm border border-white/20 group-hover:bg-[#07182D] transition-colors shrink-0">
               <PixelCarOrange size={28} />
             </div>
-            <div className="shrink-0">
-              <div className="flex items-center gap-1.5">
-                <span
-                  className={`font-black text-lg tracking-tight uppercase transition-colors whitespace-nowrap ${
-                    isScrolled ? 'text-[#142A43]' : 'text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]'
-                  }`}
-                >
-                  Auto<span className="text-[#F47721]">Lead</span>
-                </span>
-                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[#F47721] text-white tracking-widest font-mono shadow-xs shrink-0 whitespace-nowrap">
-                  PIXEL WORLD
-                </span>
-              </div>
-              <p
-                className={`text-[10px] tracking-wider uppercase font-semibold transition-colors whitespace-nowrap ${
-                  isScrolled ? 'text-[#64748B]' : 'text-white/80 drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]'
-                }`}
-              >
-                AI Automotive Dealership
-              </p>
-            </div>
+            <span
+              className={`font-black text-xl tracking-tight transition-colors whitespace-nowrap ${
+                isScrolled ? 'text-[#142A43]' : 'text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]'
+              }`}
+            >
+              Auto<span className="text-[#F47721]">Lead</span>
+            </span>
           </MotionLink>
 
           {/* Desktop Nav Links with Route-aware Active Highlighting */}
@@ -181,67 +177,36 @@ export default function Navbar({
 
           {/* Desktop Action Buttons: Clean B2B Navigation */}
           <div className="hidden lg:flex items-center gap-2 shrink-0">
-            {/* Cổng CRM Đại lý */}
-            <MotionLink
-              to="/crm"
-              onClick={handleScrollTop}
-              whileHover={shouldReduceMotion ? {} : buttonMotion.whileHover}
-              whileTap={shouldReduceMotion ? {} : buttonMotion.whileTap}
-              className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs whitespace-nowrap ${
-                isScrolled
-                  ? 'bg-[#142A43] hover:bg-[#07182D] text-white border border-[#142A43]'
-                  : 'bg-white/15 hover:bg-white/25 text-white backdrop-blur-md border border-white/30 drop-shadow-sm'
-              }`}
-              title="Cổng hệ thống CRM quản trị và tiếp nhận lead đại lý showroom"
-            >
-              <Building2 className="w-3.5 h-3.5 text-emerald-400" />
-              <span>🏢 Cổng CRM Đại lý</span>
-            </MotionLink>
-
-            {/* Open Leads Manager Modal */}
-            {onOpenLeadViewer && (
-              <motion.button
-                type="button"
-                onClick={onOpenLeadViewer}
-                whileHover={shouldReduceMotion ? {} : buttonMotion.whileHover}
-                whileTap={shouldReduceMotion ? {} : buttonMotion.whileTap}
-                className={`inline-flex items-center gap-1.5 px-2.5 py-2 rounded-xl text-xs font-medium transition-colors cursor-pointer whitespace-nowrap ${
-                  isScrolled
-                    ? 'text-[#64748B] hover:text-[#142A43]'
-                    : 'text-white/80 hover:text-white drop-shadow-sm'
-                }`}
-                title="Quản lý và đối soát các yêu cầu tư vấn đã tiếp nhận"
-              >
-                <Database className="w-3.5 h-3.5 text-[#F47721]" />
-                <span className="hidden xl:inline">Quản lý</span>
-              </motion.button>
-            )}
-
-            {/* CTA Consultation Navigation */}
+            {/* Nút Đăng nhập đưa thẳng vào CRM Dashboard */}
             <motion.button
               type="button"
-              onClick={() => handleNavClick({ sectionId: 'consultation', to: '/contact' })}
+              onClick={handleLoginToDashboard}
               whileHover={shouldReduceMotion ? {} : buttonMotion.whileHover}
               whileTap={shouldReduceMotion ? {} : buttonMotion.whileTap}
-              className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-white bg-[#F47721] hover:bg-[#E76513] shadow-md shadow-[#F47721]/30 transition-all cursor-pointer whitespace-nowrap"
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs whitespace-nowrap ${
+                isScrolled
+                  ? 'bg-[#F47721] hover:bg-[#E76513] text-white shadow-md shadow-[#F47721]/30'
+                  : 'bg-[#F47721] hover:bg-[#E76513] text-white shadow-md shadow-black/20'
+              }`}
+              title="Đăng nhập và truy cập thẳng vào Cổng Dashboard CRM"
             >
-              <span>Đăng ký tư vấn 30 phút</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <User className="w-3.5 h-3.5 text-white" />
+              <span>Đăng nhập</span>
             </motion.button>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="flex lg:hidden items-center gap-2">
-            <MotionLink
-              to="/crm"
-              onClick={handleScrollTop}
+            <motion.button
+              type="button"
+              onClick={handleLoginToDashboard}
               whileHover={shouldReduceMotion ? {} : buttonMotion.whileHover}
               whileTap={shouldReduceMotion ? {} : buttonMotion.whileTap}
-              className="px-2.5 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 text-[11px] font-bold flex items-center gap-1"
+              className="px-3 py-1.5 rounded-lg bg-[#F47721] text-white text-[11px] font-bold flex items-center gap-1 shadow-xs cursor-pointer"
             >
-              <Building2 className="w-3 h-3 text-emerald-300" />
-              <span>CRM</span>
-            </MotionLink>
+              <User className="w-3 h-3 text-white" />
+              <span>Đăng nhập</span>
+            </motion.button>
 
             <motion.button
               type="button"
@@ -271,7 +236,7 @@ export default function Navbar({
             transition={{ duration: 0.25, ease: 'easeOut' }}
             className="lg:hidden bg-[#0E2034] border-b border-white/20 px-4 pt-3 pb-6 space-y-3 shadow-2xl overflow-hidden"
           >
-            {/* Quick Demo & CRM Links in Mobile Drawer */}
+            {/* Quick Demo & Dashboard Links in Mobile Drawer */}
             <div className="grid grid-cols-2 gap-2 pb-2 border-b border-white/10">
               <button
                 type="button"
@@ -283,11 +248,11 @@ export default function Navbar({
               </button>
               <button
                 type="button"
-                onClick={() => handleNavClick('/crm')}
-                className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-[#142A43] border border-emerald-400/40 text-emerald-300 text-xs font-bold shadow-xs cursor-pointer"
+                onClick={handleLoginToDashboard}
+                className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-[#F47721] hover:bg-[#E76513] text-white text-xs font-bold shadow-xs cursor-pointer"
               >
-                <Building2 className="w-3.5 h-3.5 text-emerald-400" />
-                <span>🏢 Cổng CRM Đại lý</span>
+                <User className="w-3.5 h-3.5 text-white" />
+                <span>Đăng nhập CRM</span>
               </button>
             </div>
 
@@ -314,17 +279,6 @@ export default function Navbar({
                   </button>
                 );
               })}
-            </div>
-
-            <div className="pt-2 border-t border-white/10 space-y-2">
-              <button
-                type="button"
-                onClick={() => handleNavClick({ sectionId: 'consultation', to: '/contact' })}
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-xs text-white bg-[#F47721] hover:bg-[#E76513] shadow-md shadow-[#F47721]/30 cursor-pointer"
-              >
-                <span>Đăng ký tư vấn 30 phút</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
             </div>
           </motion.div>
         )}
