@@ -25,14 +25,34 @@ export default function Navbar({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const [activeSection, setActiveSection] = useState('hero');
+
   const navLinks = [
-    { to: '/', label: 'Trang chủ' },
-    { to: '/solutions', label: 'Giải pháp' },
-    { to: '/workflow', label: 'Quy trình' },
-    { to: '/pricing', label: 'Bảng giá & ROI' },
-    { to: '/roadmap', label: 'Lộ trình' },
-    { to: '/faq', label: 'Cam kết & FAQ' }
+    { to: '/', sectionId: 'hero', label: 'Trang chủ' },
+    { to: '/solutions', sectionId: 'solutions', label: 'Giải pháp' },
+    { to: '/workflow', sectionId: 'workflow', label: 'Quy trình' },
+    { to: '/pricing', sectionId: 'pricing', label: 'Bảng giá & ROI' },
+    { to: '/roadmap', sectionId: 'roadmap', label: 'Lộ trình' },
+    { to: '/faq', sectionId: 'faq', label: 'Cam kết & FAQ' }
   ];
+
+  // ScrollSpy for Sale Page sections
+  useEffect(() => {
+    if (location.pathname !== '/' && location.pathname !== '') return;
+    const sectionIds = ['hero', 'solutions', 'workflow', 'pricing', 'roadmap', 'faq'];
+    const handleScrollSpy = () => {
+      const scrollPos = window.scrollY + 200;
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sectionIds[i]);
+        if (el && el.offsetTop <= scrollPos) {
+          setActiveSection(sectionIds[i]);
+          break;
+        }
+      }
+    };
+    window.addEventListener('scroll', handleScrollSpy, { passive: true });
+    return () => window.removeEventListener('scroll', handleScrollSpy);
+  }, [location.pathname]);
 
   const handleScrollTop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -40,10 +60,42 @@ export default function Navbar({
     if (document.body) document.body.scrollTop = 0;
   };
 
-  const handleNavClick = (to) => {
-    navigate(to);
-    handleScrollTop();
+  const handleNavClick = (item) => {
     setMobileMenuOpen(false);
+    const isTargetSection = typeof item === 'object' && item.sectionId;
+    const targetSectionId = isTargetSection ? item.sectionId : null;
+    const targetTo = typeof item === 'string' ? item : item.to;
+
+    if (location.pathname === '/' || location.pathname === '') {
+      if (targetSectionId) {
+        if (targetSectionId === 'hero') {
+          handleScrollTop();
+          setActiveSection('hero');
+        } else {
+          const el = document.getElementById(targetSectionId);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+            setActiveSection(targetSectionId);
+          }
+        }
+        return;
+      }
+    }
+
+    if (targetSectionId) {
+      navigate('/');
+      setTimeout(() => {
+        if (targetSectionId === 'hero') {
+          handleScrollTop();
+        } else {
+          const el = document.getElementById(targetSectionId);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 120);
+    } else {
+      navigate(targetTo);
+      handleScrollTop();
+    }
   };
 
   return (
@@ -59,7 +111,7 @@ export default function Navbar({
           {/* Logo Brand */}
           <MotionLink
             to="/"
-            onClick={handleScrollTop}
+            onClick={() => handleNavClick(navLinks[0])}
             whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
             whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
             transition={{ duration: 0.15 }}
@@ -100,20 +152,20 @@ export default function Navbar({
             }`}
           >
             {navLinks.map((item) => {
-              const isActive =
-                item.to === '/'
-                  ? location.pathname === '/' || location.pathname === ''
-                  : location.pathname.startsWith(item.to);
+              const isHome = location.pathname === '/' || location.pathname === '';
+              const isActive = isHome
+                ? activeSection === item.sectionId
+                : location.pathname.startsWith(item.to);
 
               return (
-                <MotionLink
-                  key={item.to}
-                  to={item.to}
-                  onClick={handleScrollTop}
+                <motion.button
+                  key={item.label}
+                  type="button"
+                  onClick={() => handleNavClick(item)}
                   whileHover={shouldReduceMotion ? {} : { y: -1 }}
                   whileTap={shouldReduceMotion ? {} : { scale: 0.96 }}
                   transition={{ duration: 0.15 }}
-                  className={`text-xs font-semibold px-3 py-1 rounded-full transition-all whitespace-nowrap shrink-0 ${
+                  className={`text-xs font-semibold px-3 py-1 rounded-full transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                     isActive
                       ? 'bg-[#F47721] text-white shadow-xs font-bold'
                       : isScrolled
@@ -122,7 +174,7 @@ export default function Navbar({
                   }`}
                 >
                   {item.label}
-                </MotionLink>
+                </motion.button>
               );
             })}
           </nav>
@@ -166,16 +218,16 @@ export default function Navbar({
             )}
 
             {/* CTA Consultation Navigation */}
-            <MotionLink
-              to="/contact"
-              onClick={handleScrollTop}
+            <motion.button
+              type="button"
+              onClick={() => handleNavClick({ sectionId: 'consultation', to: '/contact' })}
               whileHover={shouldReduceMotion ? {} : buttonMotion.whileHover}
               whileTap={shouldReduceMotion ? {} : buttonMotion.whileTap}
               className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-white bg-[#F47721] hover:bg-[#E76513] shadow-md shadow-[#F47721]/30 transition-all cursor-pointer whitespace-nowrap"
             >
               <span>Đăng ký tư vấn 30 phút</span>
               <ArrowRight className="w-3.5 h-3.5" />
-            </MotionLink>
+            </motion.button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -239,36 +291,35 @@ export default function Navbar({
               </button>
             </div>
 
-            {/* Subpages Links */}
+            {/* Subpages / Sections Links */}
             <div className="grid grid-cols-2 gap-1.5 pt-1">
-              {navLinks.map((item) => (
-                <button
-                  key={item.to}
-                  type="button"
-                  onClick={() => handleNavClick(item.to)}
-                  className={`text-left text-xs font-semibold px-3 py-2 rounded-lg transition-colors cursor-pointer ${
-                    location.pathname === item.to
-                      ? 'bg-[#F47721] text-white font-bold'
-                      : 'text-slate-200 hover:bg-white/10 hover:text-white'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
+              {navLinks.map((item) => {
+                const isHome = location.pathname === '/' || location.pathname === '';
+                const isActive = isHome
+                  ? activeSection === item.sectionId
+                  : location.pathname.startsWith(item.to);
+
+                return (
+                  <button
+                    key={item.label}
+                    type="button"
+                    onClick={() => handleNavClick(item)}
+                    className={`text-left text-xs font-semibold px-3 py-2 rounded-lg transition-colors cursor-pointer ${
+                      isActive
+                        ? 'bg-[#F47721] text-white font-bold'
+                        : 'text-slate-200 hover:bg-white/10 hover:text-white'
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
             </div>
 
             <div className="pt-2 border-t border-white/10 space-y-2">
               <button
                 type="button"
-                onClick={() => handleNavClick('/all')}
-                className="w-full py-2 px-3 rounded-lg bg-white/10 text-slate-200 hover:text-white text-xs font-medium text-center cursor-pointer"
-              >
-                📄 Xem trang dài một cuộn (All-in-one)
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleNavClick('/contact')}
+                onClick={() => handleNavClick({ sectionId: 'consultation', to: '/contact' })}
                 className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-xs text-white bg-[#F47721] hover:bg-[#E76513] shadow-md shadow-[#F47721]/30 cursor-pointer"
               >
                 <span>Đăng ký tư vấn 30 phút</span>
