@@ -118,7 +118,7 @@ export default function Navbar({
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-3">
-          {/* Logo Brand: Chỉ Logo xe và chữ AutoLead */}
+          {/* Logo Brand: Logo xe + AutoLead Systems + Slogan */}
           <MotionLink
             to="/"
             onClick={() => handleNavClick(navLinks[0])}
@@ -130,13 +130,22 @@ export default function Navbar({
             <div className="w-10 h-10 rounded-xl bg-[#142A43] flex items-center justify-center p-1 shadow-sm border border-white/20 group-hover:bg-[#07182D] transition-colors shrink-0">
               <PixelCarOrange size={28} />
             </div>
-            <span
-              className={`font-black text-xl tracking-tight transition-colors whitespace-nowrap ${
-                isScrolled ? 'text-[#142A43]' : 'text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]'
-              }`}
-            >
-              Auto<span className="text-[#F47721]">Lead</span>
-            </span>
+            <div className="flex flex-col text-left">
+              <span
+                className={`font-black text-lg sm:text-xl tracking-tight leading-none uppercase transition-colors whitespace-nowrap ${
+                  isScrolled ? 'text-[#142A43]' : 'text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]'
+                }`}
+              >
+                Auto<span className="text-[#F47721]">Lead</span> <span className="text-xs font-bold tracking-wider opacity-90">SYSTEMS</span>
+              </span>
+              <span
+                className={`text-[9px] sm:text-[10px] font-medium tracking-tight leading-tight mt-0.5 whitespace-nowrap hidden sm:block ${
+                  isScrolled ? 'text-[#64748B]' : 'text-white/85 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]'
+                }`}
+              >
+                From Leads to Qualified Test Drives.
+              </span>
+            </div>
           </MotionLink>
 
           {/* Desktop Nav Links with Route-aware Active Highlighting */}

@@ -32,7 +32,7 @@ export default function WorkflowPage() {
               Bạn muốn trải nghiệm trực tiếp quy trình này?
             </h3>
             <p className="text-xs sm:text-sm text-[#64748B]">
-              Trực tiếp điền form đặt lịch lái thử ở vai trò khách hàng hoặc kiểm tra bảng giá dịch vụ theo CPA.
+              Trực tiếp trải nghiệm Showroom ô tô có nhúng AI Widget hoặc kiểm tra bảng giá gói thuê bao B2B chính thức.
             </p>
             <div className="pt-2 flex flex-wrap justify-center items-center gap-3">
               <Link

@@ -36,7 +36,7 @@ export default function SolutionsPage() {
               Bạn đã hiểu giải pháp. Tiếp theo hãy xem cách thức vận hành:
             </h3>
             <p className="text-xs sm:text-sm text-[#64748B]">
-              Khám phá quy trình 5 bước Lean Racetrack hoặc xem bảng giá tính phí theo hiệu quả CPA 300.000đ.
+              Khám phá quy trình 5 bước Lean Racetrack hoặc xem chính sách giá gói thuê bao Standard chủ lực 4.000.000đ/tháng.
             </p>
             <div className="pt-2 flex flex-wrap justify-center items-center gap-3">
               <Link

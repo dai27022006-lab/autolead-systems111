@@ -46,14 +46,11 @@ export default function Footer({ onOpenLeadViewer }) {
               <div>
                 <div className="flex items-center gap-1.5">
                   <span className="font-black text-lg text-white tracking-tight uppercase">
-                    Auto<span className="text-[#F47721]">Lead</span>
-                  </span>
-                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[#F47721] text-white tracking-widest font-mono">
-                    PIXEL WORLD
+                    Auto<span className="text-[#F47721]">Lead</span> <span className="text-xs font-bold tracking-wider opacity-90">SYSTEMS</span>
                   </span>
                 </div>
-                <p className="text-[10px] text-slate-400 font-mono uppercase tracking-wider">
-                  AI Automotive Dealership Operations
+                <p className="text-[11px] text-[#F47721] font-medium tracking-wide mt-0.5">
+                  From Leads to Qualified Test Drives.
                 </p>
               </div>
             </div>

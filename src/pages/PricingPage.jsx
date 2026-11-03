@@ -15,10 +15,10 @@ export default function PricingPage({ onOpenContact }) {
     <div className="flex-1 flex flex-col bg-[#F8F9F5]">
       {/* Dedicated Page Header with Breadcrumbs */}
       <PageHeader
-        badge="BẢNG GIÁ THEO HIỆU QUẢ"
-        title="Bảng Giá Dịch Vụ CPA 300.000đ & Dự Toán ROI"
-        subtitle="Mô hình tính phí dựa trên kết quả thực tế (Performance-based). Đại lý chỉ trả phí cho khách hàng tiềm năng đã được thẩm định đạt chuẩn TQM."
-        breadcrumbCurrent="Bảng giá & Dự toán ROI"
+        badge="CHÍNH SÁCH GIÁ B2B CHÍNH THỨC"
+        title="Bảng Giá Dịch Vụ Thuê Bao & Phí Setup Showroom"
+        subtitle="Mô hình kết hợp phí thiết lập ban đầu (5.000.000đ/showroom) và gói thuê bao hàng tháng (Standard chủ lực 4.000.000đ/50 Qualified Leads). Vượt hạn mức chỉ 100.000đ/lead sau đối soát."
+        breadcrumbCurrent="Bảng giá & Gói dịch vụ"
       />
 
       <main className="flex-1">

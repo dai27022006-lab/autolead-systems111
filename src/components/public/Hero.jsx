@@ -167,9 +167,9 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
               {/* Badge */}
               <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#142A43] border border-[#F47721]/50 text-xs font-bold text-white tracking-wide font-mono shadow-xs">
                 <PixelCarOrange size={20} />
-                <span className="text-[#F47721]">AUTOLEAD</span>
+                <span className="text-[#F47721]">AUTOLEAD SYSTEMS</span>
                 <span className="text-white/60">•</span>
-                <span>AI LEAD QUALIFICATION CHO SHOWROOM Ô TÔ</span>
+                <span>FROM LEADS TO QUALIFIED TEST DRIVES</span>
               </motion.div>
 
               {/* Main Headline */}
@@ -177,11 +177,11 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
                 variants={itemVariants}
                 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-[1.18] drop-shadow-md"
               >
-                Chuyển đổi khách truy cập website showroom thành{' '}
+                Từ khách hàng quan tâm đến{' '}
                 <span className="text-[#F47721] underline decoration-[#F47721]/60 underline-offset-4">
                   lịch hẹn lái thử
                 </span>{' '}
-                có giá trị.
+                đủ điều kiện.
               </motion.h1>
 
               {/* Subtitle */}
@@ -189,7 +189,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
                 variants={itemVariants}
                 className="text-xs sm:text-base text-slate-200 font-normal leading-relaxed"
               >
-                <strong>AutoLead cung cấp AI Widget nhúng vào website showroom, giúp tăng 300% tỷ lệ chuyển đổi khách lái thử mà không cần đổi website hiện có.</strong> Khách hàng vẫn lướt xem xe như bình thường; AI Widget tự động đối thoại, khai thác 7 tiêu chí TQM và đồng bộ dữ liệu lead nóng sang CRM đại lý tức thì.
+                <strong>AutoLead Systems cung cấp giải pháp AI nhúng trực tiếp vào website showroom ô tô</strong>, hỗ trợ trò chuyện, tìm hiểu nhu cầu và sàng lọc khách hàng tiềm năng. Khách hàng phù hợp có thể gửi yêu cầu đặt lịch lái thử; showroom tiếp nhận hồ sơ trên CRM để chủ động liên hệ và xác nhận lịch hẹn.
               </motion.p>
 
               {/* CTAs: Showroom Simulator & CRM Portal */}
@@ -232,7 +232,7 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
               <motion.div variants={itemVariants} className="p-2.5 rounded-xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-between text-[11px] text-emerald-300">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span>AI Widget nhúng trực tiếp website showroom • Đẩy lead đủ tiêu chuẩn vào CRM trong 0.05s</span>
+                  <span>AI Widget nhúng website showroom • Sàng lọc Qualified Lead • Đẩy hồ sơ sang CRM tức thì</span>
                 </div>
                 <span className="text-[10px] font-mono font-bold text-white bg-emerald-600/40 px-2 py-0.5 rounded">
                   Live Synced
@@ -243,9 +243,9 @@ export default function Hero({ onOpenContact, onOpenMvpDemo, onOpenSaas }) {
               <motion.div variants={itemVariants} className="pt-3 border-t border-white/15 flex items-start gap-2 text-xs text-slate-300">
                 <CheckCircle2 className="w-4 h-4 text-[#75A94C] shrink-0 mt-0.5" />
                 <span>
-                  Offer chính thức cho Showroom:{' '}
-                  <strong className="text-white">15.000.000 VNĐ</strong> setup 30 ngày +{' '}
-                  <strong className="text-[#F47721]">300.000 VNĐ</strong> / lịch hẹn đủ điều kiện.
+                  Offer chủ lực: Phí thiết lập ban đầu{' '}
+                  <strong className="text-white">5.000.000 VNĐ</strong> (30 ngày) • Thuê bao Standard:{' '}
+                  <strong className="text-[#F47721]">4.000.000 VNĐ / tháng</strong> (50 Qualified Leads) • Vượt hạn mức: <strong>100.000 VNĐ</strong> / lead.
                 </span>
               </motion.div>
             </motion.div>

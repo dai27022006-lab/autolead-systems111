@@ -96,7 +96,7 @@ export default function AppointmentManagement({
         <div>
           <h2 className="text-xl font-extrabold text-[#142A43]">Quản Lý Lịch Hẹn Lái Thử (Test Drive Appointments)</h2>
           <p className="text-xs text-[#64748B]">
-            Điều phối phương tiện lái thử, phân công tư vấn viên và nghiệm thu tiêu chuẩn 300.000 VNĐ/cuộc hẹn
+            Tiếp nhận yêu cầu (Appointment Requested), kiểm tra lịch xe và chủ động xác nhận Appointment Confirmed trên CRM
           </p>
         </div>
 
@@ -185,13 +185,13 @@ export default function AppointmentManagement({
                       <p className="text-xs text-[#64748B] font-mono mt-0.5">{apt.customerPhone}</p>
                     </div>
 
-                    {/* CPA Billable Badge */}
+                    {/* Appointment State Badge */}
                     <div className="text-right">
-                      <span className={`text-xs font-bold font-mono block ${apt.billableFee > 0 ? 'text-[#F47721]' : 'text-[#94A3B8]'}`}>
-                        {apt.billableFee > 0 ? formatVND(apt.billableFee) : '0 VNĐ (Không tính phí)'}
+                      <span className={`text-xs font-bold font-mono block ${apt.status === 'Confirmed' ? 'text-emerald-700' : 'text-[#F47721]'}`}>
+                        {apt.status === 'Confirmed' ? 'Appointment Confirmed' : (apt.status === 'Completed' ? 'Showroom Visited' : 'Appointment Requested')}
                       </span>
                       <span className="text-[10px] text-[#94A3B8]">
-                        {apt.isQualifiedAppointment ? 'Đạt 7/7 tiêu chuẩn' : 'Chưa đủ điều kiện'}
+                        {apt.isQualifiedAppointment ? 'Lead đủ điều kiện' : 'Lead đang xử lý'}
                       </span>
                     </div>
                   </div>
@@ -349,7 +349,7 @@ export default function AppointmentManagement({
         <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-black/60 backdrop-blur-xs">
           <div className="bg-white border border-[#DCE3EC] rounded-2xl sm:rounded-3xl p-4 sm:p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl text-[#142A43]">
             <h3 className="text-lg sm:text-xl font-bold text-[#142A43] mb-1">Thiết Lập Lịch Hẹn Lái Thử Mới</h3>
-            <p className="text-xs text-[#64748B] mb-5">Đảm bảo khách hàng đã đồng ý ngày giờ cụ thể để đạt chuẩn 300.000 VNĐ</p>
+            <p className="text-xs text-[#64748B] mb-5">Ghi nhận khung ngày giờ mong muốn và xác nhận lịch hẹn chính thức trên CRM</p>
 
             <form onSubmit={handleCreateAppointment} className="space-y-4 text-xs">
               <div>

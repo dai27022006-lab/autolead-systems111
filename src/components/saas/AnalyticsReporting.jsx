@@ -26,9 +26,12 @@ export default function AnalyticsReporting({ leads = [], appointments = [], camp
   const appointmentRate = totalLeads ? Math.round((bookedAppointments / totalLeads) * 100) : 0;
   const showroomVisitRate = bookedAppointments ? Math.round((showroomVisits / bookedAppointments) * 100) : 0;
 
-  // Billable Qualified Appointments (300,000 VND rate)
-  const billableCount = safeAppointments.filter(a => a?.isQualifiedAppointment && (a?.status === 'Confirmed' || a?.status === 'Completed')).length;
-  const billableAmount = billableCount * 300000;
+  // Official Core Offer: Standard Plan (4,000,000 VND for 50 Qualified Leads, 100,000 VND/overage lead)
+  const standardQuota = 50;
+  const baseMonthlySubscription = 4000000;
+  const overageLeadsCount = Math.max(0, qualifiedLeads - standardQuota);
+  const overageFeeAmount = overageLeadsCount * 100000;
+  const totalSettlementAmount = baseMonthlySubscription + overageFeeAmount;
 
   const formatVND = (num) => new Intl.NumberFormat('vi-VN').format(num) + ' VNĐ';
 
@@ -60,7 +63,7 @@ export default function AnalyticsReporting({ leads = [], appointments = [], camp
           Báo Cáo Hiệu Suất Tác Nghiệp & Đối Soát Chi Phí (KPI & TQM)
         </h2>
         <p className="text-xs text-[#64748B]">
-          Minh bạch toàn diện các chỉ số luồng vi mô, phễu chuyển đổi và biểu phí theo kết quả 300.000 VNĐ/lịch hẹn
+          Minh bạch toàn diện các chỉ số luồng vi mô, phễu chuyển đổi và đối soát hạn mức gói Standard (4.000.000đ/tháng)
         </p>
       </div>
 
@@ -70,7 +73,7 @@ export default function AnalyticsReporting({ leads = [], appointments = [], camp
           <span className="text-xs text-[#64748B] block">Tỷ lệ Sàng lọc Đạt Chuẩn (AI)</span>
           <div className="flex items-baseline justify-between mt-2">
             <span className="text-3xl font-black text-[#142A43]">{qualificationRate}%</span>
-            <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">7 Tiêu chuẩn</span>
+            <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">6 Tiêu chuẩn</span>
           </div>
           <p className="text-[11px] text-[#94A3B8] mt-2">Đạt {qualifiedLeads}/{totalLeads} khách hàng thẩm định</p>
         </div>
@@ -79,7 +82,7 @@ export default function AnalyticsReporting({ leads = [], appointments = [], camp
           <span className="text-xs text-[#64748B] block">Tỷ lệ Chốt Hẹn Lái Thử</span>
           <div className="flex items-baseline justify-between mt-2">
             <span className="text-3xl font-black text-[#F47721]">{appointmentRate}%</span>
-            <span className="text-xs font-bold text-[#64748B] bg-slate-100 px-2 py-0.5 rounded border border-[#DCE3EC]">CPA 300K</span>
+            <span className="text-xs font-bold text-[#64748B] bg-slate-100 px-2 py-0.5 rounded border border-[#DCE3EC]">Appointment</span>
           </div>
           <p className="text-[11px] text-[#94A3B8] mt-2">Tổng {bookedAppointments} cuộc hẹn showroom</p>
         </div>
@@ -94,13 +97,15 @@ export default function AnalyticsReporting({ leads = [], appointments = [], camp
         </div>
 
         <div className="p-5 rounded-2xl bg-orange-50/50 border-2 border-[#F47721] shadow-xs">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#F47721] block">Lịch Hẹn Tính Phí Tháng Này</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-[#F47721] block">Gói Standard (50 Lead Hạn Mức)</span>
           <div className="flex items-baseline justify-between mt-2">
-            <span className="text-3xl font-black text-[#142A43]">{billableCount}</span>
-            <span className="text-xs font-bold text-[#F47721]">300.000đ / lịch</span>
+            <span className="text-2xl font-black text-[#142A43]">{qualifiedLeads} / 50</span>
+            <span className="text-xs font-bold text-[#F47721]">
+              {overageLeadsCount > 0 ? `+${overageLeadsCount} lead vượt` : 'Trong hạn mức'}
+            </span>
           </div>
           <p className="text-xs font-bold text-emerald-700 mt-2">
-            Phí thanh toán: {formatVND(billableAmount)}
+            Tổng phí kỳ này: {formatVND(totalSettlementAmount)}
           </p>
         </div>
       </div>
@@ -192,29 +197,33 @@ export default function AnalyticsReporting({ leads = [], appointments = [], camp
           <div>
             <h3 className="text-base font-bold text-[#142A43] mb-3 flex items-center gap-2">
               <FileCheck className="w-4 h-4 text-[#F47721]" />
-              Quy Trình Nghiệm Thu & Quyết Toán CPA
+              Quy Trình Nghiệm Thu & Quyết Toán Thuê Bao
             </h3>
             <p className="text-xs text-[#64748B] leading-relaxed">
-              Theo hợp đồng dịch vụ chính thức: Mỗi lịch hẹn đủ điều kiện phải đáp ứng đầy đủ 7 tiêu chí TQM và được xác nhận trên hệ thống trước khi xuất hóa đơn <strong>300.000 VNĐ</strong>.
+              Theo lời chào hàng chính thức (Gói Standard chủ lực): Phí thuê bao <strong>4.000.000 VNĐ / tháng</strong> cho 50 Qualified Lead hợp lệ. Mỗi lead vượt hạn mức tính <strong>100.000 VNĐ</strong> sau đối soát. Không thu phí riêng cho mỗi lịch hẹn hoặc lượt khách đến.
             </p>
             <div className="mt-4 p-4 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC] text-xs space-y-1.5 text-[#142A43]">
               <div className="flex justify-between">
-                <span className="text-[#64748B]">Số lịch hẹn đủ điều kiện:</span>
-                <span className="font-bold text-[#142A43]">{billableCount} lịch</span>
+                <span className="text-[#64748B]">Qualified Leads ghi nhận:</span>
+                <span className="font-bold text-[#142A43]">{qualifiedLeads} / 50 lead</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#64748B]">Đơn giá chuẩn hóa:</span>
-                <span className="font-mono text-[#F47721] font-bold">300.000 VNĐ / lịch</span>
+                <span className="text-[#64748B]">Phí thuê bao cơ bản:</span>
+                <span className="font-mono text-[#142A43] font-bold">4.000.000 VNĐ</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[#64748B]">Phí vượt hạn mức ({overageLeadsCount} × 100k):</span>
+                <span className="font-mono text-[#F47721] font-bold">{formatVND(overageFeeAmount)}</span>
               </div>
               <div className="flex justify-between pt-2 border-t border-[#E2E8F0] font-bold text-sm">
-                <span>Tổng tiền quyết toán:</span>
-                <span className="text-emerald-700 font-black">{formatVND(billableAmount)}</span>
+                <span>Tổng tiền quyết toán kỳ:</span>
+                <span className="text-emerald-700 font-black">{formatVND(totalSettlementAmount)}</span>
               </div>
             </div>
           </div>
 
           <div className="mt-6 pt-4 border-t border-[#E2E8F0] text-[11px] text-[#94A3B8] italic">
-            * Cam kết không tính phí đối với lịch hủy trước giờ hẹn hoặc lead trùng lặp.
+            * Nguyên tắc mục 5.5: Lead trùng lặp hoặc không đạt tiêu chí không tính vào hạn mức Qualified Lead.
           </div>
         </div>
       </div>

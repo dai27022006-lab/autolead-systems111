@@ -110,7 +110,7 @@ export default function SaasLayout({
                 <span className="font-bold text-[#142A43] text-base">AutoLead</span>
                 <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-orange-100 text-[#F47721] border border-orange-200 uppercase">SaaS</span>
               </div>
-              <p className="text-[10px] text-[#64748B]">Operations Management Console</p>
+              <p className="text-[10px] text-[#64748B]">From Leads to Qualified Test Drives.</p>
             </div>
           </div>
         </div>

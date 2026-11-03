@@ -42,7 +42,7 @@ export default function HomePage({ onOpenContact }) {
       {/* 5. How It Works: 5-Step Lean Workflow with ZingSpeed Nitro Racetrack */}
       <HowItWorks />
 
-      {/* 6. Pricing: CPA 300K Model & Interactive ROI Calculator */}
+      {/* 6. Pricing: Setup Fee (5M) + Monthly Subscription & Overage Model */}
       <Pricing onOpenContact={onOpenContact} />
 
       {/* 7. Roadmap: 30-Day Deployment Plan */}

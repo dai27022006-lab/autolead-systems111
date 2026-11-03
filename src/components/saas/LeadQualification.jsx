@@ -42,7 +42,7 @@ export default function LeadQualification({
       if (newStatus !== 'Appointment Booked' && newStatus !== 'Showroom Visit' && newStatus !== 'Sales Opportunity') {
         newStatus = 'Qualified Lead';
       }
-      updatedDetails.aiExplanation = 'Đạt chuẩn 7/7 tiêu chí chất lượng. Đủ điều kiện nghiệm thu chi phí 300.000 VNĐ/cuộc hẹn.';
+      updatedDetails.aiExplanation = 'Đạt chuẩn tiêu chí chất lượng. Đủ điều kiện ghi nhận Qualified Lead vào hạn mức gói.';
       updatedDetails.suggestedAction = 'Chốt thông tin lịch hẹn và điều phối xe lái thử sẵn sàng tại showroom.';
     } else {
       updatedDetails.aiExplanation = `Đang đáp ứng ${activeConditionsCount}/7 tiêu chí. Cần thu thập thêm thông tin còn thiếu.`;
@@ -69,15 +69,15 @@ export default function LeadQualification({
               TQM Quality Assurance Framework
             </span>
           </div>
-          <h2 className="text-xl font-extrabold text-[#142A43] mt-0.5">Trung Tâm Sàng Lọc Khách Hàng AI (7 Tiêu Chuẩn)</h2>
+          <h2 className="text-xl font-extrabold text-[#142A43] mt-0.5">Trung Tâm Sàng Lọc Khách Hàng AI (Tiêu Chuẩn Showroom)</h2>
           <p className="text-xs text-[#64748B]">
-            Kiểm soát chất lượng lead nghiêm ngặt theo tiêu chuẩn nghiệm thu chi phí 300.000 VNĐ/lịch hẹn
+            Kiểm soát chất lượng nghiêm ngặt theo tiêu chuẩn Qualified Lead để tối ưu hạn mức gói thuê bao
           </p>
         </div>
 
         <div className="px-3.5 py-1.5 rounded-xl bg-white border border-[#DCE3EC] text-xs font-mono font-bold text-[#F47721] flex items-center gap-2 shadow-2xs">
           <ShieldCheck className="w-4 h-4" />
-          <span>7/7 Tiêu chí = Lịch Hẹn Đủ Điều Kiện</span>
+          <span>Tiêu chuẩn = Qualified Lead Hợp Lệ</span>
         </div>
       </div>
 
@@ -216,8 +216,8 @@ export default function LeadQualification({
               {/* Action Buttons */}
               <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex flex-wrap items-center justify-between gap-3">
                 <span className="text-xs text-[#64748B]">
-                  Trạng thái nghiệm thu: <strong className="text-[#142A43]">
-                    {(activeLead.qualificationDetails?.aiScore || 0) >= 90 ? 'Lịch Hẹn Đủ Điều Kiện (CPA: 300.000 VNĐ)' : 'Cần Follow-up Thêm'}
+                  Trạng thái đối soát: <strong className="text-[#142A43]">
+                    {(activeLead.qualificationDetails?.aiScore || 0) >= 90 ? 'Qualified Lead Hợp Lệ (Tính vào hạn mức gói)' : 'Cần Follow-up Thêm'}
                   </strong>
                 </span>
 

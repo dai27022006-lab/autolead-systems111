@@ -178,7 +178,7 @@ export default function DashboardOverview({
               </h3>
               <p className="text-xs text-[#64748B] mt-0.5">Tỷ lệ chuyển hóa qua từng chặng thẩm định</p>
             </div>
-            <span className="text-xs font-mono text-[#F47721] font-bold">Standard CPA: 300.000đ</span>
+            <span className="text-xs font-mono text-[#F47721] font-bold">Gói Standard: 50 Qualified Leads</span>
           </div>
 
           <div className="space-y-4">
@@ -231,7 +231,7 @@ export default function DashboardOverview({
                   <span>WIP Khâu Sàng Lọc:</span>
                   <span className="font-bold text-amber-700">{contactedLeads} lead đang chờ</span>
                 </div>
-                <p className="text-[11px] text-[#64748B] mt-1">Cần chốt lịch hẹn cụ thể để đủ điều kiện nghiệm thu 300.000 VNĐ.</p>
+                <p className="text-[11px] text-[#64748B] mt-1">AI tiếp tục khai thác nhu cầu để hoàn tất hồ sơ Qualified Lead.</p>
               </div>
 
               <div className="p-3.5 rounded-xl bg-[#F8F9F5] border border-[#DCE3EC]">
@@ -296,10 +296,10 @@ export default function DashboardOverview({
                 </div>
 
                 <div className="text-left sm:text-right shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#E2E8F0] flex sm:block items-center justify-between">
-                  <span className={`font-mono text-xs font-bold block ${apt.isQualifiedAppointment ? 'text-[#F47721]' : 'text-[#94A3B8]'}`}>
-                    {apt.isQualifiedAppointment ? '+300.000đ' : 'Chưa đủ điều kiện'}
+                  <span className={`font-mono text-xs font-bold block ${apt.isQualifiedAppointment ? 'text-emerald-700' : 'text-[#94A3B8]'}`}>
+                    {apt.isQualifiedAppointment ? 'Appointment Confirmed' : 'Appointment Requested'}
                   </span>
-                  <span className="text-[10px] text-[#94A3B8]">Billable CPA</span>
+                  <span className="text-[10px] text-[#94A3B8]">Trạng thái lịch</span>
                 </div>
               </div>
             ))}
