@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   HashRouter,
   Routes,
@@ -76,6 +76,103 @@ function AppContent() {
   const [appointments, setAppointments] = useState([]);
   const [campaigns, setCampaigns] = useState([]);
   const [b2bInquiries, setB2bInquiries] = useState([]);
+
+  // Multi-tenant CRM Vehicle and Showroom Filters
+  const [selectedVehicle, setSelectedVehicle] = useState('ALL');
+  const [selectedShowroom, setSelectedShowroom] = useState('ALL');
+
+  // Available vehicles list dynamically derived from mock data and leads
+  const availableVehicles = useMemo(() => {
+    const defaultList = [
+      'Mercedes-Benz GLC 300 4MATIC 2024',
+      'Mercedes-Benz E200 Exclusive 2024',
+      'Mercedes-Benz C200 Avantgarde 2024',
+      'Porsche Macan GTS 2023 (Lướt)',
+      'BMW X5 xDrive40i M Sport',
+      'Lexus RX 350 Premium 2023',
+      'Audi Q5 Sportback 45 TFSI'
+    ];
+    const fromLeads = (crmLeads || []).map(l => l.interestedVehicle).filter(Boolean);
+    return Array.from(new Set([...defaultList, ...fromLeads]));
+  }, [crmLeads]);
+
+  // Filtered CRM Leads
+  const filteredCrmLeads = useMemo(() => {
+    return (crmLeads || []).filter(lead => {
+      if (!lead) return false;
+
+      // Filter by vehicle
+      if (selectedVehicle !== 'ALL') {
+        const v = String(lead.interestedVehicle || '').toLowerCase();
+        const target = selectedVehicle.toLowerCase();
+        // Match either full vehicle string or primary model code (e.g. GLC 300, E200, Macan, X5)
+        const parts = target.split(' ').filter(p => p.length > 2);
+        const matchKeyword = parts.some(p => v.includes(p.toLowerCase()));
+        if (!v.includes(target) && !target.includes(v) && !matchKeyword) {
+          return false;
+        }
+      }
+
+      // Filter by showroom/dealership
+      if (selectedShowroom !== 'ALL') {
+        const v = String(lead.interestedVehicle || '').toLowerCase();
+        if (selectedShowroom.includes('Haxaco') || selectedShowroom.includes('Mercedes')) {
+          if (!v.includes('mercedes') && !v.includes('c200') && !v.includes('e200') && !v.includes('glc') && !v.includes('c300')) return false;
+        } else if (selectedShowroom.includes('Porsche')) {
+          if (!v.includes('porsche') && !v.includes('macan') && !v.includes('cayenne')) return false;
+        } else if (selectedShowroom.includes('568')) {
+          if (!v.includes('bmw') && !v.includes('lexus') && !v.includes('audi') && !v.includes('lướt') && !v.includes('x5') && !v.includes('rx 350') && !v.includes('q5')) return false;
+        }
+      }
+
+      return true;
+    });
+  }, [crmLeads, selectedVehicle, selectedShowroom]);
+
+  // Filtered Appointments
+  const filteredAppointments = useMemo(() => {
+    return (appointments || []).filter(apt => {
+      if (!apt) return false;
+
+      if (selectedVehicle !== 'ALL') {
+        const v = String(apt.vehicleModel || '').toLowerCase();
+        const target = selectedVehicle.toLowerCase();
+        const parts = target.split(' ').filter(p => p.length > 2);
+        const matchKeyword = parts.some(p => v.includes(p.toLowerCase()));
+        if (!v.includes(target) && !target.includes(v) && !matchKeyword) {
+          return false;
+        }
+      }
+
+      if (selectedShowroom !== 'ALL') {
+        const v = String(apt.vehicleModel || '').toLowerCase();
+        if (selectedShowroom.includes('Haxaco') || selectedShowroom.includes('Mercedes')) {
+          if (!v.includes('mercedes') && !v.includes('c200') && !v.includes('e200') && !v.includes('glc') && !v.includes('c300')) return false;
+        } else if (selectedShowroom.includes('Porsche')) {
+          if (!v.includes('porsche') && !v.includes('macan') && !v.includes('cayenne')) return false;
+        } else if (selectedShowroom.includes('568')) {
+          if (!v.includes('bmw') && !v.includes('lexus') && !v.includes('audi') && !v.includes('lướt') && !v.includes('x5') && !v.includes('rx 350') && !v.includes('q5')) return false;
+        }
+      }
+
+      return true;
+    });
+  }, [appointments, selectedVehicle, selectedShowroom]);
+
+  // Filtered Campaigns
+  const filteredCampaigns = useMemo(() => {
+    return (campaigns || []).filter(camp => {
+      if (!camp) return false;
+      if (selectedVehicle !== 'ALL') {
+        const c = String(camp.name || '').toLowerCase();
+        const target = selectedVehicle.toLowerCase();
+        const parts = target.split(' ').filter(w => w.length > 2);
+        const hasMatch = parts.some(kw => c.includes(kw.toLowerCase()));
+        if (!hasMatch && !c.includes(target)) return false;
+      }
+      return true;
+    });
+  }, [campaigns, selectedVehicle]);
 
   // Check legacy query params or hash on initial load for backwards compatibility
   useEffect(() => {
@@ -365,21 +462,29 @@ function AppContent() {
                     setActiveTab={setActiveSaasTab}
                     onBackToPublic={() => navigate('/')}
                     onResetData={handleResetData}
-                    leadsCount={crmLeads.length}
+                    leadsCount={filteredCrmLeads.length}
+                    totalLeadsCount={crmLeads.length}
                     b2bCount={b2bInquiries.length}
+                    selectedVehicle={selectedVehicle}
+                    setSelectedVehicle={setSelectedVehicle}
+                    selectedShowroom={selectedShowroom}
+                    setSelectedShowroom={setSelectedShowroom}
+                    availableVehicles={availableVehicles}
+                    filteredLeadsCount={filteredCrmLeads.length}
+                    filteredAptsCount={filteredAppointments.length}
                   >
                     {activeSaasTab === 'overview' && (
                       <DashboardOverview
-                        leads={crmLeads}
-                        appointments={appointments}
-                        campaigns={campaigns}
+                        leads={filteredCrmLeads}
+                        appointments={filteredAppointments}
+                        campaigns={filteredCampaigns}
                         onNavigateToTab={(tabId) => setActiveSaasTab(tabId)}
                       />
                     )}
 
                     {activeSaasTab === 'leads' && (
                       <LeadManagement
-                        leads={crmLeads}
+                        leads={filteredCrmLeads}
                         onUpdateLeadStatus={handleUpdateLeadStatus}
                         onAddLead={handleAddLead}
                         onUpdateLead={handleUpdateLead}
@@ -388,7 +493,7 @@ function AppContent() {
 
                     {activeSaasTab === 'qualification' && (
                       <LeadQualification
-                        leads={crmLeads}
+                        leads={filteredCrmLeads}
                         onUpdateLead={handleUpdateLead}
                         onOpenCreateAppointment={() => {
                           setActiveSaasTab('appointments');
@@ -398,8 +503,8 @@ function AppContent() {
 
                     {activeSaasTab === 'appointments' && (
                       <AppointmentManagement
-                        appointments={appointments}
-                        leads={crmLeads}
+                        appointments={filteredAppointments}
+                        leads={filteredCrmLeads}
                         onAddAppointment={handleAddAppointment}
                         onUpdateAppointmentStatus={handleUpdateAppointmentStatus}
                       />
@@ -407,20 +512,20 @@ function AppContent() {
 
                     {activeSaasTab === 'campaigns' && (
                       <CampaignManagement
-                        campaigns={campaigns}
+                        campaigns={filteredCampaigns}
                         onAddCampaign={handleAddCampaign}
                       />
                     )}
 
                     {activeSaasTab === 'ai-assistant' && (
-                      <AiAssistant leads={crmLeads} />
+                      <AiAssistant leads={filteredCrmLeads} />
                     )}
 
                     {activeSaasTab === 'analytics' && (
                       <AnalyticsReporting
-                        leads={crmLeads}
-                        appointments={appointments}
-                        campaigns={campaigns}
+                        leads={filteredCrmLeads}
+                        appointments={filteredAppointments}
+                        campaigns={filteredCampaigns}
                       />
                     )}
 

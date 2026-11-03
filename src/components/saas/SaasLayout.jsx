@@ -16,7 +16,10 @@ import {
   ShieldCheck,
   ChevronRight,
   Menu,
-  X
+  X,
+  Car,
+  RotateCcw,
+  Filter
 } from 'lucide-react';
 
 export default function SaasLayout({
@@ -26,9 +29,16 @@ export default function SaasLayout({
   children,
   onResetData,
   leadsCount,
-  b2bCount
+  totalLeadsCount,
+  b2bCount,
+  selectedVehicle = 'ALL',
+  setSelectedVehicle,
+  selectedShowroom = 'ALL',
+  setSelectedShowroom,
+  availableVehicles = [],
+  filteredLeadsCount,
+  filteredAptsCount
 }) {
-  const [selectedShowroom, setSelectedShowroom] = useState('Mercedes-Benz Haxaco Saigon');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
@@ -56,7 +66,9 @@ export default function SaasLayout({
               <span className="font-bold text-[#142A43] text-sm">AutoLead SaaS</span>
               <span className="text-[9px] font-bold px-1 rounded bg-orange-100 text-[#F47721] border border-orange-200">CRM</span>
             </div>
-            <p className="text-[10px] text-[#64748B] truncate">{selectedShowroom}</p>
+            <p className="text-[10px] text-[#64748B] truncate">
+              {selectedVehicle !== 'ALL' ? selectedVehicle : (selectedShowroom !== 'ALL' ? selectedShowroom : 'Tất cả dòng xe')}
+            </p>
           </div>
         </div>
 
@@ -90,20 +102,72 @@ export default function SaasLayout({
           </div>
         </div>
 
-        {/* Showroom Selector (Multi-tenant simulation) */}
-        <div className="p-3.5 lg:p-4 border-b border-[#DCE3EC] bg-[#F8F9F5]">
-          <label className="text-[10px] font-bold uppercase tracking-wider text-[#64748B] block mb-1.5">
-            Đại lý đang vận hành:
-          </label>
-          <select
-            value={selectedShowroom}
-            onChange={(e) => setSelectedShowroom(e.target.value)}
-            className="w-full px-3 py-2 rounded-lg bg-white border border-[#DCE3EC] text-base sm:text-xs text-[#142A43] outline-none focus:border-[#F47721] focus:ring-1 focus:ring-[#F47721] cursor-pointer shadow-2xs"
-          >
-            <option value="Mercedes-Benz Haxaco Saigon">Mercedes-Benz Haxaco Sài Gòn</option>
-            <option value="Porsche Saigon Gallery">Porsche Saigon Gallery</option>
-            <option value="Auto 568 Luxury Used Cars">Auto 568 Luxury Used Cars</option>
-          </select>
+        {/* Multi-tenant & Vehicle CRM Filter */}
+        <div className="p-3.5 lg:p-4 border-b border-[#DCE3EC] bg-[#F8F9F5] space-y-3">
+          {/* 1. Lọc theo từng dòng xe riêng biệt hoặc tất cả */}
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-[#64748B] flex items-center gap-1">
+                <Car className="w-3 h-3 text-[#F47721]" />
+                Lọc theo dòng xe (CRM):
+              </label>
+              {(selectedVehicle !== 'ALL' || selectedShowroom !== 'ALL') && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedVehicle?.('ALL');
+                    setSelectedShowroom?.('ALL');
+                  }}
+                  className="text-[10px] text-[#F47721] hover:underline font-bold flex items-center gap-0.5 cursor-pointer"
+                  title="Khôi phục xem toàn bộ CRM"
+                >
+                  <RotateCcw className="w-2.5 h-2.5" />
+                  Tất cả
+                </button>
+              )}
+            </div>
+            <select
+              value={selectedVehicle}
+              onChange={(e) => setSelectedVehicle?.(e.target.value)}
+              className="w-full px-2.5 py-2 rounded-lg bg-white border border-[#DCE3EC] text-xs font-semibold text-[#142A43] outline-none focus:border-[#F47721] focus:ring-1 focus:ring-[#F47721] cursor-pointer shadow-2xs"
+            >
+              <option value="ALL">🚗 Tất cả dòng xe (Xem tổng số)</option>
+              <optgroup label="Chọn xem CRM từng xe riêng:">
+                {availableVehicles.map((v) => (
+                  <option key={v} value={v}>
+                    {v}
+                  </option>
+                ))}
+              </optgroup>
+            </select>
+          </div>
+
+          {/* 2. Đại lý Showroom */}
+          <div>
+            <label className="text-[10px] font-bold uppercase tracking-wider text-[#64748B] block mb-1">
+              Đại lý đang vận hành:
+            </label>
+            <select
+              value={selectedShowroom}
+              onChange={(e) => setSelectedShowroom?.(e.target.value)}
+              className="w-full px-2.5 py-1.5 rounded-lg bg-white border border-[#DCE3EC] text-xs text-[#142A43] outline-none focus:border-[#F47721] focus:ring-1 focus:ring-[#F47721] cursor-pointer shadow-2xs"
+            >
+              <option value="ALL">🏢 Tất cả đại lý showroom</option>
+              <option value="Mercedes-Benz Haxaco Saigon">Mercedes-Benz Haxaco Sài Gòn</option>
+              <option value="Porsche Saigon Gallery">Porsche Saigon Gallery</option>
+              <option value="Auto 568 Luxury Used Cars">Auto 568 Luxury Used Cars</option>
+            </select>
+          </div>
+
+          {/* Status summary indicator */}
+          <div className="pt-2 flex items-center justify-between text-[11px] font-medium border-t border-[#E2E8F0]">
+            <span className="text-[#64748B]">
+              {selectedVehicle === 'ALL' && selectedShowroom === 'ALL' ? 'Tổng số CRM:' : 'Khớp bộ lọc:'}
+            </span>
+            <span className="font-bold text-[#F47721] font-mono">
+              {filteredLeadsCount ?? leadsCount}/{totalLeadsCount ?? leadsCount} Lead ({filteredAptsCount ?? 0} lịch)
+            </span>
+          </div>
         </div>
 
         {/* Navigation Links */}
@@ -190,6 +254,34 @@ export default function SaasLayout({
 
         {/* Viewport Content */}
         <main className="p-3 sm:p-6 lg:p-8 flex-1 bg-[#F8F9F5]">
+          {/* Active Filter Notification Banner */}
+          {(selectedVehicle !== 'ALL' || selectedShowroom !== 'ALL') && (
+            <div className="mb-4 sm:mb-6 p-3.5 sm:p-4 rounded-2xl bg-orange-50/95 border border-orange-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#F47721] shrink-0 animate-pulse"></span>
+                <div className="text-xs text-[#142A43]">
+                  Đang xem CRM riêng biệt cho:{' '}
+                  <strong className="text-[#F47721]">
+                    {selectedVehicle !== 'ALL' ? selectedVehicle : selectedShowroom}
+                  </strong>{' '}
+                  <span className="text-[#64748B]">
+                    (Khớp {filteredLeadsCount ?? leadsCount} khách hàng tiềm năng, {filteredAptsCount ?? 0} lịch hẹn lái thử)
+                  </span>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedVehicle?.('ALL');
+                  setSelectedShowroom?.('ALL');
+                }}
+                className="self-start sm:self-auto px-3 py-1.5 rounded-xl bg-white hover:bg-orange-100 text-[#F47721] font-bold text-xs border border-orange-200 transition-colors cursor-pointer shrink-0 shadow-2xs"
+              >
+                ← Xem Tất Cả Xe (Tổng Hợp)
+              </button>
+            </div>
+          )}
+
           {children}
         </main>
       </div>
